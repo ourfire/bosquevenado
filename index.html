@@ -1,5 +1,986 @@
 <!doctype html>
-<html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bosque Venado · Acanceh, Yucatán</title><meta name="robots" content="noindex, nofollow">
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#E8EAE2;color:#18321F;font-family:Georgia,serif;text-align:center;padding:24px;box-sizing:border-box}h1{font-size:clamp(2rem,6vw,3.2rem);margin:0 0 .3em}p{font-family:system-ui,sans-serif;font-size:1.1rem;margin:0}</style></head>
-<body><main><h1>Bosque Venado</h1><p>Cinco hectáreas de monte en Acanceh, Yucatán. Muy pronto.</p></main></body></html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bosque Venado · Acanceh, Yucatán</title>
+<meta name="description" content="Cinco hectáreas de monte en Acanceh, Yucatán, cuidadas por una comunidad. Participaciones con espacio de arraigo y voz en el cuidado del lugar.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2318321F'/%3E%3Ccircle cx='11' cy='13' r='5' fill='%233F6B45'/%3E%3Ccircle cx='20' cy='11' r='4' fill='%23D8B23E'/%3E%3Ccircle cx='19' cy='21' r='6' fill='%233F6B45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cal:#E8EAE2; --cal-2:#DDE1D5; --monte:#18321F; --hoja:#3F6B45; --hoja-2:#5E8A5E;
+  --cenote:#0F5E66; --huano:#D8B23E; --linea:#B8BEB0; --tinta:#18321F; --tenue:#4A5A4C;
+  --serif:"Alegreya",Georgia,serif; --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --ancho:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--cal);color:var(--tinta);font-family:var(--sans);font-size:1.125rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:var(--cenote);text-underline-offset:.18em}
+a:hover{color:var(--monte)}
+:focus-visible{outline:3px solid var(--cenote);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:800;line-height:1.05;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.1rem);max-width:18ch}
+h3{font-size:1.4rem;font-weight:700;line-height:1.2}
+p{margin:0 0 1em;max-width:62ch}
+.lede{font-size:1.25rem;color:var(--tenue)}
+.tbd{background:rgba(216,178,62,.28);border-bottom:1.5px dashed #9C7C1C;padding:0 .2em;border-radius:2px;white-space:nowrap;font-style:normal}
+.draft{background:var(--monte);color:var(--cal);font-size:.95rem;text-align:center;padding:.5rem 1rem;margin:0;max-width:none}
+.draft .tbd{color:var(--cal);border-color:var(--huano)}
+
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
+.marca{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:1.45rem;color:var(--monte);text-decoration:none}
+.marca svg{width:30px;height:30px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--tinta);text-decoration:none;font-weight:500}
+.nav ul a:hover{text-decoration:underline}
+.btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:1.05rem;padding:.8em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--monte);cursor:pointer;line-height:1.1}
+.btn-1{background:var(--monte);color:var(--cal)}
+.btn-1:hover{background:var(--hoja);border-color:var(--hoja);color:var(--cal)}
+.btn-2{background:transparent;color:var(--monte)}
+.btn-2:hover{background:var(--cal-2);color:var(--monte)}
+@media (max-width:880px){.nav ul{display:none}}
+@media (max-width:560px){.marca{font-size:1.2rem;white-space:nowrap}.marca svg{width:26px;height:26px}.nav .btn{font-size:.95rem;padding:.65em 1em}.nav{gap:12px}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:48px;align-items:center;padding:34px 0 64px}
+.hero h1{font-size:clamp(2.4rem,4.6vw,3.9rem);max-width:15ch;margin-bottom:.45em}
+.hero .acciones{display:flex;flex-wrap:wrap;gap:12px;margin:1.6em 0 0}
+.plan-fig{margin:0}
+.plan-fig figcaption{font-size:.92rem;color:var(--tenue);margin-top:.6em;max-width:none}
+.plan .p-land{fill:#D3DACB}
+.plan .p-tree{fill:var(--hoja)}
+.plan .t0{fill:var(--hoja);opacity:.95}.plan .t1{fill:var(--hoja-2);opacity:.85}.plan .t2{fill:#2F5536}
+.plan .p-path{fill:none;stroke:#A9946A;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.plan .p-deer{fill:none;stroke:var(--monte);stroke-width:1.4;stroke-dasharray:2 5;stroke-linecap:round}
+.plan .p-common{fill:#E9E2C8;stroke:#A9946A;stroke-width:1.5}
+.plan .p-spot{fill:var(--huano);stroke:var(--monte);stroke-width:1.2}
+.plan .p-edge{fill:none;stroke:var(--monte);stroke-width:2}
+.plan .p-gate{fill:var(--monte)}
+.plan text{font-family:var(--sans);font-size:15px;fill:var(--monte)}
+.plan .p-c{font-size:13px}
+.plan .p-big{font-family:var(--serif);font-weight:700;font-size:20px;paint-order:stroke;stroke:#D3DACB;stroke-width:5px}
+.plan .p-sub{font-size:13px;fill:var(--tenue)}
+.plan .p-call line{stroke:var(--monte);stroke-width:1}
+.plan .p-call text{paint-order:stroke;stroke:var(--cal);stroke-width:4px}
+.plan .p-north path{fill:var(--monte)}
+.plan .p-scale line{stroke:var(--monte);stroke-width:1.5}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding-top:12px}}
+
+/* datos */
+.datos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--monte);border-bottom:1px solid var(--linea);margin:0}
+.datos div{padding:18px 18px 20px 0}
+.datos dt{font-size:.95rem;color:var(--tenue)}
+.datos dd{margin:0;font-family:var(--serif);font-weight:700;font-size:1.45rem;line-height:1.2}
+@media (max-width:760px){.datos{grid-template-columns:1fr 1fr}}
+
+section{padding:96px 0 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:48px;align-items:end;margin-bottom:40px}
+.sec-head p{margin:0}
+@media (max-width:880px){.sec-head{grid-template-columns:1fr;gap:16px}}
+
+/* hoy / después */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.dos h3{padding-bottom:.5em;border-bottom:1px solid var(--linea);margin-bottom:.6em}
+.lista{list-style:none;padding:0;margin:0}
+.lista li{padding:.55em 0;border-bottom:1px solid var(--linea)}
+.lista small{display:block;color:var(--tenue);font-size:.95rem}
+@media (max-width:760px){.dos{grid-template-columns:1fr;gap:36px}}
+
+/* derechos */
+.banda{background:var(--monte);color:var(--cal);margin-top:96px;padding:88px 0 96px}
+.banda section{padding:0}
+.banda h2,.banda h3{color:var(--cal)}
+.banda .lede{color:#C9D2C3}
+.banda .lista li{border-color:rgba(232,234,226,.22)}
+.banda .lista small{color:#B9C4B4}
+.banda a{color:var(--huano)}
+.banda .si li,.banda .no li{position:relative;padding-left:1.6em}
+.banda .si li::before,.banda .no li::before{position:absolute;left:0;top:.5em;font-weight:700}
+.banda .si li::before{content:"+";color:var(--huano)}
+.banda .no li::before{content:"–";color:#C9D2C3}
+.banda .nota{margin-top:32px;color:#C9D2C3;font-size:1rem}
+
+/* cotizador */
+.cotiza{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
+.plazos{border:0;padding:0;margin:0 0 28px;display:flex;flex-wrap:wrap;gap:8px}
+.plazos legend{font-weight:700;margin-bottom:10px;padding:0}
+.plazos input{position:absolute;opacity:0;pointer-events:none}
+.plazos label{border:2px solid var(--monte);border-radius:999px;padding:.45em 1em;cursor:pointer;font-weight:500;background:transparent}
+.plazos input:checked+label{background:var(--monte);color:var(--cal)}
+.plazos input:focus-visible+label{outline:3px solid var(--cenote);outline-offset:3px}
+.resultado{border-top:2px solid var(--monte);padding-top:18px}
+.cifra{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,7vw,5.2rem);line-height:1;letter-spacing:-.02em;margin:.1em 0 .15em}
+.cifra small{font-family:var(--sans);font-weight:500;font-size:1.1rem;letter-spacing:0;color:var(--tenue)}
+.desglose{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:18px 0 0}
+.desglose div{padding:12px 0;border-bottom:1px solid var(--linea)}
+.desglose dt{font-size:.95rem;color:var(--tenue)}
+.desglose dd{margin:0;font-weight:700;font-size:1.2rem}
+.ahorro{color:var(--hoja)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:700;padding-bottom:10px}
+th,td{padding:.6em .5em;border-bottom:1px solid var(--linea);text-align:right}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+thead th{font-weight:500;color:var(--tenue);font-size:.95rem;border-bottom:2px solid var(--monte)}
+tr.activo td{background:var(--cal-2);font-weight:700}
+.letra{font-size:.98rem;color:var(--tenue);margin-top:24px}
+@media (max-width:880px){.cotiza{grid-template-columns:1fr}}
+@media (max-width:480px){th,td{padding:.55em .3em;font-size:.95rem}}
+
+/* pasos */
+.pasos{list-style:none;counter-reset:p;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.pasos li{counter-increment:p;border-top:2px solid var(--monte);padding-top:14px}
+.pasos li::before{content:counter(p);display:block;font-family:var(--serif);font-weight:800;font-size:2.2rem;line-height:1;margin-bottom:12px;color:var(--hoja)}
+.pasos p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
+@media (max-width:980px){.pasos{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.pasos{grid-template-columns:1fr}}
+
+/* estructura */
+.capas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--monte)}
+.capas div{padding:20px 24px 8px 0}
+.capas div+div{padding-left:24px;border-left:1px solid var(--linea)}
+.capas p{font-size:1.02rem}
+@media (max-width:760px){.capas{grid-template-columns:1fr}.capas div+div{padding-left:0;border-left:0;border-top:1px solid var(--linea)}}
+
+/* faq */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--linea)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 32px 18px 0;font-family:var(--serif);font-weight:700;font-size:1.3rem;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-family:var(--sans);font-size:1.6rem;color:var(--hoja)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--tenue)}
+
+/* visita */
+.visita{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start}
+form{display:grid;gap:18px}
+.campo{display:grid;gap:6px}
+.campo label{font-weight:700}
+.campo .ayuda{font-size:.95rem;color:var(--tenue)}
+input[type=text],input[type=email],input[type=tel],select,textarea{font:inherit;color:var(--tinta);background:#F3F4EF;border:1.5px solid var(--linea);border-radius:8px;padding:.7em .8em;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--cenote);outline:2px solid var(--cenote);outline-offset:0}
+textarea{min-height:120px;resize:vertical}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.oculto{position:absolute;left:-9999px}
+.error{color:#9B2C1F;font-size:.95rem;min-height:1.2em;margin:0}
+@media (max-width:880px){.visita{grid-template-columns:1fr;gap:28px}}
+@media (max-width:520px){.fila{grid-template-columns:1fr}}
+
+footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;font-size:.98rem;color:var(--tenue)}
+.pie{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.pie p{max-width:70ch}
+@media (max-width:760px){.pie{grid-template-columns:1fr;gap:16px}}
+</style>
+</head>
+<body>
+<p class="draft">Borrador de diseño. Los datos marcados <span class="tbd">así</span> están por definir.</p>
+
+<div class="wrap">
+<header class="nav">
+  <a class="marca" href="#inicio" aria-label="Bosque Venado, inicio">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#18321F"/><circle cx="11" cy="13" r="5" fill="#3F6B45"/><circle cx="20" cy="11" r="4" fill="#D8B23E"/><circle cx="19" cy="21" r="6" fill="#3F6B45"/></svg>
+    Bosque Venado
+  </a>
+  <nav aria-label="Secciones">
+    <ul>
+      <li><a href="#lugar">El lugar</a></li>
+      <li><a href="#participacion">Tu participación</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#entrar">Cómo entrar</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn-1" href="#visita">Agenda una visita</a>
+</header>
+
+<main id="inicio">
+<div class="hero">
+  <div>
+    <h1>Cinco hectáreas de monte, cuidadas por una comunidad.</h1>
+    <p class="lede">Bosque Venado es tierra de conservación en Acanceh, Yucatán, y un experimento de vida neorural fuera de la red. Cada participación te da un espacio de arraigo, acceso al lugar y voz en cómo se cuida.</p>
+    <div class="acciones">
+      <a class="btn btn-1" href="#visita">Agenda una visita</a>
+      <a class="btn btn-2" href="#precios">Ver precios</a>
+    </div>
+  </div>
+  <figure class="plan-fig">
+<svg class="plan" viewBox="0 0 580 500" role="img" aria-labelledby="plan-t plan-d"><title id="plan-t">Plano ilustrativo del predio</title><desc id="plan-d">Cinco hectáreas de monte. La mayor parte queda en conservación; cerca del acceso hay un área común y, a lo largo del sendero, doce espacios de arraigo. Distribución ilustrativa.</desc>
+<polygon points="46,58 500,26 532,398 74,432" class="p-land"/>
+<circle cx="362.2" cy="53.7" r="5.2" class="p-tree t1"/>
+<circle cx="86.6" cy="262.9" r="5.2" class="p-tree t1"/>
+<circle cx="146.3" cy="59.2" r="4.2" class="p-tree t0"/>
+<circle cx="101.3" cy="115.5" r="5.2" class="p-tree t1"/>
+<circle cx="509.1" cy="260.6" r="4.2" class="p-tree t0"/>
+<circle cx="64.5" cy="114.6" r="5.2" class="p-tree t1"/>
+<circle cx="464.9" cy="142.7" r="2.8" class="p-tree t1"/>
+<circle cx="307.6" cy="258.1" r="5.2" class="p-tree t1"/>
+<circle cx="444.0" cy="98.1" r="5.2" class="p-tree t1"/>
+<circle cx="322.7" cy="101.0" r="2.2" class="p-tree t1"/>
+<circle cx="311.1" cy="49.7" r="2.2" class="p-tree t1"/>
+<circle cx="346.4" cy="227.5" r="5.2" class="p-tree t1"/>
+<circle cx="329.9" cy="209.8" r="3.4" class="p-tree t1"/>
+<circle cx="163.0" cy="97.7" r="2.8" class="p-tree t1"/>
+<circle cx="80.5" cy="147.1" r="4.2" class="p-tree t0"/>
+<circle cx="473.2" cy="323.1" r="3.4" class="p-tree t1"/>
+<circle cx="341.4" cy="54.0" r="5.2" class="p-tree t1"/>
+<circle cx="247.0" cy="334.4" r="2.8" class="p-tree t1"/>
+<circle cx="502.0" cy="196.9" r="2.2" class="p-tree t1"/>
+<circle cx="418.5" cy="258.9" r="3.4" class="p-tree t1"/>
+<circle cx="208.4" cy="167.6" r="4.2" class="p-tree t0"/>
+<circle cx="507.6" cy="218.4" r="2.2" class="p-tree t1"/>
+<circle cx="446.9" cy="140.7" r="4.2" class="p-tree t0"/>
+<circle cx="479.1" cy="166.3" r="4.2" class="p-tree t0"/>
+<circle cx="284.4" cy="113.5" r="3.4" class="p-tree t1"/>
+<circle cx="493.8" cy="227.6" r="2.8" class="p-tree t1"/>
+<circle cx="262.3" cy="249.3" r="2.8" class="p-tree t1"/>
+<circle cx="445.5" cy="378.2" r="3.4" class="p-tree t1"/>
+<circle cx="377.9" cy="180.0" r="2.8" class="p-tree t1"/>
+<circle cx="114.7" cy="96.2" r="2.8" class="p-tree t1"/>
+<circle cx="511.8" cy="307.1" r="5.2" class="p-tree t1"/>
+<circle cx="510.4" cy="292.5" r="2.2" class="p-tree t1"/>
+<circle cx="266.0" cy="381.1" r="5.2" class="p-tree t1"/>
+<circle cx="143.3" cy="90.5" r="3.4" class="p-tree t1"/>
+<circle cx="337.4" cy="66.0" r="5.2" class="p-tree t1"/>
+<circle cx="114.9" cy="65.6" r="3.4" class="p-tree t1"/>
+<circle cx="344.0" cy="84.9" r="3.4" class="p-tree t1"/>
+<circle cx="513.0" cy="270.9" r="4.2" class="p-tree t0"/>
+<circle cx="100.8" cy="372.1" r="4.2" class="p-tree t0"/>
+<circle cx="277.8" cy="151.9" r="2.8" class="p-tree t1"/>
+<circle cx="90.6" cy="164.5" r="3.4" class="p-tree t1"/>
+<circle cx="276.9" cy="307.7" r="5.2" class="p-tree t1"/>
+<circle cx="301.5" cy="84.1" r="5.2" class="p-tree t1"/>
+<circle cx="492.5" cy="334.8" r="3.4" class="p-tree t1"/>
+<circle cx="384.6" cy="131.1" r="3.4" class="p-tree t1"/>
+<circle cx="489.6" cy="169.8" r="2.8" class="p-tree t1"/>
+<circle cx="303.6" cy="343.4" r="3.4" class="p-tree t1"/>
+<circle cx="355.0" cy="275.4" r="2.8" class="p-tree t1"/>
+<circle cx="439.0" cy="359.5" r="2.8" class="p-tree t1"/>
+<circle cx="139.0" cy="226.0" r="2.2" class="p-tree t1"/>
+<circle cx="273.8" cy="103.4" r="5.2" class="p-tree t1"/>
+<circle cx="348.9" cy="393.1" r="2.2" class="p-tree t1"/>
+<circle cx="277.3" cy="291.7" r="2.2" class="p-tree t1"/>
+<circle cx="453.2" cy="73.2" r="4.2" class="p-tree t0"/>
+<circle cx="427.2" cy="331.6" r="4.2" class="p-tree t0"/>
+<circle cx="480.1" cy="201.9" r="3.4" class="p-tree t1"/>
+<circle cx="82.9" cy="411.9" r="4.2" class="p-tree t0"/>
+<circle cx="269.3" cy="328.8" r="2.2" class="p-tree t1"/>
+<circle cx="398.8" cy="93.7" r="2.8" class="p-tree t1"/>
+<circle cx="365.3" cy="167.7" r="5.2" class="p-tree t1"/>
+<circle cx="435.7" cy="321.8" r="2.2" class="p-tree t1"/>
+<circle cx="300.7" cy="406.8" r="4.2" class="p-tree t0"/>
+<circle cx="472.6" cy="35.5" r="2.8" class="p-tree t1"/>
+<circle cx="185.0" cy="122.6" r="5.2" class="p-tree t1"/>
+<circle cx="452.9" cy="49.0" r="3.4" class="p-tree t1"/>
+<circle cx="484.4" cy="295.6" r="5.2" class="p-tree t1"/>
+<circle cx="288.3" cy="242.0" r="5.2" class="p-tree t1"/>
+<circle cx="292.7" cy="381.9" r="2.8" class="p-tree t1"/>
+<circle cx="341.2" cy="342.2" r="2.8" class="p-tree t1"/>
+<circle cx="399.0" cy="252.2" r="3.4" class="p-tree t1"/>
+<circle cx="377.8" cy="241.6" r="4.2" class="p-tree t0"/>
+<circle cx="428.2" cy="67.5" r="5.2" class="p-tree t1"/>
+<circle cx="68.1" cy="102.4" r="2.2" class="p-tree t1"/>
+<circle cx="422.3" cy="232.2" r="5.2" class="p-tree t1"/>
+<circle cx="71.4" cy="157.5" r="5.2" class="p-tree t1"/>
+<circle cx="340.0" cy="105.8" r="3.4" class="p-tree t1"/>
+<circle cx="291.3" cy="125.5" r="5.2" class="p-tree t1"/>
+<circle cx="506.9" cy="368.4" r="2.8" class="p-tree t1"/>
+<circle cx="252.0" cy="111.2" r="3.4" class="p-tree t1"/>
+<circle cx="428.0" cy="391.8" r="2.8" class="p-tree t1"/>
+<circle cx="505.1" cy="287.8" r="3.4" class="p-tree t1"/>
+<circle cx="110.8" cy="386.0" r="4.2" class="p-tree t0"/>
+<circle cx="295.2" cy="163.0" r="2.8" class="p-tree t1"/>
+<circle cx="216.5" cy="61.8" r="3.4" class="p-tree t1"/>
+<circle cx="293.6" cy="50.4" r="2.8" class="p-tree t1"/>
+<circle cx="425.6" cy="134.9" r="2.8" class="p-tree t1"/>
+<circle cx="240.9" cy="244.0" r="5.2" class="p-tree t1"/>
+<circle cx="322.4" cy="311.2" r="2.2" class="p-tree t1"/>
+<circle cx="130.8" cy="391.1" r="3.4" class="p-tree t1"/>
+<circle cx="81.5" cy="375.1" r="2.2" class="p-tree t1"/>
+<circle cx="170.9" cy="73.9" r="2.2" class="p-tree t1"/>
+<circle cx="498.7" cy="133.8" r="2.8" class="p-tree t1"/>
+<circle cx="351.2" cy="241.7" r="2.8" class="p-tree t1"/>
+<circle cx="183.5" cy="229.0" r="2.8" class="p-tree t1"/>
+<circle cx="365.9" cy="290.5" r="4.2" class="p-tree t0"/>
+<circle cx="310.2" cy="388.4" r="5.2" class="p-tree t1"/>
+<circle cx="66.9" cy="77.2" r="2.2" class="p-tree t1"/>
+<circle cx="349.6" cy="384.7" r="4.2" class="p-tree t0"/>
+<circle cx="456.4" cy="380.9" r="3.4" class="p-tree t1"/>
+<circle cx="336.4" cy="308.0" r="2.2" class="p-tree t1"/>
+<circle cx="267.4" cy="88.6" r="4.2" class="p-tree t0"/>
+<circle cx="81.5" cy="138.4" r="2.8" class="p-tree t1"/>
+<circle cx="162.8" cy="342.3" r="2.2" class="p-tree t1"/>
+<circle cx="170.8" cy="60.8" r="4.2" class="p-tree t0"/>
+<circle cx="330.5" cy="185.5" r="3.4" class="p-tree t1"/>
+<circle cx="514.0" cy="373.8" r="2.8" class="p-tree t1"/>
+<circle cx="365.5" cy="317.6" r="5.2" class="p-tree t1"/>
+<circle cx="398.5" cy="287.7" r="2.2" class="p-tree t1"/>
+<circle cx="448.3" cy="317.2" r="5.2" class="p-tree t1"/>
+<circle cx="350.5" cy="324.9" r="5.2" class="p-tree t1"/>
+<circle cx="289.7" cy="366.3" r="2.2" class="p-tree t1"/>
+<circle cx="449.1" cy="263.5" r="2.8" class="p-tree t1"/>
+<circle cx="303.1" cy="124.3" r="3.4" class="p-tree t1"/>
+<circle cx="410.4" cy="230.2" r="5.2" class="p-tree t1"/>
+<circle cx="85.5" cy="239.7" r="4.2" class="p-tree t0"/>
+<circle cx="171.5" cy="323.0" r="2.8" class="p-tree t1"/>
+<circle cx="154.2" cy="290.5" r="4.2" class="p-tree t0"/>
+<circle cx="284.5" cy="180.8" r="4.2" class="p-tree t0"/>
+<circle cx="490.7" cy="141.8" r="2.2" class="p-tree t1"/>
+<circle cx="345.4" cy="287.5" r="2.2" class="p-tree t1"/>
+<circle cx="336.9" cy="160.0" r="3.4" class="p-tree t1"/>
+<circle cx="70.0" cy="134.2" r="2.2" class="p-tree t1"/>
+<circle cx="382.6" cy="301.0" r="3.4" class="p-tree t1"/>
+<circle cx="390.9" cy="141.1" r="4.2" class="p-tree t0"/>
+<circle cx="270.8" cy="72.6" r="5.2" class="p-tree t1"/>
+<circle cx="267.2" cy="360.2" r="4.2" class="p-tree t0"/>
+<circle cx="410.0" cy="131.3" r="3.4" class="p-tree t1"/>
+<circle cx="105.6" cy="360.3" r="5.2" class="p-tree t1"/>
+<circle cx="178.4" cy="70.2" r="3.4" class="p-tree t1"/>
+<circle cx="392.9" cy="393.6" r="3.4" class="p-tree t1"/>
+<circle cx="414.0" cy="374.2" r="3.4" class="p-tree t1"/>
+<circle cx="90.3" cy="366.2" r="3.4" class="p-tree t1"/>
+<circle cx="354.3" cy="85.1" r="3.4" class="p-tree t1"/>
+<circle cx="422.7" cy="345.9" r="4.2" class="p-tree t0"/>
+<circle cx="477.7" cy="356.9" r="4.2" class="p-tree t0"/>
+<circle cx="311.9" cy="319.0" r="2.2" class="p-tree t1"/>
+<circle cx="412.6" cy="288.2" r="3.4" class="p-tree t1"/>
+<circle cx="280.4" cy="397.9" r="5.2" class="p-tree t1"/>
+<circle cx="168.8" cy="293.0" r="3.4" class="p-tree t1"/>
+<circle cx="279.2" cy="298.2" r="2.2" class="p-tree t1"/>
+<circle cx="122.8" cy="90.3" r="2.8" class="p-tree t1"/>
+<circle cx="287.8" cy="356.8" r="5.2" class="p-tree t1"/>
+<circle cx="109.1" cy="102.9" r="2.2" class="p-tree t1"/>
+<circle cx="198.0" cy="175.0" r="5.2" class="p-tree t1"/>
+<circle cx="409.2" cy="110.1" r="3.4" class="p-tree t1"/>
+<circle cx="85.8" cy="391.7" r="4.2" class="p-tree t0"/>
+<circle cx="282.5" cy="54.0" r="5.2" class="p-tree t1"/>
+<circle cx="163.0" cy="68.7" r="2.8" class="p-tree t1"/>
+<circle cx="115.3" cy="422.5" r="2.2" class="p-tree t1"/>
+<circle cx="360.4" cy="337.6" r="4.2" class="p-tree t0"/>
+<circle cx="82.1" cy="342.5" r="2.2" class="p-tree t1"/>
+<circle cx="427.2" cy="119.4" r="2.2" class="p-tree t1"/>
+<circle cx="359.5" cy="148.6" r="2.8" class="p-tree t1"/>
+<circle cx="385.8" cy="70.0" r="2.2" class="p-tree t1"/>
+<circle cx="177.9" cy="153.7" r="2.8" class="p-tree t1"/>
+<circle cx="275.3" cy="120.3" r="2.8" class="p-tree t1"/>
+<circle cx="286.7" cy="300.5" r="4.2" class="p-tree t0"/>
+<circle cx="80.1" cy="117.4" r="4.2" class="p-tree t0"/>
+<circle cx="498.0" cy="117.0" r="2.2" class="p-tree t1"/>
+<circle cx="384.4" cy="318.5" r="3.4" class="p-tree t1"/>
+<circle cx="377.9" cy="105.2" r="3.4" class="p-tree t1"/>
+<circle cx="416.4" cy="144.9" r="5.2" class="p-tree t1"/>
+<circle cx="285.4" cy="100.8" r="2.8" class="p-tree t1"/>
+<circle cx="501.1" cy="159.0" r="2.8" class="p-tree t1"/>
+<circle cx="363.0" cy="239.2" r="4.2" class="p-tree t0"/>
+<circle cx="101.2" cy="419.4" r="2.8" class="p-tree t1"/>
+<circle cx="83.4" cy="313.2" r="2.8" class="p-tree t1"/>
+<circle cx="484.0" cy="36.4" r="4.2" class="p-tree t0"/>
+<circle cx="162.8" cy="280.4" r="4.2" class="p-tree t0"/>
+<circle cx="409.5" cy="306.7" r="3.4" class="p-tree t1"/>
+<circle cx="334.8" cy="354.3" r="2.2" class="p-tree t1"/>
+<circle cx="114.9" cy="120.8" r="3.4" class="p-tree t1"/>
+<circle cx="268.1" cy="345.4" r="5.2" class="p-tree t1"/>
+<circle cx="79.1" cy="104.9" r="2.8" class="p-tree t1"/>
+<circle cx="320.6" cy="176.9" r="3.4" class="p-tree t1"/>
+<circle cx="161.4" cy="86.9" r="5.2" class="p-tree t1"/>
+<circle cx="300.5" cy="290.4" r="2.2" class="p-tree t1"/>
+<circle cx="445.5" cy="368.6" r="3.4" class="p-tree t1"/>
+<circle cx="60.0" cy="144.4" r="2.2" class="p-tree t1"/>
+<circle cx="346.9" cy="113.2" r="3.4" class="p-tree t1"/>
+<circle cx="402.5" cy="398.7" r="2.2" class="p-tree t1"/>
+<circle cx="445.3" cy="191.7" r="3.4" class="p-tree t1"/>
+<circle cx="140.7" cy="350.1" r="5.2" class="p-tree t1"/>
+<circle cx="279.3" cy="191.3" r="4.2" class="p-tree t0"/>
+<circle cx="368.7" cy="87.4" r="5.2" class="p-tree t1"/>
+<circle cx="85.1" cy="91.1" r="3.4" class="p-tree t1"/>
+<circle cx="192.3" cy="414.8" r="3.4" class="p-tree t1"/>
+<circle cx="408.9" cy="386.3" r="4.2" class="p-tree t0"/>
+<circle cx="137.6" cy="322.5" r="2.8" class="p-tree t1"/>
+<circle cx="506.3" cy="202.0" r="2.8" class="p-tree t1"/>
+<circle cx="84.1" cy="279.1" r="3.4" class="p-tree t1"/>
+<circle cx="180.2" cy="237.7" r="2.2" class="p-tree t1"/>
+<circle cx="137.7" cy="75.9" r="2.2" class="p-tree t1"/>
+<circle cx="347.1" cy="362.1" r="2.8" class="p-tree t1"/>
+<circle cx="357.0" cy="375.2" r="5.2" class="p-tree t1"/>
+<circle cx="414.9" cy="39.6" r="3.4" class="p-tree t1"/>
+<circle cx="312.3" cy="281.1" r="3.4" class="p-tree t1"/>
+<circle cx="250.7" cy="294.1" r="4.2" class="p-tree t0"/>
+<circle cx="261.2" cy="277.6" r="4.2" class="p-tree t0"/>
+<circle cx="454.1" cy="356.3" r="4.2" class="p-tree t0"/>
+<circle cx="93.0" cy="76.7" r="4.2" class="p-tree t0"/>
+<circle cx="289.6" cy="293.4" r="2.2" class="p-tree t1"/>
+<circle cx="344.0" cy="307.9" r="2.2" class="p-tree t1"/>
+<circle cx="493.4" cy="91.7" r="2.8" class="p-tree t1"/>
+<circle cx="72.4" cy="167.9" r="3.4" class="p-tree t1"/>
+<circle cx="118.6" cy="391.6" r="3.4" class="p-tree t1"/>
+<circle cx="488.0" cy="211.1" r="3.4" class="p-tree t1"/>
+<circle cx="333.0" cy="276.5" r="2.8" class="p-tree t1"/>
+<circle cx="376.4" cy="391.1" r="2.8" class="p-tree t1"/>
+<circle cx="298.1" cy="306.4" r="2.2" class="p-tree t1"/>
+<circle cx="464.0" cy="326.5" r="3.4" class="p-tree t1"/>
+<circle cx="325.8" cy="171.7" r="2.2" class="p-tree t1"/>
+<circle cx="258.9" cy="96.5" r="2.2" class="p-tree t1"/>
+<circle cx="330.0" cy="296.1" r="3.4" class="p-tree t1"/>
+<circle cx="402.9" cy="330.3" r="2.8" class="p-tree t1"/>
+<circle cx="254.0" cy="234.2" r="2.2" class="p-tree t1"/>
+<circle cx="304.4" cy="193.4" r="3.4" class="p-tree t1"/>
+<circle cx="450.1" cy="89.0" r="2.2" class="p-tree t1"/>
+<circle cx="471.3" cy="344.7" r="4.2" class="p-tree t0"/>
+<circle cx="403.1" cy="125.9" r="2.2" class="p-tree t1"/>
+<circle cx="138.8" cy="273.3" r="5.2" class="p-tree t1"/>
+<circle cx="360.6" cy="194.3" r="5.2" class="p-tree t1"/>
+<circle cx="408.9" cy="214.8" r="4.2" class="p-tree t0"/>
+<circle cx="101.0" cy="389.4" r="3.4" class="p-tree t1"/>
+<circle cx="499.6" cy="390.6" r="2.2" class="p-tree t1"/>
+<circle cx="409.3" cy="158.0" r="4.2" class="p-tree t0"/>
+<circle cx="202.6" cy="122.1" r="5.2" class="p-tree t1"/>
+<circle cx="272.4" cy="368.3" r="2.2" class="p-tree t1"/>
+<circle cx="430.7" cy="184.5" r="5.2" class="p-tree t1"/>
+<circle cx="78.5" cy="397.4" r="2.8" class="p-tree t1"/>
+<circle cx="56.3" cy="69.9" r="5.2" class="p-tree t1"/>
+<circle cx="481.2" cy="51.0" r="4.2" class="p-tree t0"/>
+<circle cx="93.0" cy="108.3" r="2.2" class="p-tree t1"/>
+<circle cx="448.4" cy="282.9" r="3.4" class="p-tree t1"/>
+<circle cx="416.1" cy="397.2" r="5.2" class="p-tree t1"/>
+<circle cx="409.1" cy="347.5" r="2.2" class="p-tree t1"/>
+<circle cx="256.0" cy="340.9" r="3.4" class="p-tree t1"/>
+<circle cx="320.2" cy="316.9" r="2.2" class="p-tree t1"/>
+<circle cx="324.4" cy="141.7" r="4.2" class="p-tree t0"/>
+<circle cx="326.1" cy="89.1" r="2.8" class="p-tree t1"/>
+<circle cx="122.1" cy="408.9" r="2.2" class="p-tree t1"/>
+<circle cx="317.8" cy="66.9" r="3.4" class="p-tree t1"/>
+<circle cx="224.1" cy="148.3" r="4.2" class="p-tree t0"/>
+<circle cx="367.7" cy="328.2" r="2.8" class="p-tree t1"/>
+<circle cx="326.7" cy="75.7" r="4.2" class="p-tree t0"/>
+<circle cx="388.1" cy="369.9" r="2.8" class="p-tree t1"/>
+<circle cx="398.0" cy="271.2" r="3.4" class="p-tree t1"/>
+<circle cx="400.7" cy="65.7" r="2.2" class="p-tree t1"/>
+<circle cx="136.7" cy="85.9" r="2.8" class="p-tree t1"/>
+<circle cx="462.9" cy="203.0" r="2.8" class="p-tree t1"/>
+<circle cx="287.7" cy="283.3" r="4.2" class="p-tree t0"/>
+<circle cx="387.1" cy="264.8" r="4.2" class="p-tree t0"/>
+<circle cx="458.8" cy="297.8" r="5.2" class="p-tree t1"/>
+<circle cx="351.0" cy="64.1" r="4.2" class="p-tree t0"/>
+<circle cx="465.0" cy="236.5" r="2.8" class="p-tree t1"/>
+<circle cx="482.8" cy="158.5" r="2.2" class="p-tree t1"/>
+<circle cx="309.0" cy="89.9" r="2.8" class="p-tree t1"/>
+<circle cx="297.0" cy="65.4" r="5.2" class="p-tree t1"/>
+<circle cx="144.0" cy="304.6" r="4.2" class="p-tree t0"/>
+<circle cx="175.8" cy="187.9" r="2.2" class="p-tree t1"/>
+<circle cx="351.1" cy="300.7" r="5.2" class="p-tree t1"/>
+<circle cx="171.3" cy="116.0" r="4.2" class="p-tree t0"/>
+<circle cx="505.3" cy="240.1" r="2.8" class="p-tree t1"/>
+<circle cx="252.1" cy="285.3" r="3.4" class="p-tree t1"/>
+<circle cx="230.6" cy="59.0" r="5.2" class="p-tree t1"/>
+<circle cx="488.4" cy="345.5" r="2.8" class="p-tree t1"/>
+<circle cx="341.1" cy="261.2" r="2.8" class="p-tree t1"/>
+<circle cx="131.9" cy="209.3" r="2.8" class="p-tree t1"/>
+<circle cx="143.2" cy="189.0" r="5.2" class="p-tree t1"/>
+<circle cx="486.3" cy="248.9" r="3.4" class="p-tree t1"/>
+<circle cx="78.9" cy="368.1" r="2.2" class="p-tree t1"/>
+<circle cx="314.8" cy="132.4" r="2.8" class="p-tree t1"/>
+<circle cx="449.4" cy="218.0" r="5.2" class="p-tree t1"/>
+<circle cx="68.9" cy="215.5" r="2.8" class="p-tree t1"/>
+<circle cx="307.1" cy="377.8" r="2.2" class="p-tree t1"/>
+<circle cx="384.5" cy="228.0" r="3.4" class="p-tree t1"/>
+<circle cx="456.1" cy="177.7" r="4.2" class="p-tree t0"/>
+<circle cx="86.5" cy="222.5" r="2.8" class="p-tree t1"/>
+<circle cx="349.5" cy="162.8" r="3.4" class="p-tree t1"/>
+<circle cx="314.3" cy="398.1" r="3.4" class="p-tree t1"/>
+<circle cx="255.4" cy="197.2" r="5.2" class="p-tree t1"/>
+<circle cx="210.7" cy="107.4" r="4.2" class="p-tree t0"/>
+<circle cx="432.0" cy="159.7" r="3.4" class="p-tree t1"/>
+<circle cx="393.0" cy="76.3" r="2.2" class="p-tree t1"/>
+<circle cx="428.2" cy="40.4" r="5.2" class="p-tree t1"/>
+<circle cx="275.2" cy="338.1" r="2.2" class="p-tree t1"/>
+<circle cx="226.1" cy="84.3" r="5.2" class="p-tree t1"/>
+<circle cx="473.8" cy="58.0" r="2.2" class="p-tree t1"/>
+<circle cx="370.2" cy="211.7" r="2.8" class="p-tree t1"/>
+<circle cx="90.2" cy="98.3" r="2.2" class="p-tree t1"/>
+<circle cx="248.7" cy="65.2" r="2.2" class="p-tree t1"/>
+<circle cx="429.3" cy="254.5" r="3.4" class="p-tree t1"/>
+<circle cx="466.9" cy="99.8" r="2.2" class="p-tree t1"/>
+<circle cx="197.6" cy="200.6" r="5.2" class="p-tree t1"/>
+<circle cx="384.4" cy="189.9" r="2.2" class="p-tree t1"/>
+<circle cx="464.9" cy="113.5" r="2.2" class="p-tree t1"/>
+<circle cx="396.1" cy="123.3" r="2.8" class="p-tree t1"/>
+<circle cx="496.8" cy="174.0" r="2.8" class="p-tree t1"/>
+<circle cx="391.1" cy="212.8" r="3.4" class="p-tree t1"/>
+<circle cx="477.2" cy="305.5" r="5.2" class="p-tree t1"/>
+<circle cx="122.2" cy="377.0" r="4.2" class="p-tree t0"/>
+<circle cx="400.2" cy="216.6" r="2.8" class="p-tree t1"/>
+<circle cx="111.7" cy="350.9" r="3.4" class="p-tree t1"/>
+<circle cx="436.9" cy="219.6" r="4.2" class="p-tree t0"/>
+<circle cx="507.7" cy="345.7" r="5.2" class="p-tree t1"/>
+<circle cx="337.6" cy="150.5" r="4.2" class="p-tree t0"/>
+<circle cx="170.2" cy="197.2" r="5.2" class="p-tree t1"/>
+<circle cx="235.8" cy="314.4" r="3.4" class="p-tree t1"/>
+<circle cx="305.4" cy="169.6" r="2.2" class="p-tree t1"/>
+<circle cx="484.0" cy="386.9" r="5.2" class="p-tree t1"/>
+<circle cx="198.9" cy="231.5" r="2.8" class="p-tree t1"/>
+<circle cx="429.7" cy="88.0" r="5.2" class="p-tree t1"/>
+<circle cx="280.7" cy="256.5" r="3.4" class="p-tree t1"/>
+<circle cx="139.5" cy="98.1" r="2.2" class="p-tree t1"/>
+<circle cx="281.0" cy="370.7" r="2.2" class="p-tree t1"/>
+<circle cx="467.2" cy="286.3" r="2.2" class="p-tree t1"/>
+<circle cx="389.7" cy="60.9" r="3.4" class="p-tree t1"/>
+<circle cx="69.3" cy="250.7" r="2.2" class="p-tree t1"/>
+<circle cx="67.6" cy="83.4" r="2.2" class="p-tree t1"/>
+<circle cx="187.9" cy="266.5" r="2.2" class="p-tree t1"/>
+<circle cx="273.0" cy="176.4" r="4.2" class="p-tree t0"/>
+<circle cx="123.4" cy="121.8" r="2.8" class="p-tree t1"/>
+<circle cx="395.0" cy="104.0" r="2.2" class="p-tree t1"/>
+<circle cx="117.7" cy="365.5" r="2.2" class="p-tree t1"/>
+<circle cx="502.3" cy="379.4" r="2.8" class="p-tree t1"/>
+<circle cx="498.3" cy="181.9" r="2.2" class="p-tree t1"/>
+<circle cx="351.0" cy="209.5" r="3.4" class="p-tree t1"/>
+<circle cx="313.9" cy="83.3" r="2.8" class="p-tree t1"/>
+<circle cx="317.2" cy="366.5" r="2.2" class="p-tree t1"/>
+<circle cx="88.3" cy="142.7" r="2.8" class="p-tree t1"/>
+<circle cx="300.7" cy="100.2" r="4.2" class="p-tree t0"/>
+<circle cx="457.5" cy="237.9" r="2.8" class="p-tree t1"/>
+<circle cx="450.3" cy="388.6" r="4.2" class="p-tree t0"/>
+<circle cx="416.8" cy="95.9" r="2.8" class="p-tree t1"/>
+<circle cx="343.2" cy="314.2" r="2.8" class="p-tree t1"/>
+<circle cx="328.6" cy="106.9" r="2.2" class="p-tree t1"/>
+<circle cx="84.7" cy="191.9" r="4.2" class="p-tree t0"/>
+<circle cx="425.7" cy="379.9" r="5.2" class="p-tree t1"/>
+<circle cx="411.9" cy="49.1" r="2.2" class="p-tree t1"/>
+<circle cx="106.5" cy="123.9" r="2.2" class="p-tree t1"/>
+<circle cx="150.7" cy="98.8" r="2.2" class="p-tree t1"/>
+<circle cx="498.5" cy="326.9" r="3.4" class="p-tree t1"/>
+<circle cx="325.4" cy="238.4" r="4.2" class="p-tree t0"/>
+<circle cx="90.9" cy="380.5" r="2.8" class="p-tree t1"/>
+<circle cx="330.0" cy="336.2" r="2.2" class="p-tree t1"/>
+<circle cx="466.2" cy="84.4" r="5.2" class="p-tree t1"/>
+<circle cx="268.7" cy="186.6" r="2.2" class="p-tree t1"/>
+<circle cx="424.6" cy="162.8" r="2.8" class="p-tree t1"/>
+<circle cx="438.2" cy="398.2" r="4.2" class="p-tree t0"/>
+<circle cx="175.3" cy="246.3" r="2.2" class="p-tree t1"/>
+<circle cx="347.5" cy="126.7" r="5.2" class="p-tree t1"/>
+<circle cx="360.5" cy="73.4" r="5.2" class="p-tree t1"/>
+<circle cx="332.2" cy="406.1" r="4.2" class="p-tree t0"/>
+<circle cx="493.2" cy="260.7" r="3.4" class="p-tree t1"/>
+<circle cx="182.1" cy="210.2" r="5.2" class="p-tree t1"/>
+<circle cx="190.3" cy="219.9" r="3.4" class="p-tree t1"/>
+<circle cx="133.5" cy="247.8" r="5.2" class="p-tree t1"/>
+<circle cx="315.5" cy="225.5" r="3.4" class="p-tree t1"/>
+<circle cx="474.8" cy="112.6" r="2.2" class="p-tree t1"/>
+<circle cx="339.9" cy="166.7" r="2.2" class="p-tree t1"/>
+<circle cx="352.9" cy="312.4" r="4.2" class="p-tree t0"/>
+<circle cx="114.1" cy="372.5" r="3.4" class="p-tree t1"/>
+<circle cx="472.0" cy="273.0" r="4.2" class="p-tree t0"/>
+<circle cx="461.6" cy="308.0" r="3.4" class="p-tree t1"/>
+<circle cx="300.4" cy="268.1" r="3.4" class="p-tree t1"/>
+<circle cx="188.5" cy="244.1" r="2.8" class="p-tree t1"/>
+<circle cx="255.6" cy="178.6" r="2.8" class="p-tree t1"/>
+<circle cx="160.1" cy="157.6" r="4.2" class="p-tree t0"/>
+<circle cx="483.5" cy="146.9" r="5.2" class="p-tree t1"/>
+<circle cx="422.9" cy="244.8" r="4.2" class="p-tree t0"/>
+<circle cx="334.4" cy="168.0" r="2.2" class="p-tree t1"/>
+<circle cx="242.7" cy="229.4" r="5.2" class="p-tree t1"/>
+<circle cx="382.3" cy="330.1" r="2.2" class="p-tree t1"/>
+<circle cx="381.5" cy="360.4" r="5.2" class="p-tree t1"/>
+<circle cx="299.4" cy="358.6" r="2.8" class="p-tree t1"/>
+<circle cx="456.9" cy="264.3" r="2.2" class="p-tree t1"/>
+<circle cx="320.7" cy="381.2" r="5.2" class="p-tree t1"/>
+<circle cx="243.5" cy="73.8" r="2.8" class="p-tree t1"/>
+<circle cx="296.6" cy="232.9" r="2.2" class="p-tree t1"/>
+<circle cx="282.8" cy="215.7" r="4.2" class="p-tree t0"/>
+<circle cx="439.3" cy="49.5" r="2.2" class="p-tree t1"/>
+<circle cx="378.9" cy="261.3" r="2.8" class="p-tree t1"/>
+<circle cx="394.2" cy="169.1" r="2.8" class="p-tree t1"/>
+<circle cx="73.4" cy="301.7" r="5.2" class="p-tree t1"/>
+<circle cx="149.6" cy="150.8" r="4.2" class="p-tree t0"/>
+<circle cx="183.9" cy="254.2" r="2.2" class="p-tree t1"/>
+<circle cx="159.7" cy="77.2" r="2.8" class="p-tree t1"/>
+<circle cx="240.6" cy="282.0" r="5.2" class="p-tree t1"/>
+<circle cx="145.2" cy="381.7" r="2.2" class="p-tree t1"/>
+<circle cx="375.5" cy="61.5" r="3.4" class="p-tree t1"/>
+<circle cx="404.3" cy="337.6" r="2.2" class="p-tree t1"/>
+<circle cx="365.5" cy="256.7" r="3.4" class="p-tree t1"/>
+<circle cx="383.9" cy="342.2" r="2.8" class="p-tree t1"/>
+<circle cx="194.1" cy="116.8" r="2.8" class="p-tree t1"/>
+<circle cx="184.3" cy="135.1" r="5.2" class="p-tree t1"/>
+<circle cx="403.4" cy="316.2" r="2.2" class="p-tree t1"/>
+<circle cx="138.1" cy="148.3" r="4.2" class="p-tree t0"/>
+<circle cx="319.5" cy="117.3" r="4.2" class="p-tree t0"/>
+<circle cx="371.7" cy="259.9" r="2.2" class="p-tree t1"/>
+<circle cx="95.4" cy="337.1" r="3.4" class="p-tree t1"/>
+<circle cx="340.7" cy="43.4" r="2.8" class="p-tree t1"/>
+<circle cx="259.1" cy="163.5" r="5.2" class="p-tree t1"/>
+<circle cx="405.6" cy="364.3" r="4.2" class="p-tree t0"/>
+<circle cx="169.3" cy="248.0" r="2.8" class="p-tree t1"/>
+<circle cx="371.8" cy="121.5" r="2.8" class="p-tree t1"/>
+<circle cx="385.5" cy="78.7" r="2.8" class="p-tree t1"/>
+<circle cx="330.8" cy="122.7" r="2.2" class="p-tree t1"/>
+<circle cx="311.4" cy="335.8" r="2.8" class="p-tree t1"/>
+<circle cx="455.5" cy="190.5" r="2.8" class="p-tree t1"/>
+<circle cx="96.7" cy="142.6" r="3.4" class="p-tree t1"/>
+<circle cx="363.0" cy="127.1" r="2.8" class="p-tree t1"/>
+<circle cx="78.7" cy="330.5" r="2.2" class="p-tree t1"/>
+<circle cx="423.3" cy="368.2" r="3.4" class="p-tree t1"/>
+<circle cx="300.1" cy="391.2" r="2.8" class="p-tree t1"/>
+<circle cx="193.6" cy="276.9" r="4.2" class="p-tree t0"/>
+<circle cx="131.3" cy="362.4" r="3.4" class="p-tree t1"/>
+<circle cx="454.7" cy="128.0" r="2.2" class="p-tree t1"/>
+<circle cx="284.7" cy="228.8" r="2.8" class="p-tree t1"/>
+<circle cx="294.7" cy="196.7" r="3.4" class="p-tree t1"/>
+<circle cx="398.8" cy="179.3" r="2.2" class="p-tree t1"/>
+<circle cx="320.9" cy="216.2" r="5.2" class="p-tree t1"/>
+<circle cx="200.2" cy="212.8" r="5.2" class="p-tree t1"/>
+<circle cx="302.6" cy="283.8" r="2.8" class="p-tree t1"/>
+<circle cx="150.1" cy="327.3" r="2.2" class="p-tree t1"/>
+<circle cx="140.4" cy="331.4" r="2.8" class="p-tree t1"/>
+<circle cx="466.8" cy="127.9" r="2.2" class="p-tree t1"/>
+<circle cx="132.8" cy="298.8" r="4.2" class="p-tree t0"/>
+<circle cx="307.9" cy="309.7" r="5.2" class="p-tree t1"/>
+<circle cx="376.3" cy="352.1" r="2.8" class="p-tree t1"/>
+<circle cx="467.4" cy="249.7" r="2.2" class="p-tree t1"/>
+<circle cx="295.0" cy="212.6" r="4.2" class="p-tree t0"/>
+<circle cx="134.9" cy="218.8" r="2.2" class="p-tree t1"/>
+<circle cx="107.7" cy="342.2" r="2.2" class="p-tree t1"/>
+<circle cx="96.8" cy="322.6" r="3.4" class="p-tree t1"/>
+<circle cx="123.2" cy="329.6" r="3.4" class="p-tree t1"/>
+<circle cx="397.3" cy="41.8" r="5.2" class="p-tree t1"/>
+<circle cx="437.5" cy="70.3" r="2.8" class="p-tree t1"/>
+<circle cx="94.7" cy="352.3" r="2.8" class="p-tree t1"/>
+<circle cx="114.4" cy="405.8" r="4.2" class="p-tree t0"/>
+<circle cx="271.5" cy="260.6" r="4.2" class="p-tree t0"/>
+<circle cx="326.7" cy="160.8" r="2.2" class="p-tree t1"/>
+<circle cx="341.3" cy="282.7" r="2.8" class="p-tree t1"/>
+<circle cx="323.9" cy="263.6" r="2.8" class="p-tree t1"/>
+<circle cx="317.5" cy="340.1" r="2.8" class="p-tree t1"/>
+<circle cx="423.3" cy="283.6" r="2.2" class="p-tree t1"/>
+<circle cx="377.3" cy="148.6" r="3.4" class="p-tree t1"/>
+<circle cx="206.9" cy="156.5" r="4.2" class="p-tree t0"/>
+<circle cx="289.3" cy="390.6" r="2.8" class="p-tree t1"/>
+<circle cx="423.3" cy="199.6" r="2.2" class="p-tree t1"/>
+<circle cx="455.1" cy="154.9" r="2.8" class="p-tree t1"/>
+<circle cx="176.6" cy="129.6" r="2.2" class="p-tree t1"/>
+<circle cx="415.5" cy="280.8" r="2.8" class="p-tree t1"/>
+<circle cx="388.7" cy="113.5" r="4.2" class="p-tree t0"/>
+<circle cx="261.7" cy="390.1" r="3.4" class="p-tree t1"/>
+<circle cx="76.4" cy="358.7" r="5.2" class="p-tree t1"/>
+<circle cx="356.7" cy="402.4" r="2.8" class="p-tree t1"/>
+<circle cx="341.8" cy="352.2" r="2.8" class="p-tree t1"/>
+<circle cx="68.4" cy="193.9" r="2.2" class="p-tree t1"/>
+<circle cx="398.4" cy="159.0" r="2.2" class="p-tree t1"/>
+<circle cx="302.1" cy="368.6" r="3.4" class="p-tree t1"/>
+<circle cx="376.7" cy="379.0" r="2.8" class="p-tree t1"/>
+<circle cx="365.4" cy="270.6" r="3.4" class="p-tree t1"/>
+<circle cx="503.8" cy="280.1" r="2.2" class="p-tree t1"/>
+<circle cx="69.8" cy="229.8" r="5.2" class="p-tree t1"/>
+<circle cx="471.1" cy="374.8" r="2.8" class="p-tree t1"/>
+<circle cx="267.7" cy="156.8" r="2.2" class="p-tree t1"/>
+<circle cx="489.0" cy="178.0" r="2.8" class="p-tree t1"/>
+<circle cx="147.2" cy="257.5" r="2.8" class="p-tree t1"/>
+<circle cx="276.3" cy="406.9" r="3.4" class="p-tree t1"/>
+<circle cx="188.5" cy="60.3" r="2.2" class="p-tree t1"/>
+<circle cx="255.2" cy="81.3" r="3.4" class="p-tree t1"/>
+<circle cx="432.1" cy="306.7" r="2.2" class="p-tree t1"/>
+<circle cx="72.0" cy="69.2" r="4.2" class="p-tree t0"/>
+<circle cx="287.9" cy="70.1" r="3.4" class="p-tree t1"/>
+<circle cx="172.3" cy="157.5" r="2.2" class="p-tree t1"/>
+<circle cx="203.7" cy="192.3" r="3.4" class="p-tree t1"/>
+<circle cx="242.9" cy="82.7" r="2.2" class="p-tree t1"/>
+<circle cx="448.7" cy="296.0" r="2.2" class="p-tree t1"/>
+<circle cx="457.3" cy="345.4" r="2.2" class="p-tree t1"/>
+<circle cx="311.7" cy="153.4" r="5.2" class="p-tree t1"/>
+<circle cx="310.4" cy="179.8" r="4.2" class="p-tree t0"/>
+<circle cx="366.5" cy="362.7" r="2.2" class="p-tree t1"/>
+<circle cx="414.8" cy="173.3" r="2.8" class="p-tree t1"/>
+<circle cx="128.0" cy="412.4" r="2.2" class="p-tree t1"/>
+<circle cx="100.9" cy="87.1" r="3.4" class="p-tree t1"/>
+<circle cx="264.1" cy="60.1" r="4.2" class="p-tree t0"/>
+<circle cx="262.4" cy="220.1" r="2.8" class="p-tree t1"/>
+<circle cx="415.6" cy="85.5" r="2.8" class="p-tree t1"/>
+<circle cx="208.3" cy="180.3" r="2.2" class="p-tree t1"/>
+<circle cx="253.3" cy="273.1" r="3.4" class="p-tree t1"/>
+<circle cx="327.2" cy="50.0" r="2.8" class="p-tree t1"/>
+<circle cx="203.1" cy="53.0" r="4.2" class="p-tree t0"/>
+<circle cx="236.8" cy="79.5" r="2.2" class="p-tree t1"/>
+<circle cx="319.4" cy="46.6" r="2.8" class="p-tree t1"/>
+<circle cx="392.0" cy="221.9" r="2.2" class="p-tree t1"/>
+<circle cx="306.7" cy="237.2" r="2.2" class="p-tree t1"/>
+<circle cx="195.0" cy="128.6" r="3.4" class="p-tree t1"/>
+<circle cx="495.1" cy="252.0" r="2.2" class="p-tree t1"/>
+<circle cx="447.6" cy="38.5" r="2.8" class="p-tree t1"/>
+<circle cx="434.1" cy="143.5" r="2.8" class="p-tree t1"/>
+<circle cx="437.2" cy="266.8" r="4.2" class="p-tree t0"/>
+<circle cx="241.0" cy="322.4" r="2.8" class="p-tree t1"/>
+<circle cx="464.8" cy="75.0" r="2.8" class="p-tree t1"/>
+<circle cx="397.0" cy="326.3" r="2.8" class="p-tree t1"/>
+<circle cx="437.0" cy="243.1" r="2.8" class="p-tree t1"/>
+<circle cx="384.4" cy="41.1" r="4.2" class="p-tree t0"/>
+<circle cx="434.6" cy="313.8" r="2.8" class="p-tree t1"/>
+<circle cx="456.4" cy="86.3" r="2.8" class="p-tree t1"/>
+<circle cx="228.1" cy="286.7" r="2.8" class="p-tree t1"/>
+<circle cx="300.5" cy="143.2" r="3.4" class="p-tree t1"/>
+<circle cx="77.7" cy="322.3" r="2.8" class="p-tree t1"/>
+<circle cx="305.3" cy="72.2" r="4.2" class="p-tree t0"/>
+<circle cx="60.8" cy="129.1" r="2.8" class="p-tree t1"/>
+<circle cx="489.7" cy="321.9" r="5.2" class="p-tree t1"/>
+<circle cx="381.0" cy="118.0" r="2.8" class="p-tree t1"/>
+<circle cx="391.8" cy="49.5" r="2.8" class="p-tree t1"/>
+<circle cx="122.7" cy="351.0" r="2.8" class="p-tree t1"/>
+<circle cx="140.9" cy="403.2" r="3.4" class="p-tree t1"/>
+<circle cx="469.0" cy="44.6" r="3.4" class="p-tree t1"/>
+<circle cx="168.4" cy="308.4" r="3.4" class="p-tree t1"/>
+<path d="M150,420 L160,370 L185,330 L176,280 L150,235 L160,185 L200,150 L232,110" class="p-path"/>
+<path d="M522,365 L502,305 L474,245 L466,185 L480,120 L492,48" class="p-deer"/>
+<circle cx="212" cy="372" r="40" class="p-common"/>
+<rect x="96" y="286" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="96" y="248" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="94" y="210" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="104" y="172" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="191" y="286" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="200" y="248" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="208" y="208" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="104" y="134" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="136" y="106" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="176" y="82" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="221" y="156" width="28" height="28" rx="3" class="p-spot"/>
+<rect x="241" y="121" width="28" height="28" rx="3" class="p-spot"/>
+<polygon points="46,58 500,26 532,398 74,432" class="p-edge"/>
+<rect x="138" y="424" width="24" height="10" class="p-gate"/>
+<text x="212" y="376" class="p-lbl p-c" text-anchor="middle">Área común</text>
+<g class="p-call"><line x1="268" y1="140" x2="330" y2="118"/><text x="336" y="116">Espacios de arraigo</text><text x="336" y="133" class="p-sub">200 m² cada uno</text></g>
+<g class="p-call"><line x1="440" y1="236" x2="470" y2="240"/><text x="436" y="240" text-anchor="end">Sendero de venado</text></g>
+<text x="380" y="372" class="p-lbl p-big">Monte en</text><text x="380" y="394" class="p-lbl p-big">conservación</text>
+<text x="150" y="455" class="p-lbl" text-anchor="middle">Acceso</text>
+<g class="p-north"><path d="M548 476 L556 452 L564 476 L556 470 Z"/><text x="556" y="446" text-anchor="middle">N</text></g>
+<g class="p-scale"><line x1="300" y1="478" x2="400" y2="478"/><line x1="300" y1="472" x2="300" y2="484"/><line x1="400" y1="472" x2="400" y2="484"/><text x="350" y="470" text-anchor="middle">50 m</text></g>
+</svg>
+    <figcaption>Plano ilustrativo. La distribución final depende del estudio de agua y suelo.</figcaption>
+  </figure>
+</div>
+
+<dl class="datos">
+  <div><dt>Superficie</dt><dd>5 hectáreas</dd></div>
+  <div><dt>Ubicación</dt><dd>Acanceh, Yucatán</dd></div>
+  <div><dt>Espacio de arraigo</dt><dd>200 m²</dd></div>
+  <div><dt>Cupo</dt><dd><span class="tbd">[N]</span> participaciones</dd></div>
+</dl>
+
+<section id="lugar" aria-labelledby="lugar-t">
+  <div class="sec-head">
+    <h2 id="lugar-t">Primero el monte, después todo lo demás.</h2>
+    <p class="lede">La mayor parte del predio se queda como está. Habitamos poco, con estructuras ligeras, y lo común se construye entre todos: agua de lluvia, energía solar, huerto y un lugar para reunirse.</p>
+  </div>
+  <div class="dos">
+    <div>
+      <h3>Lo que hay hoy</h3>
+      <ul class="lista">
+        <li>Vegetación<small><span class="tbd">Monte o breña: por confirmar</span></small></li>
+        <li>Acceso<small><span class="tbd">Camino y entrada: por confirmar</span></small></li>
+        <li>Agua<small><span class="tbd">Pozo o captación: por confirmar</span></small></li>
+        <li>Energía<small>Sin red eléctrica. Paneles solares en el plan común.</small></li>
+        <li>Distancia a Mérida<small><span class="tbd">Unos 40 minutos en auto: por confirmar</span></small></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Lo que construimos juntos</h3>
+      <ul class="lista">
+        <li>Captación y almacenamiento de agua<small>Fecha estimada: <span class="tbd">por definir</span></small></li>
+        <li>Sistema solar común<small>Fecha estimada: <span class="tbd">por definir</span></small></li>
+        <li>Huerto y vivero<small>Fecha estimada: <span class="tbd">por definir</span></small></li>
+        <li>Palapa y bodega común<small>Fecha estimada: <span class="tbd">por definir</span></small></li>
+        <li>Senderos y señalización<small>Fecha estimada: <span class="tbd">por definir</span></small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<div class="banda">
+<div class="wrap">
+<section id="participacion" aria-labelledby="part-t">
+  <div class="sec-head">
+    <h2 id="part-t">Qué te da tu participación, y qué no.</h2>
+    <p class="lede">No compras un lote. Compras una participación en la comunidad que cuida la tierra, con un espacio asignado para ti y tu familia.</p>
+  </div>
+  <div class="dos">
+    <div>
+      <h3>Incluye</h3>
+      <ul class="lista si">
+        <li>Acceso al predio y a las áreas comunes<small>Visitas y estancias según el reglamento</small></li>
+        <li>Un espacio de arraigo de 200 m²<small>Asignado a tu participación, sin deslinde ni barda</small></li>
+        <li>Refugio ligero y desmontable<small>Materiales y tamaño según el reglamento</small></li>
+        <li>Uso de agua, energía, huerto y bodega comunes<small>Con turnos y cuota de mantenimiento</small></li>
+        <li>Voto en las decisiones sobre la tierra<small>Reglas, mejoras y admisión de nuevos miembros</small></li>
+        <li>Herencia y reventa<small>Con admisión del nuevo titular por la comunidad</small></li>
+      </ul>
+    </div>
+    <div>
+      <h3>No incluye</h3>
+      <ul class="lista no">
+        <li>Escritura individual ni lote deslindado<small>La tierra es de la sociedad, no de cada titular</small></li>
+        <li>Construcción permanente<small>Ni casas de material ni bardas</small></li>
+        <li>Desmonte por tu cuenta<small>Cualquier claro se decide en común y con permiso</small></li>
+        <li>Renta o uso comercial del espacio<small><span class="tbd">Regla por definir</span></small></li>
+        <li>Promesa de rendimiento o plusvalía<small>El valor está en el uso y la comunidad</small></li>
+      </ul>
+    </div>
+  </div>
+  <p class="nota">Los derechos se fijan en los estatutos, el reglamento de uso y tu contrato. Versión final de los documentos: <span class="tbd">por definir</span>.</p>
+</section>
+</div>
+</div>
+
+<div class="wrap">
+<section id="precios" aria-labelledby="precios-t">
+  <div class="sec-head">
+    <h2 id="precios-t">Una participación, seis formas de pagarla.</h2>
+    <p class="lede">El precio base es de $100,000 a 60 meses, o $500 por m² de arraigo. Mientras más corto el plazo, menor el precio total.</p>
+  </div>
+  <div class="cotiza">
+    <div>
+      <fieldset class="plazos" id="plazos">
+        <legend>Elige un plazo</legend>
+      </fieldset>
+      <div class="resultado" aria-live="polite">
+        <div id="r-etq">Mensualidad</div>
+        <div class="cifra" id="r-cifra">$1,500</div>
+        <dl class="desglose">
+          <div><dt>Enganche</dt><dd id="r-eng">$10,000</dd></div>
+          <div><dt>Precio total</dt><dd id="r-total">$100,000</dd></div>
+          <div><dt>Precio por m²</dt><dd id="r-m2">$500</dd></div>
+          <div><dt>Ahorro contra 60 meses</dt><dd id="r-ahorro">$0</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <table>
+        <caption>Todos los planes</caption>
+        <thead><tr><th scope="col">Plazo</th><th scope="col">Mensualidad</th><th scope="col">Total</th><th scope="col">Descuento</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+      <p class="letra">Enganche de $10,000 en todos los plazos (<span class="tbd">por confirmar</span>). Si liquidas antes, pagas el precio del plazo en que terminas. Precios para la primera etapa, vigentes hasta <span class="tbd">fecha por definir</span>. La cuota de mantenimiento se paga aparte: <span class="tbd">monto por definir</span>. Precios en pesos mexicanos, sin intereses.</p>
+    </div>
+  </div>
+</section>
+
+<section id="entrar" aria-labelledby="entrar-t">
+  <div class="sec-head">
+    <h2 id="entrar-t">Cómo entrar a la comunidad.</h2>
+    <p class="lede">Antes de pagar, nos conocemos. Una comunidad fuerte empieza por elegir bien a quién se suma.</p>
+  </div>
+  <ol class="pasos">
+    <li><h3>Visita el predio</h3><p>Recorre el monte, el área común y los espacios disponibles.</p></li>
+    <li><h3>Conversa con la comunidad</h3><p>Hablamos de valores, expectativas y cómo quieres usar el lugar.</p></li>
+    <li><h3>Aparta y revisa</h3><p>Recibes estatutos, reglamento y contrato para revisarlos con calma.</p></li>
+    <li><h3>Firma y registro</h3><p>Firmas tu contrato y quedas inscrito en el registro de accionistas.</p></li>
+    <li><h3>Recibe tu llave</h3><p>Te entregamos tu token de acceso y se asigna tu espacio de arraigo.</p></li>
+  </ol>
+</section>
+
+<section id="estructura" aria-labelledby="estr-t">
+  <div class="sec-head">
+    <h2 id="estr-t">La tierra, la sociedad y el token.</h2>
+    <p class="lede">Tres piezas que se respaldan entre sí, para que tu participación sea clara hoy y siga clara si algo falla.</p>
+  </div>
+  <div class="capas">
+    <div><h3>La tierra</h3><p>El predio pertenece a <span class="tbd">la serie o SAPI de Bosque Venado</span>, administrada por La Tokenizadora. Nadie lo puede dividir ni vender por partes.</p></div>
+    <div><h3>Tu participación</h3><p>Son acciones de esa sociedad. El registro de accionistas es el documento que manda, y ahí se ligan tus derechos de uso.</p></div>
+    <div><h3>El token</h3><p>Es tu llave: comprueba tu participación y tu acceso. Si un día falla la red, el padrón y el reglamento existen también en papel.</p></div>
+  </div>
+</section>
+
+<section id="preguntas" aria-labelledby="faq-t">
+  <div class="sec-head"><h2 id="faq-t">Preguntas frecuentes.</h2></div>
+  <div class="faq">
+    <details><summary>¿Puedo construir una casa?</summary><p>No una casa permanente. Puedes instalar un refugio ligero y desmontable en tu espacio de arraigo, con los materiales y tamaños que fija el reglamento.</p></details>
+    <details><summary>¿Puedo vender o heredar mi participación?</summary><p>Sí. La participación se transmite con tus acciones, por herencia o venta. Quien la reciba pasa por el mismo proceso de admisión que tú.</p></details>
+    <details><summary>¿Cuánto es la cuota de mantenimiento?</summary><p>Cubre agua, energía, senderos y cuidado del monte. Monto: <span class="tbd">por definir</span>.</p></details>
+    <details><summary>¿Qué pasa si dejo de pagar?</summary><p>Lo que pasa con tus pagos y tu participación se fija en el contrato: <span class="tbd">regla por definir</span>.</p></details>
+    <details><summary>¿Hay agua y luz?</summary><p>No hay red eléctrica. El plan común incluye energía solar y captación de agua de lluvia; el estado actual del agua está <span class="tbd">por confirmar</span>.</p></details>
+    <details><summary>¿Puedo ir antes de decidir?</summary><p>Sí, y lo recomendamos. Agenda una visita y te mostramos el predio y los espacios disponibles.</p></details>
+  </div>
+</section>
+
+<section id="visita" aria-labelledby="visita-t">
+  <div class="visita">
+    <div>
+      <h2 id="visita-t">Agenda una visita.</h2>
+      <p class="lede">Cuéntanos quién eres y qué buscas. Te escribimos para coordinar el día y la hora.</p>
+      <p>También por WhatsApp: <span class="tbd">número por definir</span></p>
+    </div>
+    <form name="visita" method="POST" action="/gracias" data-netlify="true" netlify-honeypot="bot-field" id="form-visita" novalidate>
+      <input type="hidden" name="form-name" value="visita">
+      <p class="oculto"><label>No llenes este campo <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="campo"><label for="f-nombre">Nombre</label><input id="f-nombre" type="text" name="nombre" autocomplete="name" required></div>
+      <div class="fila">
+        <div class="campo"><label for="f-email">Correo</label><input id="f-email" type="email" name="email" autocomplete="email" required></div>
+        <div class="campo"><label for="f-wa">WhatsApp</label><input id="f-wa" type="tel" name="whatsapp" autocomplete="tel"></div>
+      </div>
+      <div class="campo"><label for="f-plazo">Plazo que te interesa</label>
+        <select id="f-plazo" name="plazo">
+          <option value="">Aún no sé</option>
+          <option>60 meses</option><option>48 meses</option><option>36 meses</option><option>24 meses</option><option>12 meses</option><option>Contado</option>
+        </select>
+      </div>
+      <div class="campo"><label for="f-uso">¿Cómo te imaginas usar el lugar?</label><span class="ayuda" id="f-uso-ayuda">Fines de semana, temporadas, un huerto, un refugio para tu familia…</span><textarea id="f-uso" name="uso" aria-describedby="f-uso-ayuda"></textarea></div>
+      <p class="error" id="f-error" role="alert"></p>
+      <div><button class="btn btn-1" type="submit">Enviar solicitud de visita</button></div>
+    </form>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap pie">
+    <p><strong>Bosque Venado</strong><br>Un proyecto de La Tokenizadora.<br>Acanceh, Yucatán, México.</p>
+    <p>Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. Autorizaciones y documentos legales: <span class="tbd">por definir</span>. <a href="#">Aviso de privacidad</a> (<span class="tbd">por definir</span>).</p>
+  </div>
+</footer>
+
+<script>
+const planes=[
+  {id:"60",n:"60 meses",m:60,mens:1500},
+  {id:"48",n:"48 meses",m:48,mens:1750},
+  {id:"36",n:"36 meses",m:36,mens:2200},
+  {id:"24",n:"24 meses",m:24,mens:3050},
+  {id:"12",n:"12 meses",m:12,mens:5700},
+  {id:"c",n:"Contado",m:0,total:73000}
+];
+const ENG=10000, BASE=100000, M2=200;
+const $=n=>"$"+Math.round(n).toLocaleString("en-US");
+planes.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE});
+const fs=document.getElementById("plazos"), tb=document.getElementById("tabla");
+planes.forEach((p,i)=>{
+  fs.insertAdjacentHTML("beforeend",`<input type="radio" name="plazo-c" id="pl-${p.id}" value="${p.id}" ${i===0?"checked":""}><label for="pl-${p.id}">${p.n}</label>`);
+  tb.insertAdjacentHTML("beforeend",`<tr id="tr-${p.id}"><td>${p.n}</td><td>${p.m?$(p.mens):"N/A"}</td><td>${$(p.total)}</td><td>${p.desc?(p.desc*100).toFixed(1)+"%":"0%"}</td></tr>`);
+});
+function pinta(id){
+  const p=planes.find(x=>x.id===id);
+  document.getElementById("r-etq").textContent=p.m?`Mensualidad, ${p.m} pagos`:"Pago único";
+  document.getElementById("r-cifra").innerHTML=p.m?`${$(p.mens)} <small>al mes</small>`:$(p.total);
+  document.getElementById("r-eng").textContent=p.m?$(ENG):"Incluido";
+  document.getElementById("r-total").textContent=$(p.total);
+  document.getElementById("r-m2").textContent=$(p.total/M2);
+  const ah=BASE-p.total, el=document.getElementById("r-ahorro");
+  el.textContent=ah?`${$(ah)} (${(p.desc*100).toFixed(1)}%)`:"$0"; el.className=ah?"ahorro":"";
+  document.querySelectorAll("#tabla tr").forEach(r=>r.classList.toggle("activo",r.id==="tr-"+id));
+}
+fs.addEventListener("change",e=>pinta(e.target.value));
+pinta("60");
+
+const f=document.getElementById("form-visita"), err=document.getElementById("f-error");
+f.addEventListener("submit",e=>{
+  const nombre=f.nombre.value.trim(), email=f.email.value.trim();
+  if(!nombre){e.preventDefault();err.textContent="Escribe tu nombre.";f.nombre.focus();return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){e.preventDefault();err.textContent="Escribe un correo válido, por ejemplo nombre@dominio.com.";f.email.focus();return}
+});
+f.addEventListener("input",()=>{err.textContent=""});
+</script>
+</body>
+</html>

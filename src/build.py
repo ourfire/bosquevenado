@@ -90,7 +90,7 @@ ES = dict(
         ("Acceso a las áreas comunes", "Vías, agua, energía, huerto y bodega, con cuota de mantenimiento"),
         ("Construir en tu lote", "Tipo, materiales y tamaño según el reglamento: " + TBD.format("por definir")),
         ("Voto en las decisiones sobre la tierra", "Reglas, mejoras y admisión de nuevos miembros"),
-        ("Reventa de tu participación", "Con admisión del nuevo titular por la comunidad"),
+        ("Herencia y reventa", "Tu derecho pasa a tus herederos o a quien compre, con admisión por la comunidad"),
     ]),
     no_h="No incluye",
     no_items=li([
@@ -104,7 +104,7 @@ ES = dict(
     pr_lede="Cada lote de 200 m² cuesta $100,000 a 60 meses, o $500 por m². Mientras más corto el plazo, menor el precio total.",
     pr_elige="Elige un plazo", pr_eng="Enganche", pr_total="Precio total", pr_m2="Precio por m²", pr_ahorro="Ahorro contra 60 meses",
     pr_tabla="Todos los planes", pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
-    pr_letra="Enganche de $10,000 en todos los plazos (" + TBD.format("por confirmar") + "). Si liquidas antes, pagas el precio del plazo en que terminas. Precios de la etapa 3, vigentes hasta " + TBD.format("fecha por definir") + ". La cuota de mantenimiento se paga aparte: " + TBD.format("monto por definir") + ". Precios en pesos mexicanos, sin intereses.",
+    pr_letra="Enganche de $10,000 en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. Precios de la etapa 3, vigentes hasta " + TBD.format("fecha por definir") + ". La cuota de mantenimiento se paga aparte: " + TBD.format("monto por definir") + ". Precios en pesos mexicanos, sin intereses.",
     en_h="Cómo entrar a la comunidad.",
     en_lede="Antes de pagar, nos conocemos. Una comunidad fuerte empieza por elegir bien a quién se suma.",
     pasos=pasos([
@@ -125,7 +125,7 @@ ES = dict(
     faq=faq([
         ("¿Puedo construir en mi lote?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño: " + TBD.format("por definir") + "."),
         ("¿Recibo escritura del lote?", "No. La tierra es de la sociedad. Tu derecho de uso se liga a tus acciones en el registro de accionistas y a tu contrato."),
-        ("¿Puedo vender mi participación? ¿Se hereda?", "Puedes venderla junto con tus acciones; quien la compre pasa por el mismo proceso de admisión que tú. Tu derecho de uso es vitalicio. Qué pasa con él al fallecer el titular: " + TBD.format("por definir") + "."),
+        ("¿Puedo vender o heredar mi participación?", "Sí. El derecho de uso se transmite con tus acciones, por herencia o por venta. Quien la reciba pasa por el mismo proceso de admisión que tú."),
         ("¿Hay agua y luz?", "Hay un pozo con agua a 27 metros. No hay red eléctrica: una de las casas habitadas funciona con paneles solares y baterías, y el plan común suma energía solar para la comunidad."),
         ("¿Qué pasa con las etapas 1 y 2?", "Ya están vendidas. La etapa 3 es la única que está a la venta."),
         ("¿Cuánto es la cuota de mantenimiento?", "Cubre vías, agua, energía y cuidado del monte. Monto: " + TBD.format("por definir") + "."),
@@ -207,7 +207,7 @@ EN = dict(
         ("Access to common areas", "Roads, water, power, garden and storage, with a maintenance fee"),
         ("Building on your lot", "Type, materials and size set by the rules: " + TBD.format("to be defined")),
         ("A vote on decisions about the land", "Rules, improvements and admission of new members"),
-        ("Resale of your stake", "The new holder is admitted by the community"),
+        ("Inheritance and resale", "Your right passes to your heirs or to a buyer, with admission by the community"),
     ]),
     no_h="Not included",
     no_items=li([
@@ -221,7 +221,7 @@ EN = dict(
     pr_lede="Each 200 m² lot costs MXN $100,000 over 60 months, or $500 per m². The shorter the term, the lower the total price.",
     pr_elige="Choose a term", pr_eng="Down payment", pr_total="Total price", pr_m2="Price per m²", pr_ahorro="Savings vs. 60 months",
     pr_tabla="All plans", pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
-    pr_letra="MXN $10,000 down payment on every term (" + TBD.format("to be confirmed") + "). If you pay off early, you pay the price of the term in which you finish. Phase 3 prices, valid until " + TBD.format("date to be defined") + ". The maintenance fee is separate: " + TBD.format("amount to be defined") + ". Prices in Mexican pesos, interest-free.",
+    pr_letra="MXN $10,000 down payment on every term. If you pay off early, you pay the price of the term in which you finish. Phase 3 prices, valid until " + TBD.format("date to be defined") + ". The maintenance fee is separate: " + TBD.format("amount to be defined") + ". Prices in Mexican pesos, interest-free.",
     en_h="How to join the community.",
     en_lede="Before any payment, we get to know each other. A strong community starts with choosing well who joins.",
     pasos=pasos([
@@ -242,7 +242,7 @@ EN = dict(
     faq=faq([
         ("Can I build on my lot?", "Yes, under the building rules, which set type, materials and size: " + TBD.format("to be defined") + "."),
         ("Do I get a deed to the lot?", "No. The land belongs to the company. Your right of use is tied to your shares in the share register and to your contract."),
-        ("Can I sell my stake? Can it be inherited?", "You can sell it together with your shares; the buyer goes through the same admission process you did. Your right of use is for life. What happens to it when the holder dies: " + TBD.format("to be defined") + "."),
+        ("Can I sell or pass on my stake?", "Yes. The right of use transfers with your shares, by inheritance or sale. The new holder goes through the same admission process you did."),
         ("Is there water and power?", "There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the shared plan adds solar power for the community."),
         ("What about phases 1 and 2?", "They are already sold. Phase 3 is the only one for sale."),
         ("How much is the maintenance fee?", "It covers roads, water, power and forest care. Amount: " + TBD.format("to be defined") + "."),

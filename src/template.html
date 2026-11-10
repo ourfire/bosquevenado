@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<meta name="description" content="{{desc}}">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2318321F'/%3E%3Ccircle cx='11' cy='13' r='5' fill='%233F6B45'/%3E%3Ccircle cx='20' cy='11' r='4' fill='%23D8B23E'/%3E%3Ccircle cx='19' cy='21' r='6' fill='%233F6B45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cal:#E8EAE2; --cal-2:#DDE1D5; --monte:#18321F; --hoja:#3F6B45; --hoja-2:#5E8A5E;
+  --cenote:#0F5E66; --huano:#D8B23E; --linea:#B8BEB0; --tinta:#18321F; --tenue:#4A5A4C; --camino:#B9A37A;
+  --serif:"Alegreya",Georgia,serif; --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --ancho:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--cal);color:var(--tinta);font-family:var(--sans);font-size:1.125rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:var(--cenote);text-underline-offset:.18em}
+a:hover{color:var(--monte)}
+:focus-visible{outline:3px solid var(--cenote);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:800;line-height:1.05;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.1rem);max-width:18ch}
+h3{font-size:1.4rem;font-weight:700;line-height:1.2}
+p{margin:0 0 1em;max-width:62ch}
+.lede{font-size:1.25rem;color:var(--tenue)}
+.tbd{background:rgba(216,178,62,.28);border-bottom:1.5px dashed #9C7C1C;padding:0 .2em;border-radius:2px;font-style:normal}
+.draft{background:var(--monte);color:var(--cal);font-size:.95rem;text-align:center;padding:.5rem 1rem;margin:0;max-width:none}
+.draft .tbd{color:var(--cal);border-color:var(--huano)}
+
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
+.marca{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:1.45rem;color:var(--monte);text-decoration:none;white-space:nowrap}
+.marca svg{width:30px;height:30px;flex-shrink:0}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--tinta);text-decoration:none;font-weight:500}
+.nav ul a:hover{text-decoration:underline}
+.nav-der{display:flex;align-items:center;gap:18px}
+.idioma{font-weight:700;color:var(--monte);text-decoration:none;border-bottom:1.5px solid currentColor}
+.btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:1.05rem;padding:.8em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--monte);cursor:pointer;line-height:1.1}
+.btn-1{background:var(--monte);color:var(--cal)}
+.btn-1:hover{background:var(--hoja);border-color:var(--hoja);color:var(--cal)}
+.btn-2{background:transparent;color:var(--monte)}
+.btn-2:hover{background:var(--cal-2);color:var(--monte)}
+@media (max-width:1040px){.nav ul{display:none}}
+@media (max-width:420px){.nav .btn{display:none}}
+@media (max-width:560px){.marca{font-size:1.2rem}.marca svg{width:26px;height:26px}.nav .btn{font-size:.95rem;padding:.65em 1em}.nav{gap:12px}.nav-der{gap:12px}}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center;padding:30px 0 56px}
+.hero h1{font-size:clamp(2.4rem,4.6vw,3.9rem);max-width:15ch;margin-bottom:.45em}
+.hero .acciones{display:flex;flex-wrap:wrap;gap:12px;margin:1.6em 0 0}
+.plan-fig{margin:0}
+.plan-fig .plan{margin:0 auto;max-height:620px;width:auto}
+.plan-fig figcaption{font-size:.92rem;color:var(--tenue);margin-top:.6em;max-width:none}
+.plan .p-land{fill:#D3DACB}
+.plan .t0{fill:var(--hoja);opacity:.95}.plan .t1{fill:var(--hoja-2);opacity:.85}.plan .t2{fill:#2F5536}
+.plan .p-road{fill:var(--camino)}
+.plan .p-lot{fill:var(--huano);stroke:var(--monte);stroke-width:.6}
+.plan .p-cut{stroke:var(--monte);stroke-width:1.4;stroke-dasharray:6 5}
+.plan .p-edge{fill:none;stroke:var(--monte);stroke-width:2}
+.plan .p-edge-soft{fill:none;stroke:var(--monte);stroke-width:1.5}
+.plan .p-common{fill:#E3E0CC}
+.plan text{font-family:var(--sans);font-size:14px;fill:var(--monte)}
+.plan .p-stage{font-family:var(--serif);font-weight:700;font-size:17px}
+.plan .p-street{font-size:13px;fill:var(--tenue)}
+.plan .p-north path{fill:var(--monte)}
+.plan .p-scale line{stroke:var(--monte);stroke-width:1.5}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding-top:12px}.plan-fig .plan{max-height:none;width:100%}}
+
+.datos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--monte);border-bottom:1px solid var(--linea);margin:0}
+.datos div{padding:18px 18px 20px 0}
+.datos dt{font-size:.95rem;color:var(--tenue)}
+.datos dd{margin:0;font-family:var(--serif);font-weight:700;font-size:1.45rem;line-height:1.2}
+@media (max-width:760px){.datos{grid-template-columns:1fr 1fr}}
+
+section{padding:96px 0 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:48px;align-items:end;margin-bottom:40px}
+.sec-head p{margin:0}
+@media (max-width:880px){.sec-head{grid-template-columns:1fr;gap:16px}}
+
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.dos h3{padding-bottom:.5em;border-bottom:1px solid var(--linea);margin-bottom:.6em}
+.lista{list-style:none;padding:0;margin:0}
+.lista li{padding:.55em 0;border-bottom:1px solid var(--linea)}
+.lista small{display:block;color:var(--tenue);font-size:.95rem}
+@media (max-width:760px){.dos{grid-template-columns:1fr;gap:36px}}
+
+/* etapas */
+.etapas{display:grid;grid-template-columns:minmax(0,1fr) 300px minmax(0,1fr);gap:40px;align-items:start}
+.etapas-lista{list-style:none;padding:0;margin:0}
+.etapas-lista li{padding:16px 0;border-top:1px solid var(--linea)}
+.etapas-lista li:first-child{border-top:2px solid var(--monte)}
+.etapas-lista h3{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.etiqueta{font-family:var(--sans);font-size:.9rem;font-weight:700;border-radius:999px;padding:.15em .7em;white-space:nowrap}
+.et-on{background:var(--huano);color:var(--monte)}
+.et-off{border:1.5px solid var(--linea);color:var(--tenue)}
+.etapas-lista p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
+.mapa-e3{width:100%;max-width:320px}
+.plan-e3{width:100%;height:auto}
+.plan-e3 .lote{cursor:pointer}
+.plan-e3 .lote rect{fill:var(--huano);stroke:var(--monte);stroke-width:.8}
+.plan-e3 .lote text{font-size:12px;font-weight:700;pointer-events:none}
+.plan-e3 .lote:hover rect{fill:#F0D573}
+.plan-e3 .lote:focus{outline:none}
+.plan-e3 .lote:focus-visible rect{stroke:var(--cenote);stroke-width:3}
+.plan-e3 .lote.apartado rect{fill:#EFE7C8}
+.plan-e3 .lote.vendido rect{fill:var(--hoja)}
+.plan-e3 .lote.vendido text{fill:var(--cal)}
+.plan-e3 .lote.sel rect{fill:var(--monte)}
+.plan-e3 .lote.sel text{fill:var(--cal)}
+.ficha{position:sticky;top:24px;border-top:2px solid var(--monte);padding-top:16px}
+.ficha .vacia{color:var(--tenue)}
+.ficha .num{font-family:var(--serif);font-weight:800;font-size:3rem;line-height:1;margin:.1em 0 .2em}
+.ficha dl{margin:12px 0 18px}
+.ficha dl div{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--linea)}
+.ficha dt{color:var(--tenue)}
+.ficha dd{margin:0;font-weight:700;text-align:right}
+.leyenda{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.95rem;color:var(--tenue)}
+.leyenda span{display:inline-block;width:14px;height:14px;border:1px solid var(--monte);border-radius:2px;vertical-align:-2px;margin-right:6px}
+.cuenta{font-size:.98rem;color:var(--tenue);margin-top:14px}
+@media (max-width:980px){.etapas{grid-template-columns:300px minmax(0,1fr)}.etapas-lista{grid-column:1/-1}}
+@media (max-width:620px){.etapas{grid-template-columns:1fr}.mapa-e3{margin:0 auto}.ficha{position:static}}
+
+.banda{background:var(--monte);color:var(--cal);margin-top:96px;padding:88px 0 96px}
+.banda section{padding:0}
+.banda h2,.banda h3{color:var(--cal)}
+.banda .lede{color:#C9D2C3}
+.banda .lista li{border-color:rgba(232,234,226,.22)}
+.banda .lista small{color:#B9C4B4}
+.banda .si li,.banda .no li{position:relative;padding-left:1.6em}
+.banda .si li::before,.banda .no li::before{position:absolute;left:0;top:.5em;font-weight:700}
+.banda .si li::before{content:"+";color:var(--huano)}
+.banda .no li::before{content:"–";color:#C9D2C3}
+.banda .nota{margin-top:32px;color:#C9D2C3;font-size:1rem}
+
+.cotiza{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
+.plazos{border:0;padding:0;margin:0 0 28px;display:flex;flex-wrap:wrap;gap:8px}
+.plazos legend{font-weight:700;margin-bottom:10px;padding:0}
+.plazos input{position:absolute;opacity:0;pointer-events:none}
+.plazos label{border:2px solid var(--monte);border-radius:999px;padding:.45em 1em;cursor:pointer;font-weight:500}
+.plazos input:checked+label{background:var(--monte);color:var(--cal)}
+.plazos input:focus-visible+label{outline:3px solid var(--cenote);outline-offset:3px}
+.resultado{border-top:2px solid var(--monte);padding-top:18px}
+.cifra{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,7vw,5.2rem);line-height:1;letter-spacing:-.02em;margin:.1em 0 .15em}
+.cifra small{font-family:var(--sans);font-weight:500;font-size:1.1rem;letter-spacing:0;color:var(--tenue)}
+.desglose{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:18px 0 0}
+.desglose div{padding:12px 0;border-bottom:1px solid var(--linea)}
+.desglose dt{font-size:.95rem;color:var(--tenue)}
+.desglose dd{margin:0;font-weight:700;font-size:1.2rem}
+.ahorro{color:var(--hoja)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:700;padding-bottom:10px}
+th,td{padding:.6em .5em;border-bottom:1px solid var(--linea);text-align:right}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+thead th{font-weight:500;color:var(--tenue);font-size:.95rem;border-bottom:2px solid var(--monte)}
+tr.activo td{background:var(--cal-2);font-weight:700}
+.letra{font-size:.98rem;color:var(--tenue);margin-top:24px}
+@media (max-width:880px){.cotiza{grid-template-columns:1fr}}
+@media (max-width:480px){th,td{padding:.55em .3em;font-size:.95rem}}
+
+.pasos{list-style:none;counter-reset:p;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.pasos li{counter-increment:p;border-top:2px solid var(--monte);padding-top:14px}
+.pasos li::before{content:counter(p);display:block;font-family:var(--serif);font-weight:800;font-size:2.2rem;line-height:1;margin-bottom:12px;color:var(--hoja)}
+.pasos p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
+@media (max-width:980px){.pasos{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.pasos{grid-template-columns:1fr}}
+
+.capas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--monte)}
+.capas div{padding:20px 24px 8px 0}
+.capas div+div{padding-left:24px;border-left:1px solid var(--linea)}
+.capas p{font-size:1.02rem}
+@media (max-width:760px){.capas{grid-template-columns:1fr}.capas div+div{padding-left:0;border-left:0;border-top:1px solid var(--linea)}}
+
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--linea)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 32px 18px 0;font-family:var(--serif);font-weight:700;font-size:1.3rem;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-family:var(--sans);font-size:1.6rem;color:var(--hoja)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--tenue)}
+
+.visita{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start}
+form{display:grid;gap:18px}
+.campo{display:grid;gap:6px}
+.campo label{font-weight:700}
+.campo .ayuda{font-size:.95rem;color:var(--tenue)}
+input[type=text],input[type=email],input[type=tel],select,textarea{font:inherit;color:var(--tinta);background:#F3F4EF;border:1.5px solid var(--linea);border-radius:8px;padding:.7em .8em;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--cenote);outline:2px solid var(--cenote);outline-offset:0}
+textarea{min-height:120px;resize:vertical}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.oculto{position:absolute;left:-9999px}
+.error{color:#9B2C1F;font-size:.95rem;min-height:1.2em;margin:0}
+@media (max-width:880px){.visita{grid-template-columns:1fr;gap:28px}}
+@media (max-width:520px){.fila{grid-template-columns:1fr}}
+
+footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;font-size:.98rem;color:var(--tenue)}
+.pie{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.pie p{max-width:70ch}
+@media (max-width:760px){.pie{grid-template-columns:1fr;gap:16px}}
+</style>
+</head>
+<body>
+<p class="draft">{{draft}}</p>
+
+<div class="wrap">
+<header class="nav">
+  <a class="marca" href="#inicio" aria-label="{{home_label}}">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#18321F"/><circle cx="11" cy="13" r="5" fill="#3F6B45"/><circle cx="20" cy="11" r="4" fill="#D8B23E"/><circle cx="19" cy="21" r="6" fill="#3F6B45"/></svg>
+    Bosque Venado
+  </a>
+  <nav aria-label="{{nav_label}}">
+    <ul>
+      <li><a href="#lugar">{{nav_lugar}}</a></li>
+      <li><a href="#etapas">{{nav_etapas}}</a></li>
+      <li><a href="#participacion">{{nav_part}}</a></li>
+      <li><a href="#precios">{{nav_precios}}</a></li>
+      <li><a href="#preguntas">{{nav_faq}}</a></li>
+    </ul>
+  </nav>
+  <div class="nav-der">
+    <a class="idioma" href="{{alt_href}}" hreflang="{{alt_lang}}" lang="{{alt_lang}}">{{alt_label}}</a>
+    <a class="btn btn-1" href="#visita">{{cta_visita}}</a>
+  </div>
+</header>
+
+<main id="inicio">
+<div class="hero">
+  <div>
+    <h1>{{h1}}</h1>
+    <p class="lede">{{hero_lede}}</p>
+    <div class="acciones">
+      <a class="btn btn-1" href="#visita">{{cta_visita}}</a>
+      <a class="btn btn-2" href="#etapas">{{cta_lotes}}</a>
+    </div>
+  </div>
+  <figure class="plan-fig">
+{{PLAN_OVERVIEW}}
+    <figcaption>{{plan_cap}}</figcaption>
+  </figure>
+</div>
+
+<dl class="datos">
+  <div><dt>{{d1_t}}</dt><dd>{{d1}}</dd></div>
+  <div><dt>{{d2_t}}</dt><dd>{{d2}}</dd></div>
+  <div><dt>{{d3_t}}</dt><dd>{{d3}}</dd></div>
+  <div><dt>{{d4_t}}</dt><dd>{{d4}}</dd></div>
+</dl>
+
+<section id="lugar" aria-labelledby="lugar-t">
+  <div class="sec-head">
+    <h2 id="lugar-t">{{lugar_h}}</h2>
+    <p class="lede">{{lugar_lede}}</p>
+  </div>
+  <div class="dos">
+    <div>
+      <h3>{{hoy_h}}</h3>
+      <ul class="lista">{{hoy_items}}</ul>
+    </div>
+    <div>
+      <h3>{{juntos_h}}</h3>
+      <ul class="lista">{{juntos_items}}</ul>
+    </div>
+  </div>
+</section>
+
+<section id="etapas" aria-labelledby="etapas-t">
+  <div class="sec-head">
+    <h2 id="etapas-t">{{et_h}}</h2>
+    <p class="lede">{{et_lede}}</p>
+  </div>
+  <div class="etapas">
+    <ol class="etapas-lista">
+      <li><h3>{{e3_n}} <span class="etiqueta et-on">{{e3_tag}}</span></h3><p>{{e3_p}}</p></li>
+      <li><h3>{{e2_n}} <span class="etiqueta et-off">{{e12_tag}}</span></h3><p>{{e2_p}}</p></li>
+      <li><h3>{{e1_n}} <span class="etiqueta et-off">{{e12_tag}}</span></h3><p>{{e1_p}}</p></li>
+    </ol>
+    <div class="mapa-e3">
+{{PLAN_DETAIL}}
+    </div>
+    <div class="ficha" aria-live="polite">
+      <div id="ficha"><p class="vacia">{{ficha_vacia}}</p></div>
+      <ul class="leyenda">
+        <li><span style="background:#D8B23E"></span>{{st_disp}}</li>
+        <li><span style="background:#EFE7C8"></span>{{st_apar}}</li>
+        <li><span style="background:#3F6B45"></span>{{st_vend}}</li>
+      </ul>
+      <p class="cuenta" id="cuenta"></p>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<div class="banda">
+<div class="wrap">
+<section id="participacion" aria-labelledby="part-t">
+  <div class="sec-head">
+    <h2 id="part-t">{{part_h}}</h2>
+    <p class="lede">{{part_lede}}</p>
+  </div>
+  <div class="dos">
+    <div><h3>{{si_h}}</h3><ul class="lista si">{{si_items}}</ul></div>
+    <div><h3>{{no_h}}</h3><ul class="lista no">{{no_items}}</ul></div>
+  </div>
+  <p class="nota">{{part_nota}}</p>
+</section>
+</div>
+</div>
+
+<div class="wrap">
+<section id="precios" aria-labelledby="precios-t">
+  <div class="sec-head">
+    <h2 id="precios-t">{{pr_h}}</h2>
+    <p class="lede">{{pr_lede}}</p>
+  </div>
+  <div class="cotiza">
+    <div>
+      <fieldset class="plazos" id="plazos"><legend>{{pr_elige}}</legend></fieldset>
+      <div class="resultado" aria-live="polite">
+        <div id="r-etq"></div>
+        <div class="cifra" id="r-cifra"></div>
+        <dl class="desglose">
+          <div><dt>{{pr_eng}}</dt><dd id="r-eng"></dd></div>
+          <div><dt>{{pr_total}}</dt><dd id="r-total"></dd></div>
+          <div><dt>{{pr_m2}}</dt><dd id="r-m2"></dd></div>
+          <div><dt>{{pr_ahorro}}</dt><dd id="r-ahorro"></dd></div>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <table>
+        <caption>{{pr_tabla}}</caption>
+        <thead><tr><th scope="col">{{pr_th1}}</th><th scope="col">{{pr_th2}}</th><th scope="col">{{pr_th3}}</th><th scope="col">{{pr_th4}}</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+      <p class="letra">{{pr_letra}}</p>
+    </div>
+  </div>
+</section>
+
+<section id="entrar" aria-labelledby="entrar-t">
+  <div class="sec-head">
+    <h2 id="entrar-t">{{en_h}}</h2>
+    <p class="lede">{{en_lede}}</p>
+  </div>
+  <ol class="pasos">{{pasos}}</ol>
+</section>
+
+<section id="estructura" aria-labelledby="estr-t">
+  <div class="sec-head">
+    <h2 id="estr-t">{{es_h}}</h2>
+    <p class="lede">{{es_lede}}</p>
+  </div>
+  <div class="capas">{{capas}}</div>
+</section>
+
+<section id="preguntas" aria-labelledby="faq-t">
+  <div class="sec-head"><h2 id="faq-t">{{faq_h}}</h2></div>
+  <div class="faq">{{faq}}</div>
+</section>
+
+<section id="visita" aria-labelledby="visita-t">
+  <div class="visita">
+    <div>
+      <h2 id="visita-t">{{vi_h}}</h2>
+      <p class="lede">{{vi_lede}}</p>
+      <p>{{vi_wa}} <a href="https://wa.me/529999910450">999 991 0450</a></p>
+    </div>
+    <form name="visita" method="POST" action="{{form_action}}" data-netlify="true" netlify-honeypot="bot-field" id="form-visita" novalidate>
+      <input type="hidden" name="form-name" value="visita">
+      <input type="hidden" name="idioma" value="{{lang}}">
+      <p class="oculto"><label>{{f_honey}} <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="campo"><label for="f-nombre">{{f_nombre}}</label><input id="f-nombre" type="text" name="nombre" autocomplete="name" required></div>
+      <div class="fila">
+        <div class="campo"><label for="f-email">{{f_email}}</label><input id="f-email" type="email" name="email" autocomplete="email" required></div>
+        <div class="campo"><label for="f-wa">WhatsApp</label><input id="f-wa" type="tel" name="whatsapp" autocomplete="tel"></div>
+      </div>
+      <div class="fila">
+        <div class="campo"><label for="f-lote">{{f_lote}}</label><input id="f-lote" type="text" name="lote" inputmode="numeric" placeholder="{{f_lote_ph}}"></div>
+        <div class="campo"><label for="f-plazo">{{f_plazo}}</label>
+          <select id="f-plazo" name="plazo">{{f_plazo_opts}}</select>
+        </div>
+      </div>
+      <div class="campo"><label for="f-uso">{{f_uso}}</label><span class="ayuda" id="f-uso-ayuda">{{f_uso_ayuda}}</span><textarea id="f-uso" name="uso" aria-describedby="f-uso-ayuda"></textarea></div>
+      <p class="error" id="f-error" role="alert"></p>
+      <div><button class="btn btn-1" type="submit">{{f_enviar}}</button></div>
+    </form>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap pie">
+    <p>{{pie_1}}</p>
+    <p>{{pie_2}}</p>
+  </div>
+</footer>
+
+<script>
+const T={{JS}};
+const LOTES={{LOTES}};
+/* Estado de cada lote. Por omisión todos están disponibles.
+   Ejemplo: const ESTADO={7:"apartado",12:"vendido"}; */
+const ESTADO={};
+const planes=[
+  {id:"60",m:60,mens:1500},{id:"48",m:48,mens:1750},{id:"36",m:36,mens:2200},
+  {id:"24",m:24,mens:3050},{id:"12",m:12,mens:5700},{id:"c",m:0,total:73000}
+];
+const ENG=10000,BASE=100000,M2=200;
+const $=n=>"$"+Math.round(n).toLocaleString("en-US");
+const nombre=p=>p.m?T.meses.replace("{n}",p.m):T.contado;
+planes.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE});
+const fs=document.getElementById("plazos"),tb=document.getElementById("tabla");
+planes.forEach((p,i)=>{
+  fs.insertAdjacentHTML("beforeend",`<input type="radio" name="plazo-c" id="pl-${p.id}" value="${p.id}" ${i===0?"checked":""}><label for="pl-${p.id}">${nombre(p)}</label>`);
+  tb.insertAdjacentHTML("beforeend",`<tr id="tr-${p.id}"><td>${nombre(p)}</td><td>${p.m?$(p.mens):T.na}</td><td>${$(p.total)}</td><td>${p.desc?(p.desc*100).toFixed(1)+"%":"0%"}</td></tr>`);
+});
+function pinta(id){
+  const p=planes.find(x=>x.id===id);
+  document.getElementById("r-etq").textContent=p.m?T.mens_etq.replace("{n}",p.m):T.unico;
+  document.getElementById("r-cifra").innerHTML=p.m?`${$(p.mens)} <small>${T.al_mes}</small>`:$(p.total);
+  document.getElementById("r-eng").textContent=p.m?$(ENG):T.incluido;
+  document.getElementById("r-total").textContent=$(p.total);
+  document.getElementById("r-m2").textContent=$(p.total/M2);
+  const ah=BASE-p.total,el=document.getElementById("r-ahorro");
+  el.textContent=ah?`${$(ah)} (${(p.desc*100).toFixed(1)}%)`:"$0";el.className=ah?"ahorro":"";
+  document.querySelectorAll("#tabla tr").forEach(r=>r.classList.toggle("activo",r.id==="tr-"+id));
+}
+fs.addEventListener("change",e=>pinta(e.target.value));
+pinta("60");
+
+const est=n=>ESTADO[n]||"disponible";
+const lotes=[...document.querySelectorAll(".plan-e3 .lote")];
+lotes.forEach(g=>{const n=+g.dataset.lote;g.classList.add(est(n));g.setAttribute("aria-label",`${T.lote} ${n}, ${T.st[est(n)]}`)});
+const disp=lotes.filter(g=>est(+g.dataset.lote)==="disponible").length;
+document.getElementById("cuenta").textContent=T.cuenta.replace("{d}",disp).replace("{t}",lotes.length);
+function elige(g){
+  lotes.forEach(x=>x.classList.remove("sel"));g.classList.add("sel");
+  const n=+g.dataset.lote,info=LOTES[n],e=est(n);
+  document.getElementById("ficha").innerHTML=`<div>${T.lote}</div><div class="num">${n}</div>
+  <dl><div><dt>${T.sup}</dt><dd>200 m²</dd></div><div><dt>${T.medidas}</dt><dd>10 × 20 m</dd></div>
+  <div><dt>${T.fila}</dt><dd>${T.filas[info.col-1]}</dd></div><div><dt>${T.estado}</dt><dd>${T.st[e]}</dd></div>
+  <div><dt>${T.desde}</dt><dd>${$(1500)} ${T.al_mes}</dd></div><div><dt>${T.contado}</dt><dd>${$(73000)}</dd></div></dl>
+  ${e==="disponible"?`<a class="btn btn-1" href="#visita" id="pedir">${T.pedir}</a>`:""}`;
+  const b=document.getElementById("pedir");
+  if(b)b.addEventListener("click",()=>{document.getElementById("f-lote").value=n});
+}
+lotes.forEach(g=>{
+  g.addEventListener("click",()=>elige(g));
+  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();elige(g)}});
+});
+
+const f=document.getElementById("form-visita"),err=document.getElementById("f-error");
+f.addEventListener("submit",e=>{
+  if(!f.nombre.value.trim()){e.preventDefault();err.textContent=T.err_nombre;f.nombre.focus();return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())){e.preventDefault();err.textContent=T.err_email;f.email.focus()}
+});
+f.addEventListener("input",()=>{err.textContent=""});
+</script>
+</body>
+</html>

@@ -2,7 +2,18 @@
 
 Sitio de Bosque Venado: cinco hectáreas de monte en Acanceh, Yucatán.
 
-HTML estático, sin build. Formulario de visita con Netlify Forms.
+HTML estático en español (`index.html`) e inglés (`en/index.html`). Formulario de visita con Netlify Forms.
+
+## Editar
+
+Los textos están en `src/build.py`, el diseño en `src/template.html` y el plano en `src/plan.py`
+(coordenadas del levantamiento topográfico del tablaje 3735). Después de cambiar algo:
+
+```
+python3 src/build.py
+```
+
+Para marcar lotes apartados o vendidos, edita `const ESTADO={}` en `src/template.html`, por ejemplo `{7:"apartado",12:"vendido"}`.
 
 ## Cómo trabajamos
 

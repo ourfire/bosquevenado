@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bosque Venado, Acanceh, Yucatán</title>
+<meta name="description" content="7 hectares of native forest next to Acanceh, Yucatán, cared for by a community. 200 m² use lots with a stake tokenized by La Tokenizadora.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2318321F'/%3E%3Ccircle cx='11' cy='13' r='5' fill='%233F6B45'/%3E%3Ccircle cx='20' cy='11' r='4' fill='%23D8B23E'/%3E%3Ccircle cx='19' cy='21' r='6' fill='%233F6B45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cal:#E8EAE2; --cal-2:#DDE1D5; --monte:#18321F; --hoja:#3F6B45; --hoja-2:#5E8A5E;
+  --cenote:#0F5E66; --huano:#D8B23E; --linea:#B8BEB0; --tinta:#18321F; --tenue:#4A5A4C; --camino:#B9A37A;
+  --serif:"Alegreya",Georgia,serif; --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --ancho:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--cal);color:var(--tinta);font-family:var(--sans);font-size:1.125rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:var(--cenote);text-underline-offset:.18em}
+a:hover{color:var(--monte)}
+:focus-visible{outline:3px solid var(--cenote);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:800;line-height:1.05;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.1rem);max-width:18ch}
+h3{font-size:1.4rem;font-weight:700;line-height:1.2}
+p{margin:0 0 1em;max-width:62ch}
+.lede{font-size:1.25rem;color:var(--tenue)}
+.tbd{background:rgba(216,178,62,.28);border-bottom:1.5px dashed #9C7C1C;padding:0 .2em;border-radius:2px;font-style:normal}
+.draft{background:var(--monte);color:var(--cal);font-size:.95rem;text-align:center;padding:.5rem 1rem;margin:0;max-width:none}
+.draft .tbd{color:var(--cal);border-color:var(--huano)}
+
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
+.marca{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:1.45rem;color:var(--monte);text-decoration:none;white-space:nowrap}
+.marca svg{width:30px;height:30px;flex-shrink:0}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--tinta);text-decoration:none;font-weight:500}
+.nav ul a:hover{text-decoration:underline}
+.nav-der{display:flex;align-items:center;gap:18px}
+.idioma{font-weight:700;color:var(--monte);text-decoration:none;border-bottom:1.5px solid currentColor}
+.btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:1.05rem;padding:.8em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--monte);cursor:pointer;line-height:1.1}
+.btn-1{background:var(--monte);color:var(--cal)}
+.btn-1:hover{background:var(--hoja);border-color:var(--hoja);color:var(--cal)}
+.btn-2{background:transparent;color:var(--monte)}
+.btn-2:hover{background:var(--cal-2);color:var(--monte)}
+@media (max-width:1040px){.nav ul{display:none}}
+@media (max-width:420px){.nav .btn{display:none}}
+@media (max-width:560px){.marca{font-size:1.2rem}.marca svg{width:26px;height:26px}.nav .btn{font-size:.95rem;padding:.65em 1em}.nav{gap:12px}.nav-der{gap:12px}}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center;padding:30px 0 56px}
+.hero h1{font-size:clamp(2.4rem,4.6vw,3.9rem);max-width:15ch;margin-bottom:.45em}
+.hero .acciones{display:flex;flex-wrap:wrap;gap:12px;margin:1.6em 0 0}
+.plan-fig{margin:0}
+.plan-fig .plan{margin:0 auto;max-height:620px;width:auto}
+.plan-fig figcaption{font-size:.92rem;color:var(--tenue);margin-top:.6em;max-width:none}
+.plan .p-land{fill:#D3DACB}
+.plan .t0{fill:var(--hoja);opacity:.95}.plan .t1{fill:var(--hoja-2);opacity:.85}.plan .t2{fill:#2F5536}
+.plan .p-road{fill:var(--camino)}
+.plan .p-lot{fill:var(--huano);stroke:var(--monte);stroke-width:.6}
+.plan .p-cut{stroke:var(--monte);stroke-width:1.4;stroke-dasharray:6 5}
+.plan .p-edge{fill:none;stroke:var(--monte);stroke-width:2}
+.plan .p-edge-soft{fill:none;stroke:var(--monte);stroke-width:1.5}
+.plan .p-common{fill:#E3E0CC}
+.plan text{font-family:var(--sans);font-size:14px;fill:var(--monte)}
+.plan .p-stage{font-family:var(--serif);font-weight:700;font-size:17px}
+.plan .p-street{font-size:13px;fill:var(--tenue)}
+.plan .p-north path{fill:var(--monte)}
+.plan .p-scale line{stroke:var(--monte);stroke-width:1.5}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding-top:12px}.plan-fig .plan{max-height:none;width:100%}}
+
+.datos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--monte);border-bottom:1px solid var(--linea);margin:0}
+.datos div{padding:18px 18px 20px 0}
+.datos dt{font-size:.95rem;color:var(--tenue)}
+.datos dd{margin:0;font-family:var(--serif);font-weight:700;font-size:1.45rem;line-height:1.2}
+@media (max-width:760px){.datos{grid-template-columns:1fr 1fr}}
+
+section{padding:96px 0 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:48px;align-items:end;margin-bottom:40px}
+.sec-head p{margin:0}
+@media (max-width:880px){.sec-head{grid-template-columns:1fr;gap:16px}}
+
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.dos h3{padding-bottom:.5em;border-bottom:1px solid var(--linea);margin-bottom:.6em}
+.lista{list-style:none;padding:0;margin:0}
+.lista li{padding:.55em 0;border-bottom:1px solid var(--linea)}
+.lista small{display:block;color:var(--tenue);font-size:.95rem}
+@media (max-width:760px){.dos{grid-template-columns:1fr;gap:36px}}
+
+/* etapas */
+.etapas{display:grid;grid-template-columns:minmax(0,1fr) 300px minmax(0,1fr);gap:40px;align-items:start}
+.etapas-lista{list-style:none;padding:0;margin:0}
+.etapas-lista li{padding:16px 0;border-top:1px solid var(--linea)}
+.etapas-lista li:first-child{border-top:2px solid var(--monte)}
+.etapas-lista h3{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.etiqueta{font-family:var(--sans);font-size:.9rem;font-weight:700;border-radius:999px;padding:.15em .7em;white-space:nowrap}
+.et-on{background:var(--huano);color:var(--monte)}
+.et-off{border:1.5px solid var(--linea);color:var(--tenue)}
+.etapas-lista p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
+.mapa-e3{width:100%;max-width:320px}
+.plan-e3{width:100%;height:auto}
+.plan-e3 .lote{cursor:pointer}
+.plan-e3 .lote rect{fill:var(--huano);stroke:var(--monte);stroke-width:.8}
+.plan-e3 .lote text{font-size:12px;font-weight:700;pointer-events:none}
+.plan-e3 .lote:hover rect{fill:#F0D573}
+.plan-e3 .lote:focus{outline:none}
+.plan-e3 .lote:focus-visible rect{stroke:var(--cenote);stroke-width:3}
+.plan-e3 .lote.apartado rect{fill:#EFE7C8}
+.plan-e3 .lote.vendido rect{fill:var(--hoja)}
+.plan-e3 .lote.vendido text{fill:var(--cal)}
+.plan-e3 .lote.sel rect{fill:var(--monte)}
+.plan-e3 .lote.sel text{fill:var(--cal)}
+.ficha{position:sticky;top:24px;border-top:2px solid var(--monte);padding-top:16px}
+.ficha .vacia{color:var(--tenue)}
+.ficha .num{font-family:var(--serif);font-weight:800;font-size:3rem;line-height:1;margin:.1em 0 .2em}
+.ficha dl{margin:12px 0 18px}
+.ficha dl div{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--linea)}
+.ficha dt{color:var(--tenue)}
+.ficha dd{margin:0;font-weight:700;text-align:right}
+.leyenda{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.95rem;color:var(--tenue)}
+.leyenda span{display:inline-block;width:14px;height:14px;border:1px solid var(--monte);border-radius:2px;vertical-align:-2px;margin-right:6px}
+.cuenta{font-size:.98rem;color:var(--tenue);margin-top:14px}
+@media (max-width:980px){.etapas{grid-template-columns:300px minmax(0,1fr)}.etapas-lista{grid-column:1/-1}}
+@media (max-width:620px){.etapas{grid-template-columns:1fr}.mapa-e3{margin:0 auto}.ficha{position:static}}
+
+.banda{background:var(--monte);color:var(--cal);margin-top:96px;padding:88px 0 96px}
+.banda section{padding:0}
+.banda h2,.banda h3{color:var(--cal)}
+.banda .lede{color:#C9D2C3}
+.banda .lista li{border-color:rgba(232,234,226,.22)}
+.banda .lista small{color:#B9C4B4}
+.banda .si li,.banda .no li{position:relative;padding-left:1.6em}
+.banda .si li::before,.banda .no li::before{position:absolute;left:0;top:.5em;font-weight:700}
+.banda .si li::before{content:"+";color:var(--huano)}
+.banda .no li::before{content:"–";color:#C9D2C3}
+.banda .nota{margin-top:32px;color:#C9D2C3;font-size:1rem}
+
+.cotiza{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
+.plazos{border:0;padding:0;margin:0 0 28px;display:flex;flex-wrap:wrap;gap:8px}
+.plazos legend{font-weight:700;margin-bottom:10px;padding:0}
+.plazos input{position:absolute;opacity:0;pointer-events:none}
+.plazos label{border:2px solid var(--monte);border-radius:999px;padding:.45em 1em;cursor:pointer;font-weight:500}
+.plazos input:checked+label{background:var(--monte);color:var(--cal)}
+.plazos input:focus-visible+label{outline:3px solid var(--cenote);outline-offset:3px}
+.resultado{border-top:2px solid var(--monte);padding-top:18px}
+.cifra{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,7vw,5.2rem);line-height:1;letter-spacing:-.02em;margin:.1em 0 .15em}
+.cifra small{font-family:var(--sans);font-weight:500;font-size:1.1rem;letter-spacing:0;color:var(--tenue)}
+.desglose{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:18px 0 0}
+.desglose div{padding:12px 0;border-bottom:1px solid var(--linea)}
+.desglose dt{font-size:.95rem;color:var(--tenue)}
+.desglose dd{margin:0;font-weight:700;font-size:1.2rem}
+.ahorro{color:var(--hoja)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:700;padding-bottom:10px}
+th,td{padding:.6em .5em;border-bottom:1px solid var(--linea);text-align:right}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+thead th{font-weight:500;color:var(--tenue);font-size:.95rem;border-bottom:2px solid var(--monte)}
+tr.activo td{background:var(--cal-2);font-weight:700}
+.letra{font-size:.98rem;color:var(--tenue);margin-top:24px}
+@media (max-width:880px){.cotiza{grid-template-columns:1fr}}
+@media (max-width:480px){th,td{padding:.55em .3em;font-size:.95rem}}
+
+.pasos{list-style:none;counter-reset:p;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.pasos li{counter-increment:p;border-top:2px solid var(--monte);padding-top:14px}
+.pasos li::before{content:counter(p);display:block;font-family:var(--serif);font-weight:800;font-size:2.2rem;line-height:1;margin-bottom:12px;color:var(--hoja)}
+.pasos p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
+@media (max-width:980px){.pasos{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.pasos{grid-template-columns:1fr}}
+
+.capas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--monte)}
+.capas div{padding:20px 24px 8px 0}
+.capas div+div{padding-left:24px;border-left:1px solid var(--linea)}
+.capas p{font-size:1.02rem}
+@media (max-width:760px){.capas{grid-template-columns:1fr}.capas div+div{padding-left:0;border-left:0;border-top:1px solid var(--linea)}}
+
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--linea)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 32px 18px 0;font-family:var(--serif);font-weight:700;font-size:1.3rem;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-family:var(--sans);font-size:1.6rem;color:var(--hoja)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--tenue)}
+
+.visita{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start}
+form{display:grid;gap:18px}
+.campo{display:grid;gap:6px}
+.campo label{font-weight:700}
+.campo .ayuda{font-size:.95rem;color:var(--tenue)}
+input[type=text],input[type=email],input[type=tel],select,textarea{font:inherit;color:var(--tinta);background:#F3F4EF;border:1.5px solid var(--linea);border-radius:8px;padding:.7em .8em;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--cenote);outline:2px solid var(--cenote);outline-offset:0}
+textarea{min-height:120px;resize:vertical}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.oculto{position:absolute;left:-9999px}
+.error{color:#9B2C1F;font-size:.95rem;min-height:1.2em;margin:0}
+@media (max-width:880px){.visita{grid-template-columns:1fr;gap:28px}}
+@media (max-width:520px){.fila{grid-template-columns:1fr}}
+
+footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;font-size:.98rem;color:var(--tenue)}
+.pie{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.pie p{max-width:70ch}
+@media (max-width:760px){.pie{grid-template-columns:1fr;gap:16px}}
+</style>
+</head>
+<body>
+<p class="draft">Design draft. Items marked <span class="tbd">like this</span> are still to be defined.</p>
+
+<div class="wrap">
+<header class="nav">
+  <a class="marca" href="#inicio" aria-label="Bosque Venado, home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#18321F"/><circle cx="11" cy="13" r="5" fill="#3F6B45"/><circle cx="20" cy="11" r="4" fill="#D8B23E"/><circle cx="19" cy="21" r="6" fill="#3F6B45"/></svg>
+    Bosque Venado
+  </a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#lugar">The land</a></li>
+      <li><a href="#etapas">Phases and lots</a></li>
+      <li><a href="#participacion">Your stake</a></li>
+      <li><a href="#precios">Pricing</a></li>
+      <li><a href="#preguntas">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="nav-der">
+    <a class="idioma" href="../" hreflang="es" lang="es">Español</a>
+    <a class="btn btn-1" href="#visita">Book a visit</a>
+  </div>
+</header>
+
+<main id="inicio">
+<div class="hero">
+  <div>
+    <h1>Seven hectares of native forest, cared for by a community.</h1>
+    <p class="lede">Bosque Venado is conservation land next to Acanceh, Yucatán, and an off-grid experiment in rural living. Each stake gives you the use of a 200 m² lot and a say in how the land is cared for.</p>
+    <div class="acciones">
+      <a class="btn btn-1" href="#visita">Book a visit</a>
+      <a class="btn btn-2" href="#etapas">See the lots</a>
+    </div>
+  </div>
+  <figure class="plan-fig">
+<svg class="plan" viewBox="0 0 512 594" role="img" aria-labelledby="pl-t pl-d"><title id="pl-t">Site plan in three phases</title><desc id="pl-d">A 7-hectare property divided into three phases from west to east. Phase 3, along the street, has 93 lots of 200 square meters and two internal roads.</desc>
+<polygon points="46.0,529.8 46.0,113.9 332.5,57.5 472.4,30.0 472.4,403.0" class="p-land"/>
+<circle cx="172.5" cy="266.9" r="4.3" class="p-tree t1"/>
+<circle cx="172.4" cy="149.7" r="3.1" class="p-tree t2"/>
+<circle cx="99.5" cy="303.8" r="5.6" class="p-tree t1"/>
+<circle cx="216.6" cy="402.9" r="4.3" class="p-tree t1"/>
+<circle cx="131.9" cy="464.8" r="5.6" class="p-tree t1"/>
+<circle cx="222.2" cy="240.9" r="4.3" class="p-tree t1"/>
+<circle cx="312.3" cy="197.1" r="5.6" class="p-tree t1"/>
+<circle cx="226.4" cy="229.1" r="5.6" class="p-tree t1"/>
+<circle cx="66.3" cy="506.1" r="3.1" class="p-tree t2"/>
+<circle cx="212.7" cy="171.4" r="4.3" class="p-tree t1"/>
+<circle cx="112.8" cy="388.3" r="3.1" class="p-tree t2"/>
+<circle cx="229.8" cy="293.1" r="4.3" class="p-tree t1"/>
+<circle cx="160.1" cy="273.2" r="3.1" class="p-tree t2"/>
+<circle cx="242.2" cy="345.4" r="3.1" class="p-tree t2"/>
+<circle cx="189.0" cy="472.4" r="5.6" class="p-tree t1"/>
+<circle cx="258.1" cy="308.1" r="4.3" class="p-tree t1"/>
+<circle cx="154.5" cy="112.4" r="5.6" class="p-tree t1"/>
+<circle cx="49.2" cy="439.9" r="3.1" class="p-tree t2"/>
+<circle cx="177.3" cy="99.0" r="4.3" class="p-tree t1"/>
+<circle cx="163.6" cy="266.4" r="3.1" class="p-tree t2"/>
+<circle cx="261.5" cy="357.9" r="3.1" class="p-tree t2"/>
+<circle cx="134.0" cy="494.4" r="4.3" class="p-tree t1"/>
+<circle cx="255.9" cy="418.4" r="3.1" class="p-tree t2"/>
+<circle cx="242.0" cy="464.1" r="4.3" class="p-tree t1"/>
+<circle cx="266.5" cy="392.3" r="5.6" class="p-tree t1"/>
+<circle cx="80.9" cy="345.4" r="3.1" class="p-tree t2"/>
+<circle cx="49.2" cy="171.9" r="5.6" class="p-tree t1"/>
+<circle cx="132.1" cy="146.2" r="3.1" class="p-tree t2"/>
+<circle cx="100.2" cy="108.0" r="5.6" class="p-tree t1"/>
+<circle cx="224.2" cy="434.4" r="3.1" class="p-tree t2"/>
+<circle cx="107.3" cy="404.2" r="5.6" class="p-tree t1"/>
+<circle cx="138.8" cy="380.4" r="3.1" class="p-tree t2"/>
+<circle cx="69.4" cy="434.7" r="5.6" class="p-tree t1"/>
+<circle cx="115.4" cy="263.9" r="4.3" class="p-tree t1"/>
+<circle cx="218.8" cy="425.4" r="5.6" class="p-tree t1"/>
+<circle cx="181.1" cy="258.9" r="4.3" class="p-tree t1"/>
+<circle cx="99.0" cy="448.6" r="3.1" class="p-tree t2"/>
+<circle cx="272.2" cy="362.9" r="3.1" class="p-tree t2"/>
+<circle cx="92.3" cy="258.2" r="5.6" class="p-tree t1"/>
+<circle cx="102.7" cy="126.0" r="4.3" class="p-tree t1"/>
+<circle cx="213.7" cy="311.3" r="3.1" class="p-tree t2"/>
+<circle cx="78.8" cy="308.7" r="4.3" class="p-tree t1"/>
+<circle cx="114.1" cy="222.6" r="4.3" class="p-tree t1"/>
+<circle cx="163.9" cy="131.7" r="4.3" class="p-tree t1"/>
+<circle cx="129.2" cy="431.6" r="5.6" class="p-tree t1"/>
+<circle cx="315.7" cy="398.1" r="4.3" class="p-tree t1"/>
+<circle cx="201.7" cy="144.5" r="5.6" class="p-tree t1"/>
+<circle cx="253.4" cy="438.1" r="4.3" class="p-tree t1"/>
+<circle cx="170.7" cy="465.6" r="3.1" class="p-tree t2"/>
+<circle cx="126.0" cy="289.6" r="3.1" class="p-tree t2"/>
+<circle cx="74.3" cy="462.0" r="4.3" class="p-tree t1"/>
+<circle cx="191.5" cy="109.4" r="5.6" class="p-tree t1"/>
+<circle cx="58.7" cy="515.6" r="4.3" class="p-tree t1"/>
+<circle cx="240.3" cy="93.3" r="3.1" class="p-tree t2"/>
+<circle cx="212.3" cy="447.8" r="3.1" class="p-tree t2"/>
+<circle cx="69.6" cy="297.2" r="5.6" class="p-tree t1"/>
+<circle cx="61.2" cy="140.0" r="5.6" class="p-tree t1"/>
+<circle cx="241.1" cy="159.3" r="4.3" class="p-tree t1"/>
+<circle cx="145.1" cy="223.4" r="3.1" class="p-tree t2"/>
+<circle cx="286.7" cy="294.3" r="3.1" class="p-tree t2"/>
+<circle cx="284.7" cy="234.8" r="5.6" class="p-tree t1"/>
+<circle cx="229.8" cy="323.7" r="3.1" class="p-tree t2"/>
+<circle cx="80.6" cy="411.9" r="4.3" class="p-tree t1"/>
+<circle cx="247.8" cy="315.4" r="5.6" class="p-tree t1"/>
+<circle cx="277.8" cy="425.4" r="5.6" class="p-tree t1"/>
+<circle cx="57.2" cy="277.7" r="4.3" class="p-tree t1"/>
+<circle cx="184.8" cy="242.3" r="4.3" class="p-tree t1"/>
+<circle cx="118.9" cy="500.5" r="4.3" class="p-tree t1"/>
+<circle cx="95.4" cy="145.5" r="5.6" class="p-tree t1"/>
+<circle cx="302.9" cy="259.0" r="3.1" class="p-tree t2"/>
+<circle cx="138.3" cy="232.6" r="3.1" class="p-tree t2"/>
+<circle cx="222.1" cy="159.3" r="3.1" class="p-tree t2"/>
+<circle cx="289.2" cy="306.3" r="5.6" class="p-tree t1"/>
+<circle cx="300.3" cy="370.4" r="3.1" class="p-tree t2"/>
+<circle cx="184.5" cy="154.2" r="3.1" class="p-tree t2"/>
+<circle cx="124.2" cy="417.4" r="4.3" class="p-tree t1"/>
+<circle cx="153.5" cy="287.3" r="5.6" class="p-tree t1"/>
+<circle cx="135.1" cy="163.9" r="5.6" class="p-tree t1"/>
+<circle cx="242.4" cy="245.8" r="4.3" class="p-tree t1"/>
+<circle cx="226.2" cy="252.2" r="5.6" class="p-tree t1"/>
+<circle cx="86.2" cy="330.2" r="3.1" class="p-tree t2"/>
+<circle cx="266.5" cy="79.8" r="3.1" class="p-tree t2"/>
+<circle cx="170.9" cy="239.4" r="5.6" class="p-tree t1"/>
+<circle cx="223.7" cy="329.4" r="3.1" class="p-tree t2"/>
+<circle cx="235.8" cy="392.4" r="4.3" class="p-tree t1"/>
+<circle cx="123.4" cy="364.7" r="5.6" class="p-tree t1"/>
+<circle cx="156.5" cy="178.2" r="3.1" class="p-tree t2"/>
+<circle cx="154.9" cy="314.7" r="3.1" class="p-tree t2"/>
+<circle cx="219.8" cy="118.1" r="4.3" class="p-tree t1"/>
+<circle cx="199.1" cy="223.8" r="5.6" class="p-tree t1"/>
+<circle cx="266.5" cy="95.2" r="4.3" class="p-tree t1"/>
+<circle cx="138.2" cy="105.9" r="3.1" class="p-tree t2"/>
+<circle cx="246.0" cy="148.4" r="5.6" class="p-tree t1"/>
+<circle cx="301.2" cy="403.4" r="3.1" class="p-tree t2"/>
+<circle cx="294.6" cy="75.6" r="4.3" class="p-tree t1"/>
+<circle cx="195.6" cy="170.1" r="4.3" class="p-tree t1"/>
+<circle cx="120.5" cy="215.6" r="3.1" class="p-tree t2"/>
+<circle cx="144.2" cy="464.4" r="4.3" class="p-tree t1"/>
+<circle cx="142.4" cy="329.5" r="4.3" class="p-tree t1"/>
+<circle cx="166.1" cy="477.0" r="5.6" class="p-tree t1"/>
+<circle cx="140.5" cy="183.3" r="3.1" class="p-tree t2"/>
+<circle cx="190.5" cy="215.9" r="4.3" class="p-tree t1"/>
+<circle cx="223.4" cy="269.1" r="5.6" class="p-tree t1"/>
+<circle cx="119.1" cy="234.9" r="5.6" class="p-tree t1"/>
+<circle cx="105.9" cy="165.5" r="5.6" class="p-tree t1"/>
+<circle cx="192.1" cy="256.9" r="3.1" class="p-tree t2"/>
+<circle cx="161.2" cy="446.9" r="3.1" class="p-tree t2"/>
+<circle cx="214.2" cy="465.8" r="3.1" class="p-tree t2"/>
+<circle cx="189.9" cy="325.6" r="5.6" class="p-tree t1"/>
+<circle cx="82.4" cy="478.0" r="3.1" class="p-tree t2"/>
+<circle cx="300.3" cy="143.6" r="4.3" class="p-tree t1"/>
+<circle cx="122.5" cy="313.7" r="3.1" class="p-tree t2"/>
+<circle cx="141.8" cy="137.8" r="4.3" class="p-tree t1"/>
+<circle cx="192.3" cy="440.3" r="4.3" class="p-tree t1"/>
+<circle cx="102.1" cy="418.2" r="5.6" class="p-tree t1"/>
+<circle cx="288.8" cy="445.5" r="5.6" class="p-tree t1"/>
+<circle cx="161.9" cy="281.5" r="3.1" class="p-tree t2"/>
+<circle cx="216.0" cy="139.8" r="3.1" class="p-tree t2"/>
+<circle cx="298.7" cy="210.3" r="4.3" class="p-tree t1"/>
+<circle cx="295.4" cy="331.0" r="4.3" class="p-tree t1"/>
+<circle cx="292.1" cy="378.6" r="3.1" class="p-tree t2"/>
+<circle cx="291.2" cy="402.2" r="3.1" class="p-tree t2"/>
+<circle cx="75.6" cy="179.5" r="4.3" class="p-tree t1"/>
+<circle cx="197.3" cy="203.7" r="3.1" class="p-tree t2"/>
+<circle cx="159.0" cy="220.2" r="3.1" class="p-tree t2"/>
+<circle cx="75.3" cy="286.2" r="4.3" class="p-tree t1"/>
+<circle cx="241.4" cy="221.1" r="4.3" class="p-tree t1"/>
+<circle cx="268.1" cy="273.9" r="3.1" class="p-tree t2"/>
+<circle cx="296.0" cy="267.3" r="3.1" class="p-tree t2"/>
+<circle cx="99.4" cy="428.4" r="3.1" class="p-tree t2"/>
+<circle cx="319.3" cy="91.2" r="3.1" class="p-tree t2"/>
+<circle cx="175.2" cy="184.9" r="4.3" class="p-tree t1"/>
+<circle cx="155.7" cy="324.1" r="4.3" class="p-tree t1"/>
+<circle cx="166.4" cy="252.0" r="3.1" class="p-tree t2"/>
+<circle cx="222.1" cy="458.3" r="3.1" class="p-tree t2"/>
+<circle cx="98.6" cy="327.5" r="5.6" class="p-tree t1"/>
+<circle cx="150.1" cy="127.7" r="5.6" class="p-tree t1"/>
+<circle cx="288.0" cy="104.6" r="4.3" class="p-tree t1"/>
+<circle cx="204.5" cy="404.4" r="5.6" class="p-tree t1"/>
+<circle cx="317.2" cy="138.3" r="4.3" class="p-tree t1"/>
+<circle cx="261.3" cy="146.6" r="4.3" class="p-tree t1"/>
+<circle cx="85.4" cy="381.1" r="5.6" class="p-tree t1"/>
+<circle cx="238.6" cy="169.9" r="3.1" class="p-tree t2"/>
+<circle cx="159.8" cy="205.1" r="3.1" class="p-tree t2"/>
+<circle cx="266.6" cy="344.2" r="3.1" class="p-tree t2"/>
+<circle cx="52.0" cy="379.4" r="5.6" class="p-tree t1"/>
+<circle cx="295.4" cy="433.5" r="4.3" class="p-tree t1"/>
+<circle cx="108.0" cy="344.4" r="3.1" class="p-tree t2"/>
+<circle cx="224.3" cy="199.0" r="4.3" class="p-tree t1"/>
+<circle cx="316.5" cy="437.5" r="5.6" class="p-tree t1"/>
+<circle cx="225.9" cy="469.0" r="4.3" class="p-tree t1"/>
+<circle cx="117.5" cy="140.9" r="5.6" class="p-tree t1"/>
+<circle cx="204.0" cy="87.8" r="5.6" class="p-tree t1"/>
+<circle cx="177.8" cy="420.4" r="4.3" class="p-tree t1"/>
+<circle cx="196.9" cy="246.5" r="4.3" class="p-tree t1"/>
+<circle cx="307.0" cy="287.8" r="5.6" class="p-tree t1"/>
+<circle cx="157.8" cy="369.0" r="5.6" class="p-tree t1"/>
+<circle cx="306.8" cy="421.0" r="3.1" class="p-tree t2"/>
+<circle cx="166.3" cy="301.0" r="3.1" class="p-tree t2"/>
+<circle cx="61.5" cy="481.9" r="5.6" class="p-tree t1"/>
+<circle cx="297.2" cy="396.5" r="3.1" class="p-tree t2"/>
+<circle cx="146.4" cy="435.0" r="4.3" class="p-tree t1"/>
+<circle cx="169.9" cy="224.5" r="4.3" class="p-tree t1"/>
+<circle cx="213.1" cy="225.7" r="5.6" class="p-tree t1"/>
+<circle cx="271.5" cy="406.6" r="4.3" class="p-tree t1"/>
+<circle cx="249.4" cy="373.4" r="3.1" class="p-tree t2"/>
+<circle cx="186.3" cy="362.9" r="5.6" class="p-tree t1"/>
+<circle cx="215.5" cy="191.6" r="5.6" class="p-tree t1"/>
+<circle cx="298.9" cy="113.8" r="3.1" class="p-tree t2"/>
+<circle cx="145.7" cy="361.9" r="4.3" class="p-tree t1"/>
+<circle cx="252.3" cy="139.2" r="3.1" class="p-tree t2"/>
+<circle cx="268.0" cy="287.4" r="5.6" class="p-tree t1"/>
+<circle cx="277.7" cy="160.7" r="4.3" class="p-tree t1"/>
+<circle cx="164.9" cy="388.7" r="3.1" class="p-tree t2"/>
+<circle cx="149.8" cy="234.9" r="5.6" class="p-tree t1"/>
+<circle cx="137.9" cy="279.7" r="5.6" class="p-tree t1"/>
+<circle cx="204.0" cy="158.6" r="4.3" class="p-tree t1"/>
+<circle cx="130.6" cy="190.4" r="3.1" class="p-tree t2"/>
+<circle cx="71.4" cy="395.5" r="5.6" class="p-tree t1"/>
+<circle cx="257.6" cy="336.4" r="3.1" class="p-tree t2"/>
+<circle cx="108.8" cy="242.9" r="4.3" class="p-tree t1"/>
+<circle cx="149.1" cy="449.2" r="5.6" class="p-tree t1"/>
+<circle cx="174.1" cy="400.8" r="5.6" class="p-tree t1"/>
+<circle cx="293.2" cy="357.6" r="4.3" class="p-tree t1"/>
+<circle cx="275.1" cy="449.2" r="5.6" class="p-tree t1"/>
+<circle cx="157.0" cy="339.2" r="3.1" class="p-tree t2"/>
+<circle cx="97.5" cy="475.1" r="4.3" class="p-tree t1"/>
+<circle cx="289.4" cy="345.9" r="3.1" class="p-tree t2"/>
+<circle cx="109.5" cy="484.5" r="3.1" class="p-tree t2"/>
+<circle cx="140.4" cy="389.1" r="3.1" class="p-tree t2"/>
+<circle cx="294.4" cy="420.2" r="5.6" class="p-tree t1"/>
+<circle cx="257.9" cy="261.1" r="4.3" class="p-tree t1"/>
+<circle cx="232.5" cy="278.2" r="5.6" class="p-tree t1"/>
+<circle cx="144.4" cy="495.9" r="4.3" class="p-tree t1"/>
+<circle cx="276.6" cy="114.7" r="5.6" class="p-tree t1"/>
+<circle cx="319.5" cy="301.8" r="3.1" class="p-tree t2"/>
+<circle cx="136.6" cy="343.8" r="5.6" class="p-tree t1"/>
+<circle cx="128.8" cy="112.9" r="3.1" class="p-tree t2"/>
+<circle cx="177.7" cy="197.8" r="4.3" class="p-tree t1"/>
+<circle cx="225.9" cy="169.4" r="3.1" class="p-tree t2"/>
+<circle cx="298.0" cy="162.3" r="3.1" class="p-tree t2"/>
+<circle cx="208.4" cy="120.7" r="3.1" class="p-tree t2"/>
+<circle cx="134.4" cy="421.2" r="4.3" class="p-tree t1"/>
+<circle cx="177.8" cy="285.9" r="4.3" class="p-tree t1"/>
+<circle cx="99.6" cy="397.1" r="3.1" class="p-tree t2"/>
+<circle cx="297.5" cy="91.6" r="5.6" class="p-tree t1"/>
+<circle cx="281.9" cy="269.4" r="4.3" class="p-tree t1"/>
+<circle cx="259.6" cy="427.3" r="3.1" class="p-tree t2"/>
+<circle cx="158.1" cy="406.7" r="3.1" class="p-tree t2"/>
+<circle cx="265.9" cy="161.3" r="3.1" class="p-tree t2"/>
+<circle cx="228.5" cy="379.4" r="3.1" class="p-tree t2"/>
+<circle cx="266.5" cy="184.7" r="5.6" class="p-tree t1"/>
+<circle cx="84.9" cy="214.2" r="5.6" class="p-tree t1"/>
+<circle cx="273.2" cy="131.8" r="3.1" class="p-tree t2"/>
+<circle cx="193.1" cy="131.6" r="5.6" class="p-tree t1"/>
+<circle cx="197.3" cy="282.1" r="3.1" class="p-tree t2"/>
+<circle cx="59.3" cy="354.0" r="4.3" class="p-tree t1"/>
+<circle cx="92.1" cy="176.0" r="4.3" class="p-tree t1"/>
+<circle cx="67.4" cy="490.0" r="3.1" class="p-tree t2"/>
+<circle cx="77.9" cy="356.9" r="4.3" class="p-tree t1"/>
+<circle cx="252.8" cy="160.1" r="3.1" class="p-tree t2"/>
+<circle cx="243.3" cy="282.7" r="4.3" class="p-tree t1"/>
+<circle cx="203.0" cy="299.6" r="3.1" class="p-tree t2"/>
+<circle cx="105.5" cy="260.3" r="4.3" class="p-tree t1"/>
+<circle cx="200.7" cy="446.4" r="3.1" class="p-tree t2"/>
+<circle cx="103.6" cy="214.1" r="4.3" class="p-tree t1"/>
+<circle cx="246.6" cy="337.9" r="4.3" class="p-tree t1"/>
+<circle cx="98.2" cy="348.5" r="4.3" class="p-tree t1"/>
+<circle cx="57.9" cy="119.8" r="4.3" class="p-tree t1"/>
+<circle cx="160.1" cy="463.8" r="4.3" class="p-tree t1"/>
+<circle cx="180.8" cy="121.6" r="5.6" class="p-tree t1"/>
+<circle cx="105.0" cy="374.8" r="4.3" class="p-tree t1"/>
+<circle cx="274.2" cy="222.4" r="3.1" class="p-tree t2"/>
+<circle cx="198.7" cy="342.3" r="5.6" class="p-tree t1"/>
+<circle cx="318.3" cy="248.4" r="5.6" class="p-tree t1"/>
+<circle cx="241.9" cy="103.4" r="5.6" class="p-tree t1"/>
+<circle cx="261.0" cy="409.9" r="4.3" class="p-tree t1"/>
+<circle cx="206.4" cy="204.7" r="4.3" class="p-tree t1"/>
+<circle cx="74.1" cy="163.3" r="4.3" class="p-tree t1"/>
+<circle cx="175.4" cy="439.0" r="5.6" class="p-tree t1"/>
+<circle cx="198.1" cy="456.4" r="4.3" class="p-tree t1"/>
+<circle cx="256.0" cy="323.2" r="3.1" class="p-tree t2"/>
+<circle cx="99.7" cy="289.2" r="3.1" class="p-tree t2"/>
+<circle cx="173.1" cy="328.8" r="5.6" class="p-tree t1"/>
+<circle cx="154.5" cy="267.3" r="3.1" class="p-tree t2"/>
+<circle cx="298.2" cy="234.6" r="4.3" class="p-tree t1"/>
+<circle cx="254.2" cy="275.9" r="4.3" class="p-tree t1"/>
+<circle cx="296.1" cy="250.1" r="5.6" class="p-tree t1"/>
+<circle cx="136.6" cy="477.8" r="5.6" class="p-tree t1"/>
+<circle cx="289.9" cy="116.4" r="3.1" class="p-tree t2"/>
+<circle cx="238.7" cy="264.0" r="3.1" class="p-tree t2"/>
+<circle cx="164.1" cy="171.2" r="3.1" class="p-tree t2"/>
+<circle cx="226.3" cy="308.0" r="3.1" class="p-tree t2"/>
+<circle cx="82.9" cy="297.5" r="4.3" class="p-tree t1"/>
+<circle cx="49.3" cy="425.9" r="4.3" class="p-tree t1"/>
+<circle cx="55.6" cy="453.5" r="4.3" class="p-tree t1"/>
+<circle cx="87.6" cy="233.6" r="3.1" class="p-tree t2"/>
+<circle cx="133.1" cy="301.0" r="4.3" class="p-tree t1"/>
+<circle cx="194.5" cy="389.3" r="3.1" class="p-tree t2"/>
+<circle cx="226.5" cy="353.2" r="4.3" class="p-tree t1"/>
+<circle cx="311.4" cy="342.9" r="4.3" class="p-tree t1"/>
+<circle cx="243.7" cy="415.3" r="5.6" class="p-tree t1"/>
+<circle cx="310.2" cy="149.7" r="4.3" class="p-tree t1"/>
+<circle cx="129.7" cy="392.1" r="5.6" class="p-tree t1"/>
+<circle cx="57.0" cy="200.5" r="3.1" class="p-tree t2"/>
+<circle cx="66.6" cy="204.0" r="4.3" class="p-tree t1"/>
+<circle cx="96.5" cy="196.2" r="3.1" class="p-tree t2"/>
+<circle cx="264.9" cy="370.1" r="4.3" class="p-tree t1"/>
+<circle cx="287.2" cy="385.6" r="3.1" class="p-tree t2"/>
+<circle cx="186.5" cy="198.9" r="3.1" class="p-tree t2"/>
+<circle cx="114.0" cy="447.6" r="4.3" class="p-tree t1"/>
+<circle cx="185.1" cy="228.1" r="5.6" class="p-tree t1"/>
+<circle cx="95.9" cy="408.7" r="3.1" class="p-tree t2"/>
+<circle cx="263.7" cy="438.2" r="4.3" class="p-tree t1"/>
+<circle cx="176.5" cy="210.8" r="5.6" class="p-tree t1"/>
+<circle cx="255.2" cy="231.0" r="3.1" class="p-tree t2"/>
+<circle cx="257.3" cy="178.7" r="3.1" class="p-tree t2"/>
+<circle cx="129.8" cy="454.1" r="3.1" class="p-tree t2"/>
+<circle cx="226.4" cy="450.1" r="4.3" class="p-tree t1"/>
+<circle cx="301.1" cy="382.7" r="4.3" class="p-tree t1"/>
+<circle cx="116.3" cy="186.4" r="3.1" class="p-tree t2"/>
+<circle cx="148.1" cy="386.7" r="3.1" class="p-tree t2"/>
+<circle cx="108.4" cy="466.4" r="3.1" class="p-tree t2"/>
+<circle cx="91.0" cy="133.8" r="4.3" class="p-tree t1"/>
+<circle cx="54.7" cy="392.4" r="4.3" class="p-tree t1"/>
+<circle cx="114.1" cy="490.0" r="3.1" class="p-tree t2"/>
+<circle cx="151.9" cy="144.0" r="4.3" class="p-tree t1"/>
+<circle cx="195.0" cy="305.0" r="3.1" class="p-tree t2"/>
+<circle cx="309.7" cy="115.6" r="3.1" class="p-tree t2"/>
+<circle cx="241.0" cy="382.3" r="4.3" class="p-tree t1"/>
+<circle cx="251.7" cy="112.5" r="3.1" class="p-tree t2"/>
+<circle cx="179.6" cy="385.1" r="5.6" class="p-tree t1"/>
+<circle cx="81.9" cy="146.6" r="4.3" class="p-tree t1"/>
+<circle cx="130.9" cy="212.9" r="4.3" class="p-tree t1"/>
+<circle cx="57.6" cy="234.3" r="3.1" class="p-tree t2"/>
+<circle cx="259.6" cy="219.6" r="5.6" class="p-tree t1"/>
+<circle cx="124.4" cy="170.0" r="4.3" class="p-tree t1"/>
+<circle cx="133.3" cy="356.2" r="3.1" class="p-tree t2"/>
+<circle cx="90.0" cy="435.6" r="3.1" class="p-tree t2"/>
+<circle cx="49.4" cy="303.1" r="4.3" class="p-tree t1"/>
+<circle cx="290.3" cy="187.9" r="4.3" class="p-tree t1"/>
+<circle cx="121.1" cy="462.6" r="3.1" class="p-tree t2"/>
+<circle cx="157.2" cy="431.3" r="3.1" class="p-tree t2"/>
+<circle cx="117.1" cy="374.7" r="3.1" class="p-tree t2"/>
+<circle cx="63.7" cy="417.9" r="5.6" class="p-tree t1"/>
+<circle cx="250.8" cy="195.8" r="4.3" class="p-tree t1"/>
+<circle cx="219.1" cy="149.2" r="3.1" class="p-tree t2"/>
+<circle cx="128.7" cy="240.4" r="3.1" class="p-tree t2"/>
+<circle cx="321.2" cy="112.2" r="3.1" class="p-tree t2"/>
+<circle cx="126.2" cy="154.8" r="4.3" class="p-tree t1"/>
+<circle cx="204.3" cy="371.8" r="4.3" class="p-tree t1"/>
+<circle cx="319.6" cy="289.2" r="3.1" class="p-tree t2"/>
+<circle cx="320.4" cy="275.8" r="5.6" class="p-tree t1"/>
+<circle cx="61.9" cy="172.1" r="3.1" class="p-tree t2"/>
+<circle cx="147.0" cy="195.6" r="4.3" class="p-tree t1"/>
+<circle cx="66.3" cy="330.8" r="3.1" class="p-tree t2"/>
+<circle cx="66.5" cy="372.0" r="5.6" class="p-tree t1"/>
+<circle cx="121.4" cy="405.7" r="5.6" class="p-tree t1"/>
+<circle cx="55.5" cy="288.1" r="3.1" class="p-tree t2"/>
+<circle cx="220.1" cy="298.5" r="4.3" class="p-tree t1"/>
+<circle cx="84.8" cy="391.6" r="3.1" class="p-tree t2"/>
+<circle cx="150.8" cy="422.7" r="3.1" class="p-tree t2"/>
+<circle cx="51.7" cy="319.4" r="4.3" class="p-tree t1"/>
+<circle cx="74.9" cy="131.4" r="3.1" class="p-tree t2"/>
+<circle cx="166.4" cy="108.2" r="3.1" class="p-tree t2"/>
+<circle cx="185.3" cy="176.5" r="3.1" class="p-tree t2"/>
+<circle cx="307.6" cy="325.4" r="3.1" class="p-tree t2"/>
+<circle cx="142.5" cy="290.9" r="4.3" class="p-tree t1"/>
+<circle cx="68.8" cy="317.6" r="3.1" class="p-tree t2"/>
+<circle cx="259.4" cy="250.0" r="3.1" class="p-tree t2"/>
+<polygon points="356.0,437.6 356.0,52.9 366.9,50.8 366.9,434.4" class="p-road"/>
+<polygon points="428.9,415.9 428.9,38.6 439.7,36.4 439.7,412.7" class="p-road"/>
+<rect x="325.0" y="420.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="405.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="389.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="374.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="358.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="343.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="327.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="312.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="296.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="281.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="265.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="250.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="234.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="219.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="203.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="188.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="172.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="157.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="141.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="126.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="110.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="95.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="79.5" width="31.0" height="15.5" class="p-lot"/>
+<rect x="325.0" y="64.0" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="408.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="392.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="377.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="361.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="346.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="330.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="315.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="299.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="284.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="268.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="253.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="237.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="222.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="206.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="191.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="175.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="160.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="144.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="129.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="113.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="98.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="82.6" width="31.0" height="15.5" class="p-lot"/>
+<rect x="366.9" y="67.1" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="398.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="383.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="367.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="352.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="336.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="321.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="305.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="290.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="274.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="259.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="243.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="228.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="212.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="197.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="181.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="166.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="150.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="135.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="119.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="104.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="88.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="73.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="397.9" y="57.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="386.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="370.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="355.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="339.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="324.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="308.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="293.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="277.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="262.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="246.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="231.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="215.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="200.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="184.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="169.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="153.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="138.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="122.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="107.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="91.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="76.4" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="60.9" width="31.0" height="15.5" class="p-lot"/>
+<rect x="439.7" y="45.4" width="31.0" height="15.5" class="p-lot"/>
+<line x1="183.1" y1="489.0" x2="183.1" y2="86.9" class="p-cut"/>
+<line x1="325.0" y1="446.8" x2="325.0" y2="59.0" class="p-cut"/>
+<polygon points="46.0,529.8 46.0,113.9 332.5,57.5 472.4,30.0 472.4,403.0" class="p-edge"/>
+<text x="114.5" y="91.4" class="p-stage" text-anchor="middle">Phase 1</text>
+<text x="254.0" y="64.0" class="p-stage" text-anchor="middle">Phase 2</text>
+<text x="398.7" y="35.5" class="p-stage" text-anchor="middle">Phase 3</text>
+<text x="259.2" y="490.4" class="p-street" text-anchor="middle" transform="rotate(-16.56 259.2 490.4)">Unnamed street</text>
+<text x="494.4" y="216.5" class="p-street" text-anchor="middle" transform="rotate(90 494.4 216.5)">Unnamed street</text>
+<g class="p-north"><path d="M14 52 L22 28 L30 52 L22 46 Z"/><text x="22" y="20" text-anchor="middle">N</text></g>
+<g class="p-scale"><line x1="46" y1="580" x2="123.5" y2="580"/><line x1="46" y1="574" x2="46" y2="586"/><line x1="123.5" y1="574" x2="123.5" y2="586"/><text x="84.8" y="572" text-anchor="middle">50 m</text></g>
+</svg>
+    <figcaption>Based on the topographic survey of parcel 3735. The lot layout is schematic.</figcaption>
+  </figure>
+</div>
+
+<dl class="datos">
+  <div><dt>Area</dt><dd>7 hectares</dd></div>
+  <div><dt>Location</dt><dd>Next to Acanceh, Yucatán</dd></div>
+  <div><dt>Phase 3</dt><dd>93 lots of 200 m²</dd></div>
+  <div><dt>Common areas and roads</dt><dd>20% of the phase</dd></div>
+</dl>
+
+<section id="lugar" aria-labelledby="lugar-t">
+  <div class="sec-head">
+    <h2 id="lugar-t">The forest first, everything else after.</h2>
+    <p class="lede">There is already life on the land: well water, solar power and three buildings. Shared infrastructure is built together, with a light footprint and off the grid.</p>
+  </div>
+  <div class="dos">
+    <div>
+      <h3>What is there today</h3>
+      <ul class="lista"><li>Well water<small>Reached at 27 meters</small></li><li>Solar power<small>Panels and batteries in one of the lived-in houses</small></li><li>Three buildings<small>Location on the plan: <span class="tbd">to be confirmed</span></small></li><li>Access from two streets<small>On the south and east sides of the property</small></li><li>Close to Acanceh<small>About 1.2 km along Calle 19, per the survey sketch</small></li></ul>
+    </div>
+    <div>
+      <h3>What we build together</h3>
+      <ul class="lista"><li>Internal roads in phase 3<small>Estimated date: <span class="tbd">to be defined</span></small></li><li>Shared solar system<small>Estimated date: <span class="tbd">to be defined</span></small></li><li>Water storage and distribution<small>Estimated date: <span class="tbd">to be defined</span></small></li><li>Garden and nursery<small>Estimated date: <span class="tbd">to be defined</span></small></li><li>Shared palapa and storage<small>Estimated date: <span class="tbd">to be defined</span></small></li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="etapas" aria-labelledby="etapas-t">
+  <div class="sec-head">
+    <h2 id="etapas-t">Three phases, from west to east.</h2>
+    <p class="lede">Each phase covers a third of the property, about 2.33 hectares. We start with phase 3, along the street; the other two remain forest.</p>
+  </div>
+  <div class="etapas">
+    <ol class="etapas-lista">
+      <li><h3>Phase 3 <span class="etiqueta et-on">Available</span></h3><p>On the east side, facing the street. 93 lots of 10 × 20 m with two internal roads; 20% of the phase is set aside for common areas and roads.</p></li>
+      <li><h3>Phase 2 <span class="etiqueta et-off">Coming later</span></h3><p>In the middle of the property. It remains forest while its use is decided: <span class="tbd">to be defined</span>.</p></li>
+      <li><h3>Phase 1 <span class="etiqueta et-off">Coming later</span></h3><p>On the west side. It remains forest while its use is decided: <span class="tbd">to be defined</span>.</p></li>
+    </ol>
+    <div class="mapa-e3">
+<svg class="plan plan-e3" viewBox="0 0 311 772" role="group" aria-label="Phase 3: 93 lots. Choose one to see its details.">
+<polygon points="14.0,742.1 14.0,66.5 270.7,16.0 270.7,665.7" class="p-common"/>
+<polygon points="68.0,726.0 68.0,55.9 86.9,52.2 86.9,720.4" class="p-road"/>
+<polygon points="194.9,688.3 194.9,30.9 213.8,27.2 213.8,682.6" class="p-road"/>
+<g class="lote" data-lote="1" tabindex="0" role="button" aria-label="Lot 1"><rect x="14.6" y="696.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="713.8" text-anchor="middle">1</text></g>
+<g class="lote" data-lote="2" tabindex="0" role="button" aria-label="Lot 2"><rect x="14.6" y="669.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="686.8" text-anchor="middle">2</text></g>
+<g class="lote" data-lote="3" tabindex="0" role="button" aria-label="Lot 3"><rect x="14.6" y="642.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="659.8" text-anchor="middle">3</text></g>
+<g class="lote" data-lote="4" tabindex="0" role="button" aria-label="Lot 4"><rect x="14.6" y="615.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="632.8" text-anchor="middle">4</text></g>
+<g class="lote" data-lote="5" tabindex="0" role="button" aria-label="Lot 5"><rect x="14.6" y="588.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="605.8" text-anchor="middle">5</text></g>
+<g class="lote" data-lote="6" tabindex="0" role="button" aria-label="Lot 6"><rect x="14.6" y="561.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="578.8" text-anchor="middle">6</text></g>
+<g class="lote" data-lote="7" tabindex="0" role="button" aria-label="Lot 7"><rect x="14.6" y="534.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="551.8" text-anchor="middle">7</text></g>
+<g class="lote" data-lote="8" tabindex="0" role="button" aria-label="Lot 8"><rect x="14.6" y="507.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="524.8" text-anchor="middle">8</text></g>
+<g class="lote" data-lote="9" tabindex="0" role="button" aria-label="Lot 9"><rect x="14.6" y="480.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="497.8" text-anchor="middle">9</text></g>
+<g class="lote" data-lote="10" tabindex="0" role="button" aria-label="Lot 10"><rect x="14.6" y="453.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="470.8" text-anchor="middle">10</text></g>
+<g class="lote" data-lote="11" tabindex="0" role="button" aria-label="Lot 11"><rect x="14.6" y="426.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="443.8" text-anchor="middle">11</text></g>
+<g class="lote" data-lote="12" tabindex="0" role="button" aria-label="Lot 12"><rect x="14.6" y="399.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="416.8" text-anchor="middle">12</text></g>
+<g class="lote" data-lote="13" tabindex="0" role="button" aria-label="Lot 13"><rect x="14.6" y="372.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="389.8" text-anchor="middle">13</text></g>
+<g class="lote" data-lote="14" tabindex="0" role="button" aria-label="Lot 14"><rect x="14.6" y="345.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="362.8" text-anchor="middle">14</text></g>
+<g class="lote" data-lote="15" tabindex="0" role="button" aria-label="Lot 15"><rect x="14.6" y="318.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="335.8" text-anchor="middle">15</text></g>
+<g class="lote" data-lote="16" tabindex="0" role="button" aria-label="Lot 16"><rect x="14.6" y="291.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="308.8" text-anchor="middle">16</text></g>
+<g class="lote" data-lote="17" tabindex="0" role="button" aria-label="Lot 17"><rect x="14.6" y="264.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="281.8" text-anchor="middle">17</text></g>
+<g class="lote" data-lote="18" tabindex="0" role="button" aria-label="Lot 18"><rect x="14.6" y="237.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="254.8" text-anchor="middle">18</text></g>
+<g class="lote" data-lote="19" tabindex="0" role="button" aria-label="Lot 19"><rect x="14.6" y="210.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="227.8" text-anchor="middle">19</text></g>
+<g class="lote" data-lote="20" tabindex="0" role="button" aria-label="Lot 20"><rect x="14.6" y="183.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="200.8" text-anchor="middle">20</text></g>
+<g class="lote" data-lote="21" tabindex="0" role="button" aria-label="Lot 21"><rect x="14.6" y="156.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="173.8" text-anchor="middle">21</text></g>
+<g class="lote" data-lote="22" tabindex="0" role="button" aria-label="Lot 22"><rect x="14.6" y="129.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="146.8" text-anchor="middle">22</text></g>
+<g class="lote" data-lote="23" tabindex="0" role="button" aria-label="Lot 23"><rect x="14.6" y="102.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="119.8" text-anchor="middle">23</text></g>
+<g class="lote" data-lote="24" tabindex="0" role="button" aria-label="Lot 24"><rect x="14.6" y="75.9" width="52.8" height="25.8" rx="2"/><text x="41.0" y="92.8" text-anchor="middle">24</text></g>
+<g class="lote" data-lote="25" tabindex="0" role="button" aria-label="Lot 25"><rect x="87.5" y="675.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="692.1" text-anchor="middle">25</text></g>
+<g class="lote" data-lote="26" tabindex="0" role="button" aria-label="Lot 26"><rect x="87.5" y="648.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="665.1" text-anchor="middle">26</text></g>
+<g class="lote" data-lote="27" tabindex="0" role="button" aria-label="Lot 27"><rect x="87.5" y="621.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="638.1" text-anchor="middle">27</text></g>
+<g class="lote" data-lote="28" tabindex="0" role="button" aria-label="Lot 28"><rect x="87.5" y="594.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="611.1" text-anchor="middle">28</text></g>
+<g class="lote" data-lote="29" tabindex="0" role="button" aria-label="Lot 29"><rect x="87.5" y="567.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="584.1" text-anchor="middle">29</text></g>
+<g class="lote" data-lote="30" tabindex="0" role="button" aria-label="Lot 30"><rect x="87.5" y="540.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="557.1" text-anchor="middle">30</text></g>
+<g class="lote" data-lote="31" tabindex="0" role="button" aria-label="Lot 31"><rect x="87.5" y="513.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="530.1" text-anchor="middle">31</text></g>
+<g class="lote" data-lote="32" tabindex="0" role="button" aria-label="Lot 32"><rect x="87.5" y="486.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="503.1" text-anchor="middle">32</text></g>
+<g class="lote" data-lote="33" tabindex="0" role="button" aria-label="Lot 33"><rect x="87.5" y="459.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="476.1" text-anchor="middle">33</text></g>
+<g class="lote" data-lote="34" tabindex="0" role="button" aria-label="Lot 34"><rect x="87.5" y="432.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="449.1" text-anchor="middle">34</text></g>
+<g class="lote" data-lote="35" tabindex="0" role="button" aria-label="Lot 35"><rect x="87.5" y="405.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="422.1" text-anchor="middle">35</text></g>
+<g class="lote" data-lote="36" tabindex="0" role="button" aria-label="Lot 36"><rect x="87.5" y="378.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="395.1" text-anchor="middle">36</text></g>
+<g class="lote" data-lote="37" tabindex="0" role="button" aria-label="Lot 37"><rect x="87.5" y="351.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="368.1" text-anchor="middle">37</text></g>
+<g class="lote" data-lote="38" tabindex="0" role="button" aria-label="Lot 38"><rect x="87.5" y="324.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="341.1" text-anchor="middle">38</text></g>
+<g class="lote" data-lote="39" tabindex="0" role="button" aria-label="Lot 39"><rect x="87.5" y="297.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="314.1" text-anchor="middle">39</text></g>
+<g class="lote" data-lote="40" tabindex="0" role="button" aria-label="Lot 40"><rect x="87.5" y="270.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="287.1" text-anchor="middle">40</text></g>
+<g class="lote" data-lote="41" tabindex="0" role="button" aria-label="Lot 41"><rect x="87.5" y="243.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="260.1" text-anchor="middle">41</text></g>
+<g class="lote" data-lote="42" tabindex="0" role="button" aria-label="Lot 42"><rect x="87.5" y="216.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="233.1" text-anchor="middle">42</text></g>
+<g class="lote" data-lote="43" tabindex="0" role="button" aria-label="Lot 43"><rect x="87.5" y="189.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="206.1" text-anchor="middle">43</text></g>
+<g class="lote" data-lote="44" tabindex="0" role="button" aria-label="Lot 44"><rect x="87.5" y="162.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="179.1" text-anchor="middle">44</text></g>
+<g class="lote" data-lote="45" tabindex="0" role="button" aria-label="Lot 45"><rect x="87.5" y="135.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="152.1" text-anchor="middle">45</text></g>
+<g class="lote" data-lote="46" tabindex="0" role="button" aria-label="Lot 46"><rect x="87.5" y="108.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="125.1" text-anchor="middle">46</text></g>
+<g class="lote" data-lote="47" tabindex="0" role="button" aria-label="Lot 47"><rect x="87.5" y="81.2" width="52.8" height="25.8" rx="2"/><text x="113.9" y="98.1" text-anchor="middle">47</text></g>
+<g class="lote" data-lote="48" tabindex="0" role="button" aria-label="Lot 48"><rect x="141.5" y="659.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="676.1" text-anchor="middle">48</text></g>
+<g class="lote" data-lote="49" tabindex="0" role="button" aria-label="Lot 49"><rect x="141.5" y="632.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="649.1" text-anchor="middle">49</text></g>
+<g class="lote" data-lote="50" tabindex="0" role="button" aria-label="Lot 50"><rect x="141.5" y="605.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="622.1" text-anchor="middle">50</text></g>
+<g class="lote" data-lote="51" tabindex="0" role="button" aria-label="Lot 51"><rect x="141.5" y="578.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="595.1" text-anchor="middle">51</text></g>
+<g class="lote" data-lote="52" tabindex="0" role="button" aria-label="Lot 52"><rect x="141.5" y="551.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="568.1" text-anchor="middle">52</text></g>
+<g class="lote" data-lote="53" tabindex="0" role="button" aria-label="Lot 53"><rect x="141.5" y="524.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="541.1" text-anchor="middle">53</text></g>
+<g class="lote" data-lote="54" tabindex="0" role="button" aria-label="Lot 54"><rect x="141.5" y="497.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="514.1" text-anchor="middle">54</text></g>
+<g class="lote" data-lote="55" tabindex="0" role="button" aria-label="Lot 55"><rect x="141.5" y="470.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="487.1" text-anchor="middle">55</text></g>
+<g class="lote" data-lote="56" tabindex="0" role="button" aria-label="Lot 56"><rect x="141.5" y="443.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="460.1" text-anchor="middle">56</text></g>
+<g class="lote" data-lote="57" tabindex="0" role="button" aria-label="Lot 57"><rect x="141.5" y="416.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="433.1" text-anchor="middle">57</text></g>
+<g class="lote" data-lote="58" tabindex="0" role="button" aria-label="Lot 58"><rect x="141.5" y="389.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="406.1" text-anchor="middle">58</text></g>
+<g class="lote" data-lote="59" tabindex="0" role="button" aria-label="Lot 59"><rect x="141.5" y="362.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="379.1" text-anchor="middle">59</text></g>
+<g class="lote" data-lote="60" tabindex="0" role="button" aria-label="Lot 60"><rect x="141.5" y="335.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="352.1" text-anchor="middle">60</text></g>
+<g class="lote" data-lote="61" tabindex="0" role="button" aria-label="Lot 61"><rect x="141.5" y="308.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="325.1" text-anchor="middle">61</text></g>
+<g class="lote" data-lote="62" tabindex="0" role="button" aria-label="Lot 62"><rect x="141.5" y="281.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="298.1" text-anchor="middle">62</text></g>
+<g class="lote" data-lote="63" tabindex="0" role="button" aria-label="Lot 63"><rect x="141.5" y="254.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="271.1" text-anchor="middle">63</text></g>
+<g class="lote" data-lote="64" tabindex="0" role="button" aria-label="Lot 64"><rect x="141.5" y="227.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="244.1" text-anchor="middle">64</text></g>
+<g class="lote" data-lote="65" tabindex="0" role="button" aria-label="Lot 65"><rect x="141.5" y="200.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="217.1" text-anchor="middle">65</text></g>
+<g class="lote" data-lote="66" tabindex="0" role="button" aria-label="Lot 66"><rect x="141.5" y="173.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="190.1" text-anchor="middle">66</text></g>
+<g class="lote" data-lote="67" tabindex="0" role="button" aria-label="Lot 67"><rect x="141.5" y="146.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="163.1" text-anchor="middle">67</text></g>
+<g class="lote" data-lote="68" tabindex="0" role="button" aria-label="Lot 68"><rect x="141.5" y="119.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="136.1" text-anchor="middle">68</text></g>
+<g class="lote" data-lote="69" tabindex="0" role="button" aria-label="Lot 69"><rect x="141.5" y="92.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="109.1" text-anchor="middle">69</text></g>
+<g class="lote" data-lote="70" tabindex="0" role="button" aria-label="Lot 70"><rect x="141.5" y="65.2" width="52.8" height="25.8" rx="2"/><text x="167.9" y="82.1" text-anchor="middle">70</text></g>
+<g class="lote" data-lote="71" tabindex="0" role="button" aria-label="Lot 71"><rect x="214.4" y="637.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="654.4" text-anchor="middle">71</text></g>
+<g class="lote" data-lote="72" tabindex="0" role="button" aria-label="Lot 72"><rect x="214.4" y="610.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="627.4" text-anchor="middle">72</text></g>
+<g class="lote" data-lote="73" tabindex="0" role="button" aria-label="Lot 73"><rect x="214.4" y="583.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="600.4" text-anchor="middle">73</text></g>
+<g class="lote" data-lote="74" tabindex="0" role="button" aria-label="Lot 74"><rect x="214.4" y="556.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="573.4" text-anchor="middle">74</text></g>
+<g class="lote" data-lote="75" tabindex="0" role="button" aria-label="Lot 75"><rect x="214.4" y="529.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="546.4" text-anchor="middle">75</text></g>
+<g class="lote" data-lote="76" tabindex="0" role="button" aria-label="Lot 76"><rect x="214.4" y="502.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="519.4" text-anchor="middle">76</text></g>
+<g class="lote" data-lote="77" tabindex="0" role="button" aria-label="Lot 77"><rect x="214.4" y="475.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="492.4" text-anchor="middle">77</text></g>
+<g class="lote" data-lote="78" tabindex="0" role="button" aria-label="Lot 78"><rect x="214.4" y="448.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="465.4" text-anchor="middle">78</text></g>
+<g class="lote" data-lote="79" tabindex="0" role="button" aria-label="Lot 79"><rect x="214.4" y="421.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="438.4" text-anchor="middle">79</text></g>
+<g class="lote" data-lote="80" tabindex="0" role="button" aria-label="Lot 80"><rect x="214.4" y="394.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="411.4" text-anchor="middle">80</text></g>
+<g class="lote" data-lote="81" tabindex="0" role="button" aria-label="Lot 81"><rect x="214.4" y="367.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="384.4" text-anchor="middle">81</text></g>
+<g class="lote" data-lote="82" tabindex="0" role="button" aria-label="Lot 82"><rect x="214.4" y="340.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="357.4" text-anchor="middle">82</text></g>
+<g class="lote" data-lote="83" tabindex="0" role="button" aria-label="Lot 83"><rect x="214.4" y="313.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="330.4" text-anchor="middle">83</text></g>
+<g class="lote" data-lote="84" tabindex="0" role="button" aria-label="Lot 84"><rect x="214.4" y="286.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="303.4" text-anchor="middle">84</text></g>
+<g class="lote" data-lote="85" tabindex="0" role="button" aria-label="Lot 85"><rect x="214.4" y="259.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="276.4" text-anchor="middle">85</text></g>
+<g class="lote" data-lote="86" tabindex="0" role="button" aria-label="Lot 86"><rect x="214.4" y="232.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="249.4" text-anchor="middle">86</text></g>
+<g class="lote" data-lote="87" tabindex="0" role="button" aria-label="Lot 87"><rect x="214.4" y="205.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="222.4" text-anchor="middle">87</text></g>
+<g class="lote" data-lote="88" tabindex="0" role="button" aria-label="Lot 88"><rect x="214.4" y="178.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="195.4" text-anchor="middle">88</text></g>
+<g class="lote" data-lote="89" tabindex="0" role="button" aria-label="Lot 89"><rect x="214.4" y="151.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="168.4" text-anchor="middle">89</text></g>
+<g class="lote" data-lote="90" tabindex="0" role="button" aria-label="Lot 90"><rect x="214.4" y="124.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="141.4" text-anchor="middle">90</text></g>
+<g class="lote" data-lote="91" tabindex="0" role="button" aria-label="Lot 91"><rect x="214.4" y="97.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="114.4" text-anchor="middle">91</text></g>
+<g class="lote" data-lote="92" tabindex="0" role="button" aria-label="Lot 92"><rect x="214.4" y="70.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="87.4" text-anchor="middle">92</text></g>
+<g class="lote" data-lote="93" tabindex="0" role="button" aria-label="Lot 93"><rect x="214.4" y="43.5" width="52.8" height="25.8" rx="2"/><text x="240.8" y="60.4" text-anchor="middle">93</text></g>
+<polygon points="14.0,742.1 14.0,66.5 270.7,16.0 270.7,665.7" class="p-edge-soft"/>
+<text x="290.7" y="340.9" class="p-street" text-anchor="middle" transform="rotate(90 290.7 340.9)">Unnamed street</text>
+</svg>
+    </div>
+    <div class="ficha" aria-live="polite">
+      <div id="ficha"><p class="vacia">Choose a lot on the plan to see its details.</p></div>
+      <ul class="leyenda">
+        <li><span style="background:#D8B23E"></span>Available</li>
+        <li><span style="background:#EFE7C8"></span>Reserved</li>
+        <li><span style="background:#3F6B45"></span>Sold</li>
+      </ul>
+      <p class="cuenta" id="cuenta"></p>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<div class="banda">
+<div class="wrap">
+<section id="participacion" aria-labelledby="part-t">
+  <div class="sec-head">
+    <h2 id="part-t">What your stake gives you, and what it doesn't.</h2>
+    <p class="lede">Your stake is a share in the Bosque Venado series. It gives you the right to use a 200 m² lot and a say in how the land is cared for.</p>
+  </div>
+  <div class="dos">
+    <div><h3>Included</h3><ul class="lista si"><li>Use of a 200 m² lot<small>Assigned to your stake, in phase 3</small></li><li>Access to common areas<small>Roads, water, power, garden and storage, with a maintenance fee</small></li><li>Building on your lot<small>Type, materials and size set by the rules: <span class="tbd">to be defined</span></small></li><li>A vote on decisions about the land<small>Rules, improvements and admission of new members</small></li><li>Inheritance and resale<small>The new holder is admitted by the community</small></li></ul></div>
+    <div><h3>Not included</h3><ul class="lista no"><li>An individual deed to the lot<small>The land belongs to the company; your right is recorded in the share register</small></li><li>Clearing land on your own<small>Any clearing is decided together and with permits</small></li><li>Renting or commercial use of the lot<small>Rule: <span class="tbd">to be defined</span></small></li><li>A promise of returns or appreciation<small>The value is in the use and the community</small></li></ul></div>
+  </div>
+  <p class="nota">Your rights are set by the bylaws, the use rules and your contract. Final documents: <span class="tbd">to be defined</span>.</p>
+</section>
+</div>
+</div>
+
+<div class="wrap">
+<section id="precios" aria-labelledby="precios-t">
+  <div class="sec-head">
+    <h2 id="precios-t">One lot, six ways to pay.</h2>
+    <p class="lede">Each 200 m² lot costs MXN $100,000 over 60 months, or $500 per m². The shorter the term, the lower the total price.</p>
+  </div>
+  <div class="cotiza">
+    <div>
+      <fieldset class="plazos" id="plazos"><legend>Choose a term</legend></fieldset>
+      <div class="resultado" aria-live="polite">
+        <div id="r-etq"></div>
+        <div class="cifra" id="r-cifra"></div>
+        <dl class="desglose">
+          <div><dt>Down payment</dt><dd id="r-eng"></dd></div>
+          <div><dt>Total price</dt><dd id="r-total"></dd></div>
+          <div><dt>Price per m²</dt><dd id="r-m2"></dd></div>
+          <div><dt>Savings vs. 60 months</dt><dd id="r-ahorro"></dd></div>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <table>
+        <caption>All plans</caption>
+        <thead><tr><th scope="col">Term</th><th scope="col">Monthly</th><th scope="col">Total</th><th scope="col">Discount</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+      <p class="letra">MXN $10,000 down payment on every term (<span class="tbd">to be confirmed</span>). If you pay off early, you pay the price of the term in which you finish. Phase 3 prices, valid until <span class="tbd">date to be defined</span>. The maintenance fee is separate: <span class="tbd">amount to be defined</span>. Prices in Mexican pesos, interest-free.</p>
+    </div>
+  </div>
+</section>
+
+<section id="entrar" aria-labelledby="entrar-t">
+  <div class="sec-head">
+    <h2 id="entrar-t">How to join the community.</h2>
+    <p class="lede">Before any payment, we get to know each other. A strong community starts with choosing well who joins.</p>
+  </div>
+  <ol class="pasos"><li><h3>Visit the land</h3><p>Walk the forest, the buildings and the available lots.</p></li><li><h3>Talk with the community</h3><p>We discuss values, expectations and how you want to use the place.</p></li><li><h3>Reserve and review</h3><p>You receive the bylaws, rules and contract to review at your own pace.</p></li><li><h3>Sign and register</h3><p>You sign your contract and are entered in the share register.</p></li><li><h3>Receive your token</h3><p>La Tokenizadora issues your token and your lot is assigned.</p></li></ol>
+</section>
+
+<section id="estructura" aria-labelledby="estr-t">
+  <div class="sec-head">
+    <h2 id="estr-t">The land, the company and the token.</h2>
+    <p class="lede">Three pieces that back each other up, so your stake is clear today and stays clear if something fails.</p>
+  </div>
+  <div class="capas"><div><h3>The land</h3><p>The property belongs to a series of La Tokenizadora's SAPI created for Bosque Venado. No one can split it up or sell it in pieces.</p></div><div><h3>Your stake</h3><p>It is a set of shares in that series. The share register is the controlling record, and your lot is tied to it.</p></div><div><h3>The token</h3><p>La Tokenizadora tokenizes each stake. Your token is your key, and if the network ever fails, the register and the rules also exist on paper.</p></div></div>
+</section>
+
+<section id="preguntas" aria-labelledby="faq-t">
+  <div class="sec-head"><h2 id="faq-t">Frequently asked questions.</h2></div>
+  <div class="faq"><details><summary>Can I build on my lot?</summary><p>Yes, under the building rules, which set type, materials and size: <span class="tbd">to be defined</span>.</p></details><details><summary>Do I get a deed to the lot?</summary><p>No. The land belongs to the company. Your right of use is tied to your shares in the share register and to your contract.</p></details><details><summary>Can I sell or pass on my stake?</summary><p>Yes. It transfers with your shares, by inheritance or sale. The new holder goes through the same admission process you did.</p></details><details><summary>Is there water and power?</summary><p>There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the shared plan adds solar power for the community.</p></details><details><summary>What about phases 1 and 2?</summary><p>For now they remain forest. Their use and sale will be decided later.</p></details><details><summary>How much is the maintenance fee?</summary><p>It covers roads, water, power and forest care. Amount: <span class="tbd">to be defined</span>.</p></details><details><summary>What happens if I stop paying?</summary><p>What happens to your payments and your stake is set in the contract: <span class="tbd">rule to be defined</span>.</p></details></div>
+</section>
+
+<section id="visita" aria-labelledby="visita-t">
+  <div class="visita">
+    <div>
+      <h2 id="visita-t">Book a visit.</h2>
+      <p class="lede">Tell us who you are and what you are looking for. We will write to set a day and time.</p>
+      <p>Or on WhatsApp: <a href="https://wa.me/529999910450">999 991 0450</a></p>
+    </div>
+    <form name="visita" method="POST" action="/en/gracias" data-netlify="true" netlify-honeypot="bot-field" id="form-visita" novalidate>
+      <input type="hidden" name="form-name" value="visita">
+      <input type="hidden" name="idioma" value="en">
+      <p class="oculto"><label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="campo"><label for="f-nombre">Name</label><input id="f-nombre" type="text" name="nombre" autocomplete="name" required></div>
+      <div class="fila">
+        <div class="campo"><label for="f-email">Email</label><input id="f-email" type="email" name="email" autocomplete="email" required></div>
+        <div class="campo"><label for="f-wa">WhatsApp</label><input id="f-wa" type="tel" name="whatsapp" autocomplete="tel"></div>
+      </div>
+      <div class="fila">
+        <div class="campo"><label for="f-lote">Lot you are interested in</label><input id="f-lote" type="text" name="lote" inputmode="numeric" placeholder="Optional, for example 23"></div>
+        <div class="campo"><label for="f-plazo">Term you are interested in</label>
+          <select id="f-plazo" name="plazo"><option value="">Not sure yet</option><option>60 months</option><option>48 months</option><option>36 months</option><option>24 months</option><option>12 months</option><option>Cash</option></select>
+        </div>
+      </div>
+      <div class="campo"><label for="f-uso">How do you picture using the place?</label><span class="ayuda" id="f-uso-ayuda">Weekends, seasons, living there, a garden…</span><textarea id="f-uso" name="uso" aria-describedby="f-uso-ayuda"></textarea></div>
+      <p class="error" id="f-error" role="alert"></p>
+      <div><button class="btn btn-1" type="submit">Send visit request</button></div>
+    </form>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap pie">
+    <p><strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by La Tokenizadora.</p>
+    <p>This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. Permits and legal documents: <span class="tbd">to be defined</span>. <a href="#">Privacy notice</a> (<span class="tbd">to be defined</span>).</p>
+  </div>
+</footer>
+
+<script>
+const T={"meses": "{n} months", "contado": "Cash", "na": "N/A", "mens_etq": "Monthly payment, {n} payments", "unico": "Single payment", "al_mes": "per month", "incluido": "Included", "lote": "Lot", "sup": "Area", "medidas": "Size", "fila": "Column", "filas": ["A, west", "B", "C", "D, along the street"], "estado": "Status", "desde": "From", "st": {"disponible": "Available", "apartado": "Reserved", "vendido": "Sold"}, "cuenta": "{d} of {t} lots available in phase 3.", "pedir": "Ask about this lot", "err_nombre": "Enter your name.", "err_email": "Enter a valid email, for example name@domain.com."};
+const LOTES={"1": {"col": 1}, "2": {"col": 1}, "3": {"col": 1}, "4": {"col": 1}, "5": {"col": 1}, "6": {"col": 1}, "7": {"col": 1}, "8": {"col": 1}, "9": {"col": 1}, "10": {"col": 1}, "11": {"col": 1}, "12": {"col": 1}, "13": {"col": 1}, "14": {"col": 1}, "15": {"col": 1}, "16": {"col": 1}, "17": {"col": 1}, "18": {"col": 1}, "19": {"col": 1}, "20": {"col": 1}, "21": {"col": 1}, "22": {"col": 1}, "23": {"col": 1}, "24": {"col": 1}, "25": {"col": 2}, "26": {"col": 2}, "27": {"col": 2}, "28": {"col": 2}, "29": {"col": 2}, "30": {"col": 2}, "31": {"col": 2}, "32": {"col": 2}, "33": {"col": 2}, "34": {"col": 2}, "35": {"col": 2}, "36": {"col": 2}, "37": {"col": 2}, "38": {"col": 2}, "39": {"col": 2}, "40": {"col": 2}, "41": {"col": 2}, "42": {"col": 2}, "43": {"col": 2}, "44": {"col": 2}, "45": {"col": 2}, "46": {"col": 2}, "47": {"col": 2}, "48": {"col": 3}, "49": {"col": 3}, "50": {"col": 3}, "51": {"col": 3}, "52": {"col": 3}, "53": {"col": 3}, "54": {"col": 3}, "55": {"col": 3}, "56": {"col": 3}, "57": {"col": 3}, "58": {"col": 3}, "59": {"col": 3}, "60": {"col": 3}, "61": {"col": 3}, "62": {"col": 3}, "63": {"col": 3}, "64": {"col": 3}, "65": {"col": 3}, "66": {"col": 3}, "67": {"col": 3}, "68": {"col": 3}, "69": {"col": 3}, "70": {"col": 3}, "71": {"col": 4}, "72": {"col": 4}, "73": {"col": 4}, "74": {"col": 4}, "75": {"col": 4}, "76": {"col": 4}, "77": {"col": 4}, "78": {"col": 4}, "79": {"col": 4}, "80": {"col": 4}, "81": {"col": 4}, "82": {"col": 4}, "83": {"col": 4}, "84": {"col": 4}, "85": {"col": 4}, "86": {"col": 4}, "87": {"col": 4}, "88": {"col": 4}, "89": {"col": 4}, "90": {"col": 4}, "91": {"col": 4}, "92": {"col": 4}, "93": {"col": 4}};
+/* Estado de cada lote. Por omisión todos están disponibles.
+   Ejemplo: const ESTADO={7:"apartado",12:"vendido"}; */
+const ESTADO={};
+const planes=[
+  {id:"60",m:60,mens:1500},{id:"48",m:48,mens:1750},{id:"36",m:36,mens:2200},
+  {id:"24",m:24,mens:3050},{id:"12",m:12,mens:5700},{id:"c",m:0,total:73000}
+];
+const ENG=10000,BASE=100000,M2=200;
+const $=n=>"$"+Math.round(n).toLocaleString("en-US");
+const nombre=p=>p.m?T.meses.replace("{n}",p.m):T.contado;
+planes.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE});
+const fs=document.getElementById("plazos"),tb=document.getElementById("tabla");
+planes.forEach((p,i)=>{
+  fs.insertAdjacentHTML("beforeend",`<input type="radio" name="plazo-c" id="pl-${p.id}" value="${p.id}" ${i===0?"checked":""}><label for="pl-${p.id}">${nombre(p)}</label>`);
+  tb.insertAdjacentHTML("beforeend",`<tr id="tr-${p.id}"><td>${nombre(p)}</td><td>${p.m?$(p.mens):T.na}</td><td>${$(p.total)}</td><td>${p.desc?(p.desc*100).toFixed(1)+"%":"0%"}</td></tr>`);
+});
+function pinta(id){
+  const p=planes.find(x=>x.id===id);
+  document.getElementById("r-etq").textContent=p.m?T.mens_etq.replace("{n}",p.m):T.unico;
+  document.getElementById("r-cifra").innerHTML=p.m?`${$(p.mens)} <small>${T.al_mes}</small>`:$(p.total);
+  document.getElementById("r-eng").textContent=p.m?$(ENG):T.incluido;
+  document.getElementById("r-total").textContent=$(p.total);
+  document.getElementById("r-m2").textContent=$(p.total/M2);
+  const ah=BASE-p.total,el=document.getElementById("r-ahorro");
+  el.textContent=ah?`${$(ah)} (${(p.desc*100).toFixed(1)}%)`:"$0";el.className=ah?"ahorro":"";
+  document.querySelectorAll("#tabla tr").forEach(r=>r.classList.toggle("activo",r.id==="tr-"+id));
+}
+fs.addEventListener("change",e=>pinta(e.target.value));
+pinta("60");
+
+const est=n=>ESTADO[n]||"disponible";
+const lotes=[...document.querySelectorAll(".plan-e3 .lote")];
+lotes.forEach(g=>{const n=+g.dataset.lote;g.classList.add(est(n));g.setAttribute("aria-label",`${T.lote} ${n}, ${T.st[est(n)]}`)});
+const disp=lotes.filter(g=>est(+g.dataset.lote)==="disponible").length;
+document.getElementById("cuenta").textContent=T.cuenta.replace("{d}",disp).replace("{t}",lotes.length);
+function elige(g){
+  lotes.forEach(x=>x.classList.remove("sel"));g.classList.add("sel");
+  const n=+g.dataset.lote,info=LOTES[n],e=est(n);
+  document.getElementById("ficha").innerHTML=`<div>${T.lote}</div><div class="num">${n}</div>
+  <dl><div><dt>${T.sup}</dt><dd>200 m²</dd></div><div><dt>${T.medidas}</dt><dd>10 × 20 m</dd></div>
+  <div><dt>${T.fila}</dt><dd>${T.filas[info.col-1]}</dd></div><div><dt>${T.estado}</dt><dd>${T.st[e]}</dd></div>
+  <div><dt>${T.desde}</dt><dd>${$(1500)} ${T.al_mes}</dd></div><div><dt>${T.contado}</dt><dd>${$(73000)}</dd></div></dl>
+  ${e==="disponible"?`<a class="btn btn-1" href="#visita" id="pedir">${T.pedir}</a>`:""}`;
+  const b=document.getElementById("pedir");
+  if(b)b.addEventListener("click",()=>{document.getElementById("f-lote").value=n});
+}
+lotes.forEach(g=>{
+  g.addEventListener("click",()=>elige(g));
+  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();elige(g)}});
+});
+
+const f=document.getElementById("form-visita"),err=document.getElementById("f-error");
+f.addEventListener("submit",e=>{
+  if(!f.nombre.value.trim()){e.preventDefault();err.textContent=T.err_nombre;f.nombre.focus();return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())){e.preventDefault();err.textContent=T.err_email;f.email.focus()}
+});
+f.addEventListener("input",()=>{err.textContent=""});
+</script>
+</body>
+</html>

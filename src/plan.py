@@ -7,13 +7,14 @@ Etapas de oriente a poniente: la 1 junto a la calle oriente, la 2 al centro y
 la 3 al poniente. La etapa 3 es la que se lotifica.
 
 LAYOUT elige la lotificación de la etapa 3:
-  "rect": lotes de 11.11 x 18 m con dos vías de 7 m norte-sur.
+  "onda": dos calles onduladas de 6 m que forman un circuito; lotes de 200 m².
+  "rect": lotes de 11.11 x 18 m con dos vías rectas de 7 m norte-sur.
   "hex":  lotes hexagonales de 200 m² rodeados por senderos de 3 m.
 """
 import math
 import random
 
-LAYOUT = "rect"
+LAYOUT = "onda"
 
 P_UTM = [
     (246757.404, 2303902.805),  # 1
@@ -145,8 +146,82 @@ def lots_hex():
     return best, []
 
 
+# ---------- lotificación con calles onduladas ----------
+# Dos calles de doble sentido que ondulan en espejo y se unen al norte en un circuito.
+# Bajan la velocidad de los autos y el ruido, y abren y cierran la manzana central.
+V_ROAD, V_AMP, V_WAVE = 6.0, 6.0, 80.0
+V_C1, V_C2 = 22.0, 66.0
+V_STEP = 0.1
+
+
+def _wave(y):
+    return V_AMP * math.sin(2 * math.pi * y / V_WAVE)
+
+
+def road1(y):
+    return V_C1 + _wave(y)
+
+
+def road2(y):
+    return V_C2 - _wave(y)
+
+
+def _strip_lots(left, right, y_top):
+    """Corta una franja entre dos curvas en lotes de 200 m² con cortes horizontales."""
+    lots = []
+    y = 0.0
+    while y_s(right(y)) + SETBACK > y:
+        y += V_STEP
+    while True:
+        acc, y1 = 0.0, y
+        while acc < LOT_AREA:
+            acc += (right(y1) - left(y1)) * V_STEP
+            y1 += V_STEP
+            if y1 > y_top(y1):
+                return lots
+        ys = [y + k * V_STEP for k in range(int(round((y1 - y) / V_STEP)) + 1)]
+        pts = [(left(v), v) for v in ys] + [(right(v), v) for v in reversed(ys)]
+        lots.append(pts)
+        y = y1
+
+
+def _road_poly(center, y1):
+    """Calle desde el lindero sur (donde toca la calle pública) hasta y1."""
+    y0 = 0.0
+    for _ in range(50):
+        y0 = y_s(center(y0))
+    cl, cr = center(y0) - V_ROAD / 2, center(y0) + V_ROAD / 2
+    ys0 = max(y_s(cl), y_s(cr))
+    ys = [ys0 + k * V_STEP * 4 for k in range(int((y1 - ys0) / (V_STEP * 4)) + 1)]
+    return ([(cl, y_s(cl))] + [(center(v) - V_ROAD / 2, v) for v in ys]
+            + [(center(v) + V_ROAD / 2, v) for v in reversed(ys)] + [(cr, y_s(cr))])
+
+
+def lots_wave():
+    xl, xr = X0 + SETBACK, X1 - SETBACK
+    mid = (V_C1 + V_C2) / 2
+    # conector norte: franja de V_ROAD bajo el lindero norte, entre las dos calles
+    def conn_bottom(x):
+        return y_n(x) - SETBACK - V_ROAD
+    strips = [
+        (lambda y: xl, lambda y: road1(y) - V_ROAD / 2, lambda y: y_n(xl) - SETBACK),
+        (lambda y: road1(y) + V_ROAD / 2, lambda y: mid, lambda y: conn_bottom(V_C1) - 2),
+        (lambda y: mid, lambda y: road2(y) - V_ROAD / 2, lambda y: conn_bottom(mid) - 2),
+        (lambda y: road2(y) + V_ROAD / 2, lambda y: xr, lambda y: y_n(road2(y) + V_ROAD / 2) - SETBACK),
+    ]
+    lots = []
+    for left, right, top in strips:
+        lots += _strip_lots(left, right, top)  # numeración por franja, de sur a norte
+    y_end1 = y_n(V_C1) - SETBACK
+    y_end2 = y_n(V_C2) - SETBACK
+    ways = [_road_poly(road1, y_end1), _road_poly(road2, y_end2)]
+    xa, xb = road1(y_end1) - V_ROAD / 2, road2(y_end2) + V_ROAD / 2
+    ways.append([(xa, conn_bottom(xa)), (xa, y_n(xa) - SETBACK), (xb, y_n(xb) - SETBACK), (xb, conn_bottom(xb))])
+    return lots, ways
+
+
 def build(layout):
-    lots, ways = lots_rect() if layout == "rect" else lots_hex()
+    lots, ways = {"rect": lots_rect, "hex": lots_hex, "onda": lots_wave}[layout]()
     return [{"n": i, "pts": p} for i, p in enumerate(lots, 1)], ways
 
 

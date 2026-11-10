@@ -19,6 +19,9 @@ HA_ETAPA = f'{S["etapa_area"] / 10000:.2f}'
 LAY = {
     "rect": dict(es_med="11.1 × 18 m", en_med="11.1 × 18 m", es_vias="con dos vías internas", en_vias="with two internal roads",
                  es_com="áreas comunes y vías", en_com="common areas and roads"),
+    "onda": dict(es_med="Frente y fondo variables", en_med="Varies with the curve", es_vias="a lo largo de dos calles onduladas de 6 m que forman un circuito",
+                 en_vias="along two winding 6 m streets that form a loop", es_com="calles, áreas comunes y jardines", en_com="streets, common areas and gardens",
+                 es_extra=" Las curvas bajan la velocidad de los autos y el ruido.", en_extra=" The curves slow cars down and keep noise low."),
     "hex": dict(es_med="8.8 m por lado", en_med="8.8 m per side", es_vias="hexagonales, rodeados por senderos de 3 m", en_vias="hexagonal, surrounded by 3 m footpaths",
                 es_com="áreas comunes y senderos", en_com="common areas and footpaths"),
 }[plan.LAYOUT]
@@ -81,7 +84,7 @@ ES = dict(
     et_h="Tres etapas, de oriente a poniente.",
     et_lede=f"Cada etapa ocupa un tercio del predio, unas {HA_ETAPA} hectáreas. Las etapas 1 y 2, al oriente y al centro, ya están vendidas; la etapa 3, al poniente, es la que está a la venta.",
     e3_n="Etapa 3", e3_tag="Disponible",
-    e3_p=f"Al poniente, con frente a la calle del sur. {N_LOTES} lotes de 200 m² {LAY['es_vias']}; el {COMUN} de la etapa queda para {LAY['es_com']}.",
+    e3_p=f"Al poniente, con frente a la calle del sur. {N_LOTES} lotes de 200 m² {LAY['es_vias']}; el {COMUN} de la etapa queda para {LAY['es_com']}.{LAY.get('es_extra', '')}",
     e2_n="Etapa 2", e12_tag="Vendida",
     e2_p="Al centro del predio. Ya está vendida.",
     e1_n="Etapa 1",
@@ -197,7 +200,7 @@ EN = dict(
     et_h="Three phases, from east to west.",
     et_lede=f"Each phase covers a third of the property, about {HA_ETAPA} hectares. Phases 1 and 2, on the east side and in the middle, are already sold; phase 3, on the west side, is the one for sale.",
     e3_n="Phase 3", e3_tag="Available",
-    e3_p=f"On the west side, facing the south street. {N_LOTES} lots of 200 m², {LAY['en_vias']}; {COMUN} of the phase is set aside for {LAY['en_com']}.",
+    e3_p=f"On the west side, facing the south street. {N_LOTES} lots of 200 m², {LAY['en_vias']}; {COMUN} of the phase is set aside for {LAY['en_com']}.{LAY.get('en_extra', '')}",
     e2_n="Phase 2", e12_tag="Sold",
     e2_p="In the middle of the property. Already sold.",
     e1_n="Phase 1",

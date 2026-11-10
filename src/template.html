@@ -105,15 +105,15 @@ section{padding:96px 0 0}
 .mapa-e3{width:100%;max-width:320px}
 .plan-e3{width:100%;height:auto}
 .plan-e3 .lote{cursor:pointer}
-.plan-e3 .lote rect{fill:var(--huano);stroke:var(--monte);stroke-width:.8}
+.plan-e3 .lote polygon{fill:var(--huano);stroke:var(--monte);stroke-width:.8}
 .plan-e3 .lote text{font-size:12px;font-weight:700;pointer-events:none}
-.plan-e3 .lote:hover rect{fill:#F0D573}
+.plan-e3 .lote:hover polygon{fill:#F0D573}
 .plan-e3 .lote:focus{outline:none}
-.plan-e3 .lote:focus-visible rect{stroke:var(--cenote);stroke-width:3}
-.plan-e3 .lote.apartado rect{fill:#EFE7C8}
-.plan-e3 .lote.vendido rect{fill:var(--hoja)}
+.plan-e3 .lote:focus-visible polygon{stroke:var(--cenote);stroke-width:3}
+.plan-e3 .lote.apartado polygon{fill:#EFE7C8}
+.plan-e3 .lote.vendido polygon{fill:var(--hoja)}
 .plan-e3 .lote.vendido text{fill:var(--cal)}
-.plan-e3 .lote.sel rect{fill:var(--monte)}
+.plan-e3 .lote.sel polygon{fill:var(--monte)}
 .plan-e3 .lote.sel text{fill:var(--cal)}
 .ficha{position:sticky;top:24px;border-top:2px solid var(--monte);padding-top:16px}
 .ficha .vacia{color:var(--tenue)}
@@ -445,8 +445,8 @@ function elige(g){
   lotes.forEach(x=>x.classList.remove("sel"));g.classList.add("sel");
   const n=+g.dataset.lote,info=LOTES[n],e=est(n);
   document.getElementById("ficha").innerHTML=`<div>${T.lote}</div><div class="num">${n}</div>
-  <dl><div><dt>${T.sup}</dt><dd>200 m²</dd></div><div><dt>${T.medidas}</dt><dd>10 × 20 m</dd></div>
-  <div><dt>${T.fila}</dt><dd>${T.filas[info.col-1]}</dd></div><div><dt>${T.estado}</dt><dd>${T.st[e]}</dd></div>
+  <dl><div><dt>${T.sup}</dt><dd>200 m²</dd></div><div><dt>${T.medidas}</dt><dd>${T.med}</dd></div>
+  <div><dt>${T.estado}</dt><dd>${T.st[e]}</dd></div>
   <div><dt>${T.desde}</dt><dd>${$(1500)} ${T.al_mes}</dd></div><div><dt>${T.contado}</dt><dd>${$(73000)}</dd></div></dl>
   ${e==="disponible"?`<a class="btn btn-1" href="#visita" id="pedir">${T.pedir}</a>`:""}`;
   const b=document.getElementById("pedir");

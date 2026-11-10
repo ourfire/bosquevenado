@@ -15,7 +15,13 @@ TBD = '<span class="tbd">{}</span>'
 S = plan.summary()
 N_LOTES = S["lotes"]
 HA = f'{S["area"] / 10000:.0f}'
-HA_ETAPA = f'{S["etapas"][0] / 10000:.2f}'
+HA_ETAPA = f'{S["etapa_area"] / 10000:.2f}'
+LAY = {
+    "rect": dict(es_med="11.1 × 18 m", en_med="11.1 × 18 m", es_vias="con dos vías internas", en_vias="with two internal roads",
+                 es_com="áreas comunes y vías", en_com="common areas and roads"),
+    "hex": dict(es_med="8.8 m por lado", en_med="8.8 m per side", es_vias="hexagonales, rodeados por senderos de 3 m", en_vias="hexagonal, surrounded by 3 m footpaths",
+                es_com="áreas comunes y senderos", en_com="common areas and footpaths"),
+}[plan.LAYOUT]
 COMUN = f'{S["comun_pct"] * 100:.0f}%'
 
 
@@ -46,7 +52,7 @@ ES = dict(
     h1="Siete hectáreas de monte, cuidadas por una comunidad.",
     hero_lede="Bosque Venado es tierra de conservación junto a Acanceh, Yucatán, y un experimento de vida neorural fuera de la red. Cada participación te da el uso vitalicio de un lote de 200 m² y voz en cómo se cuida el lugar.",
     plan_title="Plano del predio en tres etapas",
-    plan_desc=f"Predio de {HA} hectáreas dividido en tres etapas de poniente a oriente. La etapa 3, junto a la calle, tiene {N_LOTES} lotes de 200 metros cuadrados y dos vías internas.",
+    plan_desc=f"Predio de {HA} hectáreas dividido en tres etapas. La etapa 3, al poniente, tiene {N_LOTES} lotes de 200 metros cuadrados {LAY['es_vias']}.",
     plan_cap="Plano basado en el levantamiento topográfico del tablaje 3735. La distribución de lotes es esquemática.",
     etapa="Etapa", vendida="vendida", calle="Calle sin nombre", lote="Lote",
     e3_map_label=f"Etapa 3: {N_LOTES} lotes. Elige uno para ver su información.",
@@ -72,14 +78,14 @@ ES = dict(
         ("Huerto y vivero", "Fecha estimada: " + TBD.format("por definir")),
         ("Palapa y bodega común", "Fecha estimada: " + TBD.format("por definir")),
     ]),
-    et_h="Tres etapas, de poniente a oriente.",
-    et_lede=f"Cada etapa ocupa un tercio del predio, unas {HA_ETAPA} hectáreas. Las etapas 1 y 2 ya están vendidas; la etapa 3, junto a la calle, es la que está a la venta.",
+    et_h="Tres etapas, de oriente a poniente.",
+    et_lede=f"Cada etapa ocupa un tercio del predio, unas {HA_ETAPA} hectáreas. Las etapas 1 y 2, al oriente y al centro, ya están vendidas; la etapa 3, al poniente, es la que está a la venta.",
     e3_n="Etapa 3", e3_tag="Disponible",
-    e3_p=f"Al oriente, con frente a la calle. {N_LOTES} lotes de 10 × 20 m con dos vías internas; el {COMUN} de la etapa queda para áreas comunes y vías.",
+    e3_p=f"Al poniente, con frente a la calle del sur. {N_LOTES} lotes de 200 m² {LAY['es_vias']}; el {COMUN} de la etapa queda para {LAY['es_com']}.",
     e2_n="Etapa 2", e12_tag="Vendida",
     e2_p="Al centro del predio. Ya está vendida.",
     e1_n="Etapa 1",
-    e1_p="Al poniente. Ya está vendida.",
+    e1_p="Al oriente, junto a la calle. Ya está vendida.",
     ficha_vacia="Elige un lote en el plano para ver su información.",
     st_disp="Disponible", st_apar="Apartado", st_vend="Vendido",
     part_h="Qué te da tu participación, y qué no.",
@@ -145,8 +151,7 @@ ES = dict(
     pie_1="<strong>Bosque Venado</strong><br>Tablaje 3735, Seyé, Yucatán.<br>Tokenizado por La Tokenizadora.",
     pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. Autorizaciones y documentos legales: " + TBD.format("por definir") + ". <a href=\"#\">Aviso de privacidad</a> (" + TBD.format("por definir") + ").",
     JS=dict(meses="{n} meses", contado="Contado", na="N/A", mens_etq="Mensualidad, {n} pagos", unico="Pago único",
-            al_mes="al mes", incluido="Incluido", lote="Lote", sup="Superficie", medidas="Medidas", fila="Columna",
-            filas=["A, poniente", "B", "C", "D, junto a la calle"], estado="Estado", desde="Desde",
+            al_mes="al mes", incluido="Incluido", lote="Lote", sup="Superficie", medidas="Medidas", med=LAY["es_med"], estado="Estado", desde="Desde",
             st={"disponible": "Disponible", "apartado": "Apartado", "vendido": "Vendido"},
             cuenta="{d} de {t} lotes disponibles en la etapa 3.", pedir="Pedir este lote",
             err_nombre="Escribe tu nombre.", err_email="Escribe un correo válido, por ejemplo nombre@dominio.com."),
@@ -163,7 +168,7 @@ EN = dict(
     h1="Seven hectares of native forest, cared for by a community.",
     hero_lede="Bosque Venado is conservation land next to Acanceh, Yucatán, and an off-grid experiment in rural living. Each stake gives you lifetime use of a 200 m² lot and a say in how the land is cared for.",
     plan_title="Site plan in three phases",
-    plan_desc=f"A {HA}-hectare property divided into three phases from west to east. Phase 3, along the street, has {N_LOTES} lots of 200 square meters and two internal roads.",
+    plan_desc=f"A {HA}-hectare property divided into three phases. Phase 3, on the west side, has {N_LOTES} lots of 200 square meters, {LAY['en_vias']}.",
     plan_cap="Based on the topographic survey of parcel 3735. The lot layout is schematic.",
     etapa="Phase", vendida="sold", calle="Unnamed street", lote="Lot",
     e3_map_label=f"Phase 3: {N_LOTES} lots. Choose one to see its details.",
@@ -189,14 +194,14 @@ EN = dict(
         ("Garden and nursery", "Estimated date: " + TBD.format("to be defined")),
         ("Shared palapa and storage", "Estimated date: " + TBD.format("to be defined")),
     ]),
-    et_h="Three phases, from west to east.",
-    et_lede=f"Each phase covers a third of the property, about {HA_ETAPA} hectares. Phases 1 and 2 are already sold; phase 3, along the street, is the one for sale.",
+    et_h="Three phases, from east to west.",
+    et_lede=f"Each phase covers a third of the property, about {HA_ETAPA} hectares. Phases 1 and 2, on the east side and in the middle, are already sold; phase 3, on the west side, is the one for sale.",
     e3_n="Phase 3", e3_tag="Available",
-    e3_p=f"On the east side, facing the street. {N_LOTES} lots of 10 × 20 m with two internal roads; {COMUN} of the phase is set aside for common areas and roads.",
+    e3_p=f"On the west side, facing the south street. {N_LOTES} lots of 200 m², {LAY['en_vias']}; {COMUN} of the phase is set aside for {LAY['en_com']}.",
     e2_n="Phase 2", e12_tag="Sold",
     e2_p="In the middle of the property. Already sold.",
     e1_n="Phase 1",
-    e1_p="On the west side. Already sold.",
+    e1_p="On the east side, along the street. Already sold.",
     ficha_vacia="Choose a lot on the plan to see its details.",
     st_disp="Available", st_apar="Reserved", st_vend="Sold",
     part_h="What your stake gives you, and what it doesn't.",
@@ -262,8 +267,7 @@ EN = dict(
     pie_1="<strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by La Tokenizadora.",
     pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. Permits and legal documents: " + TBD.format("to be defined") + ". <a href=\"#\">Privacy notice</a> (" + TBD.format("to be defined") + ").",
     JS=dict(meses="{n} months", contado="Cash", na="N/A", mens_etq="Monthly payment, {n} payments", unico="Single payment",
-            al_mes="per month", incluido="Included", lote="Lot", sup="Area", medidas="Size", fila="Column",
-            filas=["A, west", "B", "C", "D, along the street"], estado="Status", desde="From",
+            al_mes="per month", incluido="Included", lote="Lot", sup="Area", medidas="Size", med=LAY["en_med"], estado="Status", desde="From",
             st={"disponible": "Available", "apartado": "Reserved", "vendido": "Sold"},
             cuenta="{d} of {t} lots available in phase 3.", pedir="Ask about this lot",
             err_nombre="Enter your name.", err_email="Enter a valid email, for example name@domain.com."),
@@ -294,7 +298,7 @@ def render(t):
     data["PLAN_OVERVIEW"] = plan.overview_svg(t)
     data["PLAN_DETAIL"] = plan.detail_svg(t)
     data["JS"] = json.dumps(t["JS"], ensure_ascii=False)
-    data["LOTES"] = json.dumps({l["n"]: {"col": l["col"]} for l in plan.LOTS})
+    data["LOTES"] = json.dumps({l["n"]: {} for l in plan.LOTS})
     out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(data[m.group(1)]), tpl)
     left = re.findall(r"\{\{\w+\}\}", out)
     assert not left, left

@@ -7,6 +7,8 @@ Etapas de oriente a poniente: la 1 junto a la calle oriente, la 2 al centro y
 la 3 al poniente. La etapa 3 es la que se lotifica.
 
 LAYOUT elige la lotificación de la etapa 3:
+  "parque": calle poniente ondulada, calle oriente en el lindero con la etapa 2,
+            parque central con glorieta y corredor de monte entre los fondos.
   "onda": dos calles onduladas de 6 m que forman un circuito; lotes de 200 m².
   "rect": lotes de 11.11 x 18 m con dos vías rectas de 7 m norte-sur.
   "hex":  lotes hexagonales de 200 m² rodeados por senderos de 3 m.
@@ -14,7 +16,7 @@ LAYOUT elige la lotificación de la etapa 3:
 import math
 import random
 
-LAYOUT = "onda"
+LAYOUT = "parque"
 
 P_UTM = [
     (246757.404, 2303902.805),  # 1
@@ -220,8 +222,112 @@ def lots_wave():
     return lots, ways
 
 
+# ---------- calle ondulada, calle en el lindero y parque central ----------
+# Calle poniente ondulada; calle oriente recta sobre el lindero con la etapa 2
+# (sirve también para una ampliación); un circuito al norte; una calle transversal
+# que rodea un parque circular al centro, y un corredor de monte entre los fondos.
+P_ROAD, P_AMP, P_WAVE, P_C = 6.0, 4.0, 80.0, 22.0
+P_ROW = 20.0          # fondo de los lotes de la manzana central
+P_PARK_R = 12.0       # radio del parque
+P_RING = 6.0          # ancho de la calle que rodea el parque
+
+
+def west_road(y):
+    return P_C + P_AMP * math.sin(2 * math.pi * y / P_WAVE)
+
+
+def _in_poly(x, y, poly):
+    c = False
+    n = len(poly)
+    for i in range(n):
+        x1, y1 = poly[i]
+        x2, y2 = poly[(i + 1) % n]
+        if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1:
+            c = not c
+    return c
+
+
+def _circle(cx, cy, r, n=72):
+    return [(cx + r * math.cos(2 * math.pi * k / n), cy + r * math.sin(2 * math.pi * k / n)) for k in range(n)]
+
+
+def _row_lots(left, right, y_top, skip=None):
+    """Lotes de 200 m² entre dos curvas, de sur a norte, saltando el intervalo skip=(a, b)."""
+    lots = []
+    y = 0.0
+    while y_s(right(y)) + SETBACK > y or y_s(left(y)) + SETBACK > y:
+        y += V_STEP
+    while True:
+        acc, y1 = 0.0, y
+        while acc < LOT_AREA:
+            acc += (right(y1) - left(y1)) * V_STEP
+            y1 += V_STEP
+        if y1 > y_top(y1):
+            return lots
+        if skip and y1 > skip[0] and y < skip[1]:
+            y = skip[1]
+            continue
+        ys = [y + k * V_STEP for k in range(int(round((y1 - y) / V_STEP)) + 1)]
+        lots.append([(left(v), v) for v in ys] + [(right(v), v) for v in reversed(ys)])
+        y = y1
+
+
+def lots_park():
+    xl = X0 + SETBACK
+    xe = X1 - P_ROAD                       # borde poniente de la calle oriente
+    xr0 = xe - P_ROW                       # inicio de la fila oriente
+    def conn_bottom(x):
+        return y_n(x) - SETBACK - P_ROAD
+    yc = (y_s(45) + y_n(45)) / 2           # altura del parque
+    xs = (west_road(yc) + P_ROAD / 2 + P_ROW + xr0) / 2
+    r_out = P_PARK_R + P_RING
+
+    def skip_for(x_near):
+        """Intervalo que una fila debe dejar libre: la calle transversal y la glorieta."""
+        dx = abs(x_near - xs)
+        dy = math.sqrt(max(r_out ** 2 - dx ** 2, 0)) if dx < r_out else 0
+        h = max(P_ROAD / 2, dy) + 1.5
+        return (yc - h, yc + h)
+    w_edge_l = lambda y: west_road(y) - P_ROAD / 2
+    w_edge_r = lambda y: west_road(y) + P_ROAD / 2
+    lots = []
+    lots += _row_lots(lambda y: xl, w_edge_l, lambda y: y_n(xl) - SETBACK)
+    lots += _row_lots(w_edge_r, lambda y: w_edge_r(y) + P_ROW, lambda y: conn_bottom(w_edge_r(y)) - 1,
+                      skip_for(w_edge_r(yc) + P_ROW))
+    lots += _row_lots(lambda y: xr0, lambda y: xe, lambda y: conn_bottom(xr0) - 1, skip_for(xr0))
+    y_top_w = y_n(P_C) - SETBACK
+    ways = []
+    # corredor de monte entre los fondos de la manzana central
+    ys = [k * 2.0 for k in range(0, 200)]
+    lo = max(y_s(xr0), y_s(w_edge_r(0) + P_ROW)) + SETBACK
+    ys = [v for v in ys if lo <= v <= conn_bottom(w_edge_r(v) + P_ROW) - 1]
+    spine = [(w_edge_r(v) + P_ROW, v) for v in ys] + [(xr0, v) for v in reversed(ys)]
+    ways.append({"pts": spine, "cls": "p-green", "trees": True})
+    ways.append({"pts": _road_poly_p(west_road, y_top_w), "cls": "p-road"})
+    ways.append({"pts": [(xe, y_s(xe)), (xe, y_n(xe) - SETBACK), (X1, y_n(X1) - SETBACK), (X1, y_s(X1))], "cls": "p-road"})
+    xa = west_road(y_top_w) - P_ROAD / 2
+    ways.append({"pts": [(xa, conn_bottom(xa)), (xa, y_n(xa) - SETBACK), (X1, y_n(X1) - SETBACK), (X1, conn_bottom(X1))], "cls": "p-road"})
+    xc0 = west_road(yc)
+    ways.append({"pts": [(xc0, yc - P_ROAD / 2), (xc0, yc + P_ROAD / 2), (xe, yc + P_ROAD / 2), (xe, yc - P_ROAD / 2)], "cls": "p-road"})
+    ways.append({"pts": _circle(xs, yc, r_out), "cls": "p-road"})
+    ways.append({"pts": _circle(xs, yc, P_PARK_R), "cls": "p-green", "trees": True, "park": True})
+    return lots, ways
+
+
+def _road_poly_p(center, y1):
+    y0 = 0.0
+    for _ in range(50):
+        y0 = y_s(center(y0))
+    cl, cr = center(y0) - P_ROAD / 2, center(y0) + P_ROAD / 2
+    ys0 = max(y_s(cl), y_s(cr))
+    ys = [ys0 + k * 0.4 for k in range(int((y1 - ys0) / 0.4) + 1)]
+    return ([(cl, y_s(cl))] + [(center(v) - P_ROAD / 2, v) for v in ys]
+            + [(center(v) + P_ROAD / 2, v) for v in reversed(ys)] + [(cr, y_s(cr))])
+
+
 def build(layout):
-    lots, ways = {"rect": lots_rect, "hex": lots_hex, "onda": lots_wave}[layout]()
+    lots, ways = {"rect": lots_rect, "hex": lots_hex, "onda": lots_wave, "parque": lots_park}[layout]()
+    ways = [w if isinstance(w, dict) else {"pts": w, "cls": "p-road"} for w in ways]
     return [{"n": i, "pts": p} for i, p in enumerate(lots, 1)], ways
 
 
@@ -257,6 +363,28 @@ def _trees(x0, x1, tf, seed, n, rmin, rmax):
     return out
 
 
+def _trees_in(poly, tf, ways):
+    """Árboles dentro de un polígono, sin pisar las calles."""
+    rnd = random.Random(len(poly) * 7 + 3)
+    xs = [x for x, _ in poly]
+    ys = [y for _, y in poly]
+    roads = [w["pts"] for w in ways if w["cls"] == "p-road"]
+    placed, out, tries = [], [], 0
+    while tries < 4000:
+        tries += 1
+        x, y = rnd.uniform(min(xs), max(xs)), rnd.uniform(min(ys), max(ys))
+        r = rnd.choice([1.4, 2.0, 2.6])
+        if not _in_poly(x, y, poly) or any(_in_poly(x, y, rp) for rp in roads):
+            continue
+        if any(math.hypot(x - a, y - b) < (r + rr) * 1.2 for a, b, rr in placed):
+            continue
+        placed.append((x, y, r))
+    for x, y, r in placed:
+        sx, sy = tf(x, y)
+        out.append(f'<circle cx="{sx:.1f}" cy="{sy:.1f}" r="{r * tf.s:.1f}" class="p-tree t{int(r * 7) % 3}"/>')
+    return out
+
+
 def make_tf(s, pad_x, pad_y, ymax, x_off=0.0):
     def tf(x, y):
         return ((x - x_off) * s + pad_x, (ymax - y) * s + pad_y)
@@ -267,7 +395,9 @@ def make_tf(s, pad_x, pad_y, ymax, x_off=0.0):
 def _lots_layer(tf, interactive, t, lots, ways):
     o = [f'<polygon points="{_pts(band_poly(X0, X1), tf)}" class="p-common"/>']
     for w in ways:
-        o.append(f'<polygon points="{_pts(w, tf)}" class="p-road"/>')
+        o.append(f'<polygon points="{_pts(w["pts"], tf)}" class="{w["cls"]}"/>')
+        if w.get("trees"):
+            o += _trees_in(w["pts"], tf, ways if not w.get("park") else [])
     for lot in lots:
         if interactive:
             cx, cy = tf(*_center(lot["pts"]))

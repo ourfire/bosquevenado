@@ -19,6 +19,11 @@ HA_ETAPA = f'{S["etapa_area"] / 10000:.2f}'
 LAY = {
     "rect": dict(es_med="11.1 × 18 m", en_med="11.1 × 18 m", es_vias="con dos vías internas", en_vias="with two internal roads",
                  es_com="áreas comunes y vías", en_com="common areas and roads"),
+    "parque": dict(es_med="Frente de 9 a 14 m", en_med="9 to 14 m frontage",
+                   es_vias="sobre una calle ondulada al poniente y una calle recta en el lindero con la etapa 2, unidas por una glorieta alrededor de un parque central",
+                   en_vias="along a winding street on the west and a straight street on the boundary with phase 2, joined by a loop around a central park",
+                   es_com="calles, el parque central y un corredor de monte entre los fondos", en_com="streets, the central park and a strip of forest between back yards",
+                   es_extra=" La curva baja la velocidad de los autos y el ruido.", en_extra=" The curve slows cars down and keeps noise low."),
     "onda": dict(es_med="Frente y fondo variables", en_med="Varies with the curve", es_vias="a lo largo de dos calles onduladas de 6 m que forman un circuito",
                  en_vias="along two winding 6 m streets that form a loop", es_com="calles, áreas comunes y jardines", en_com="streets, common areas and gardens",
                  es_extra=" Las curvas bajan la velocidad de los autos y el ruido.", en_extra=" The curves slow cars down and keep noise low."),

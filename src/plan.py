@@ -152,7 +152,8 @@ def overview_svg(t):
     for i, (x0, x1) in enumerate(((0, C1), (C1, C2), (C2, W)), 1):
         cx = (x0 + x1) / 2
         sx, sy = tf(cx, y_n(cx))
-        o.append(f'<text x="{sx:.1f}" y="{sy - 9:.1f}" class="p-stage" text-anchor="middle">{t["etapa"]} {i}</text>')
+        suf = f' <tspan class="p-sold">({t["vendida"]})</tspan>' if i < 3 else ""
+        o.append(f'<text x="{sx:.1f}" y="{sy - 9:.1f}" class="p-stage" text-anchor="middle">{t["etapa"]} {i}{suf}</text>')
     # calles
     a, b = tf(W * .25, y_s(W * .25)), tf(W * .75, y_s(W * .75))
     mx, my = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + 24

@@ -27,6 +27,12 @@ Edita `estado.json` (no hace falta volver a construir el sitio). Se puede marcar
 
 Lo que no aparece está disponible. El precio de preventa sube 5% por cada 4 lotes marcados como `vendido`; el cotizador y el PDF lo calculan solos.
 
+## Seguridad
+
+- `netlify.toml` define encabezados de seguridad (CSP, HSTS, sin iframes, sin cámara ni ubicación).
+- El sitio no carga código de terceros: jsPDF vive en `vendor/` (licencia MIT en `vendor/jspdf-LICENSE`). Solo las fuentes vienen de Google Fonts.
+- El sitio no cobra ni pide datos de pago. Los pagos se hacen solo a las cuentas que diga el contrato.
+
 ## Cómo trabajamos
 
 - `preview`: rama de trabajo. Cada push genera un branch deploy en Netlify (0 créditos).

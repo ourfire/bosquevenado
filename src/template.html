@@ -185,8 +185,9 @@ section{padding:110px 0 0}
 .horiz .panel .foto{aspect-ratio:4/3;max-width:100%}
 .horiz .panel .txt{padding:22px 28px 30px}
 .horiz .panel h3{font-size:2rem;margin-bottom:.5em}
-.horiz .cierre{width:min(46vw,640px);padding:40px;display:flex;align-items:flex-end;background:var(--tinta);color:var(--hueso)}
-.horiz .cierre p{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1.2;margin:0;max-width:20ch}
+.horiz .cierre{width:min(62vw,860px);padding:40px 48px;display:flex;align-items:center;background:var(--tinta);color:var(--hueso)}
+.horiz .cierre p{font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,1.55vw,1.5rem);line-height:1.42;margin:0 0 1em;max-width:46ch}
+.horiz .cierre p:last-child{margin-bottom:0}
 @media (min-width:1024px) and (prefers-reduced-motion:no-preference){
   .horiz.activo .fijo{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
   .horiz.activo .pista{will-change:transform;height:100vh}
@@ -513,7 +514,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
         <p class="lede" style="margin:0">{{vida_lede}}</p>
       </div>
       {{pilares}}
-      <div class="panel cierre"><p>{{sin_show}}</p></div>
+      <div class="panel cierre"><div class="manifiesto">{{sin_show}}</div></div>
     </div>
   </div>
 </section>
@@ -867,7 +868,7 @@ fetch(T.estado_url,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(
 // ---------- PDF de la cotización ----------
 function cargaJsPDF(){
   if(window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
-  return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"; s.onload=()=>ok(window.jspdf.jsPDF); s.onerror=no; document.head.appendChild(s); });
+  return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src=T.jspdf; s.onload=()=>ok(window.jspdf.jsPDF); s.onerror=no; document.head.appendChild(s); });
 }
 document.getElementById("pdf").addEventListener("click",async()=>{
   const msg=document.getElementById("pdf-msg"), b=document.getElementById("pdf");

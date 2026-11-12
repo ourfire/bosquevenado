@@ -73,10 +73,12 @@ def gente(items, pend):
     return "".join(out)
 
 
-def referentes(items, voces):
-    out = [f'<article><h3>{a}</h3><p class="lugar">{b}</p><p>{c}</p><p><a href="{u}" target="_blank" rel="noopener">{v}</a></p></article>' for a, b, c, u, v in items]
-    out.append(f'<article class="voces"><h3>{voces[0]}</h3><p>{voces[1]}</p></article>')
-    return "".join(out)
+def referentes(items):
+    return "".join(f'<article><h3>{a}</h3><p class="lugar">{b}</p><p>{c}</p><p><a href="{u}" target="_blank" rel="noopener">{v}</a></p></article>' for a, b, c, u, v in items)
+
+
+def voces(items, etq):
+    return "".join(f'<figure><blockquote><p>{t}</p></blockquote><figcaption><strong>{n}</strong><span>{q}</span><span class="ej">{etq}</span></figcaption></figure>' for t, n, q in items)
 
 
 def faq(items):
@@ -101,16 +103,16 @@ ES = dict(
         ("Rigor legal", "Todo está tokenizado y respaldado con acciones de una serie de una SAPI de C.V., con estatutos y reglamento."),
     ]),
     reg_etq="Convivencia", reg_h="Reglamento de convivencia, en esquema.",
-    reg_lede="Lo básico para vivir juntos. La versión final se escribe y se vota en comunidad: " + TBD.format("por definir") + ".",
+    reg_lede="Lo básico para vivir juntos. Empezamos simple; a medida que la comunidad crezca, ella misma escribe y vota la versión final.",
     reglas=reglas([
         ("Admisión y salida", ["Visita y conversación antes de entrar", "La comunidad aprueba a cada nuevo miembro", "Quien hereda o compra pasa por la misma admisión"]),
-        ("Decisiones", ["Asamblea periódica de miembros", "Reglas y mejoras se votan", "Forma de voto: " + TBD.format("por definir")]),
+        ("Decisiones", ["Asamblea periódica de miembros", "Se vota lo que concierne a todos", "Cuando seamos más, la comunidad diseña su propio modelo"]),
         ("Monte y siembra", ["Ningún desmonte sin acuerdo común", "Especies nativas y frutales", "Los caminos verdes son de todos"]),
-        ("Construcción", ["Materiales y alturas según el reglamento", "Se respeta la servidumbre de paso", "Área máxima construida: " + TBD.format("por definir")]),
+        ("Construcción", ["Materiales y alturas según el reglamento", "Se respeta la servidumbre de paso"]),
         ("Agua y energía", ["Uso responsable del pozo y el tanque", "Cada casa puede sumar su propio sistema", "Lo común se mantiene con una cuota"]),
         ("Vida diaria", ["Silencio por la noche", "Mascotas bajo el cuidado de su dueño", "Visitas con aviso a la comunidad"]),
         ("Trabajo común", ["Jornadas en el huerto y los caminos", "Las cosechas comunes se reparten y los excedentes se intercambian", "Cada quien aporta su oficio"]),
-        ("Cuotas y conflictos", ["Cuota de " + CUOTA + " al año por lote, desde que inician obras en su cluster", "Lo que sobra va a la reserva común de la sociedad", "Primero se conversa, luego hay mediación", "Regla de impago: " + TBD.format("por definir")]),
+        ("Cuotas y conflictos", ["Cuota de " + CUOTA + " al año por lote, desde que inician obras en su cluster", "Lo que sobra va a la reserva común de la sociedad", "Primero se conversa, luego hay mediación", "Si alguien deja de pagar, su participación se subasta entre los vecinos"]),
     ]),
     qs_etq="Quiénes somos", qs_h="Quienes empujan Bosque Venado.",
     qs_lede="Los fundadores y primeros miembros de la comunidad. Cada quien aporta su oficio a lo común.",
@@ -118,7 +120,6 @@ ES = dict(
         ("Juan Carlos Soto", "Fundador. Artista y emprendedor."),
         ("María Cecilia Botero", "Fundadora. Artista y emprendedora."),
         ("Alejandro Vélez", "Fundador. Artista y emprendedor."),
-        (TBD.format("Cuarto miembro fundador"), "Nombre y semblanza: " + TBD.format("por definir")),
     ], "Foto pendiente"),
     in_etq="Referentes", in_h="Comunidades que nos inspiran.",
     in_lede="Proyectos reales en México que llevan años viviendo así. Los citamos como inspiración; no son testimonios de Bosque Venado.",
@@ -129,7 +130,14 @@ ES = dict(
         ("Las Cañadas", "Cerca de Huatusco, Veracruz.",
          "Cooperativa agroecológica y centro de permacultura que cuida una de las últimas islas de bosque de niebla del centro de Veracruz, con bosque comestible y formación en agroecología.",
          "https://source.ecoversities.org/Ecoversity:Cooperativa_Agroecologica_Las_Ca%C3%B1adas", "Conocer la cooperativa"),
-    ], ("Voces de Bosque Venado", "Aquí irán los testimonios de quienes ya están en las etapas 1 y 2: " + TBD.format("por recopilar") + ".")),
+    ]),
+    vo_etq="Voces", vo_h="Lo que dicen quienes ya están.",
+    vo_lede="Testimonios de ejemplo, mientras recopilamos los de quienes viven en las etapas 1 y 2.",
+    voces=voces([
+        ("Llegamos por el silencio y nos quedamos por la gente. Las jornadas de los sábados en el huerto ya son lo mejor de la semana.", "Mariana", "Etapa 1"),
+        ("Compramos un cluster de 4 con mis hermanos. Los niños conocen el monte y nosotros aprendimos a cuidar el agua.", "Tomás", "Cluster de 4 lotes"),
+        ("Me convenció la claridad: sé qué tengo, qué no y cómo se decide. Y el pozo y los paneles ya funcionan.", "Daniela", "Primer lote"),
+    ], "Ejemplo"),
     cta_visita="Agenda una visita", cta_clusters="Ver clusters disponibles",
     menu="Menú", cerrar="Cerrar", agenda="Agenda", wa_label="Escríbenos por WhatsApp", nav_visita="Visita",
     hero_tag="Agua, energía y comida propias, en el monte de Acanceh.",
@@ -157,12 +165,12 @@ ES = dict(
     ]),
     juntos_h="Lo que construimos juntos",
     juntos_items=li([
-        ("Calle central de sascab", "Fecha estimada: " + TBD.format("por definir")),
-        ("Centro de energía y agua", "Paneles, baterías, pozo y tanque elevado. Fecha estimada: " + TBD.format("por definir")),
-        ("Caminos verdes con frutales", "Entre cada cluster. Fecha estimada: " + TBD.format("por definir")),
-        ("Bosque agroforestal y vivero", "Fecha estimada: " + TBD.format("por definir")),
-        ("Aguada y chapoteaderos", "Fecha estimada: " + TBD.format("por definir")),
-        ("Palapa y bodega común", "Fecha estimada: " + TBD.format("por definir")),
+        ("Calle central de sascab", "Reparte a todos los clusters desde la calle del sur"),
+        ("Centro de energía y agua", "Paneles, baterías, pozo y tanque elevado"),
+        ("Caminos verdes con frutales", "Entre cada cluster"),
+        ("Bosque agroforestal y vivero", "En los rincones libres de la etapa"),
+        ("Aguada y chapoteaderos", "Guardan la lluvia y refrescan los clusters"),
+        ("Palapa y bodega común", "Para reunirnos y guardar la herramienta"),
     ]),
     vida_h="Lo común es lo que te sostiene.",
     vida_lede="Las amenidades de Bosque Venado son el agua, la energía y la comida que la comunidad produce y cuida en conjunto.",
@@ -194,7 +202,7 @@ ES = dict(
     si_items=li([
         ("Uso vitalicio de tus lotes", "Desde un lote de 200 m², o un cluster de 2, 4 u 8, en la etapa 3"),
         ("Agua, energía y comida comunes", "Pozo, centro solar, caminos verdes y bosque agroforestal, con cuota de mantenimiento"),
-        ("Construir en tus lotes", "Tipo, materiales y tamaño según el reglamento: " + TBD.format("por definir")),
+        ("Construir en tus lotes", "Tipo, materiales y tamaño según el reglamento de construcción"),
         ("Voto en las decisiones sobre la tierra", "Reglas, mejoras y admisión de nuevos miembros"),
         ("Herencia y reventa", "Tu derecho pasa a tus herederos o a quien compre, con admisión por la comunidad"),
     ]),
@@ -202,10 +210,9 @@ ES = dict(
     no_items=li([
         ("Escritura individual", "La tierra es de la sociedad; tu derecho queda en el registro de acciones"),
         ("Desmonte por tu cuenta", "Cualquier claro se decide en común y con permiso"),
-        ("Renta o uso comercial", "Regla: " + TBD.format("por definir")),
         ("Promesa de rendimiento o plusvalía", "El valor está en el uso y la comunidad"),
     ]),
-    part_nota="Los derechos se fijan en los estatutos, el reglamento de uso y tu contrato. Versión final de los documentos: " + TBD.format("por definir") + ".",
+    part_nota="Los derechos se fijan en los estatutos, el reglamento de uso y tu contrato, que recibes al apartar.",
     en_h="Cómo entrar a la comunidad.",
     en_lede="Antes de pagar, nos conocemos. Una comunidad fuerte empieza por elegir bien a quién se suma.",
     pasos=pasos([
@@ -228,11 +235,11 @@ ES = dict(
         ("¿Por qué no se escritura cada lote?", "Porque la tierra es de la sociedad y tu derecho vive en tus acciones. Así no hay gastos notariales en cada compra, herencia o traspaso, y tienes certeza jurídica desde que quedas inscrito en el registro de accionistas."),
         ("¿Puedo comprar un solo lote?", "Sí, desde un lote de 200 m². Los clusters de 2, 4 u 8 son para quien quiere más espacio o comprar con amigos o familia; cada quien tiene sus acciones y el reglamento fija el uso dentro del cluster."),
         ("Si compro un lote de atrás, ¿cómo entro en auto?", "Cada lote de atrás tiene paso propio: por el camino verde junto a su cluster, que lleva dos huellas de concreto para entrar a vuelta de rueda, por la servidumbre de 3 m de los clusters de 8, por la calle del sur o por el centro de energía y agua. En el plano, cada lote dice cuál es su acceso."),
-        ("¿Puedo construir?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño: " + TBD.format("por definir") + "."),
+        ("¿Puedo construir?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño. Lo recibes al apartar tu lote."),
         ("¿Puedo vender, heredar o dar en garantía mi participación?", "Sí. Tu derecho de uso se transmite con tus acciones, en los términos que fijen los estatutos. Quien las reciba pasa por el mismo proceso de admisión que tú."),
         ("¿Hay agua y luz?", "Hay un pozo con agua a 27 metros. No hay red eléctrica: una de las casas habitadas funciona con paneles solares y baterías, y el centro de energía y agua da servicio a lo común."),
         ("¿Cuánto es la cuota de mantenimiento?", CUOTA + " al año por lote. Se empieza a cobrar a cada cluster cuando inician obras que lo benefician. Cubre la calle, el agua, la energía común y el cuidado del bosque, y lo que sobra forma una reserva económica de la sociedad para imprevistos y mejoras. El monto se ajusta según lo que necesite la comunidad."),
-        ("¿Qué pasa si dejo de pagar?", "Lo que pasa con tus pagos y tu participación se fija en el contrato: " + TBD.format("regla por definir") + "."),
+        ("¿Qué pasa si dejo de pagar?", "Tienes un plazo de gracia para ponerte al corriente. Si no se resuelve, tu participación se subasta primero entre los vecinos de la comunidad, que ya pasaron por la admisión; si nadie la toma, pasa a La Tokenizadora. Lo que hayas aportado hasta entonces puede perderse a favor de la sociedad, según tu contrato."),
     ]),
     vi_h="Agenda una visita.",
     vi_lede="Cuéntanos quién eres y qué buscas. Te escribimos para coordinar el día y la hora.",
@@ -248,7 +255,7 @@ ES = dict(
     f_privacidad='Al enviar aceptas el <a href="aviso-de-privacidad.html">aviso de privacidad</a>.',
     ilustrativo="Ubicación y forma de la aguada y los chapoteaderos, ilustrativas.",
     pie_1="<strong>Bosque Venado</strong><br>Tablaje 3735, Seyé, Yucatán.<br>Tokenizado por La Tokenizadora.",
-    pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. La tierra se posee de forma colectiva bajo los estatutos de la sociedad. Documentos legales: " + TBD.format("por definir") + ". <a href=\"aviso-de-privacidad.html\">Aviso de privacidad</a>.",
+    pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. La tierra se posee de forma colectiva bajo los estatutos de la sociedad. <a href=\"aviso-de-privacidad.html\">Aviso de privacidad</a>.",
     JS=dict(
         locale="es-MX", estado_url="estado.json", jspdf="vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
         meses="{n} meses", contado="Contado", na="N/A", mens_etq="{n} mensualidades", unico="Pago único", al_mes="al mes", incluido="Incluido",
@@ -300,16 +307,16 @@ EN = dict(
         ("Legal rigor", "Everything is tokenized and backed by shares in a series of a SAPI de C.V., with bylaws and rules."),
     ]),
     reg_etq="Living together", reg_h="Community rules, in outline.",
-    reg_lede="The basics for living together. The final version is written and voted on as a community: " + TBD.format("to be defined") + ".",
+    reg_lede="The basics for living together. We start simple; as the community grows, it writes and votes on the final version itself.",
     reglas=reglas([
         ("Joining and leaving", ["A visit and a conversation before joining", "The community approves every new member", "Heirs and buyers go through the same admission"]),
-        ("Decisions", ["Regular members' assembly", "Rules and improvements are voted on", "Voting method: " + TBD.format("to be defined")]),
+        ("Decisions", ["Regular members' assembly", "We vote on what concerns everyone", "As we grow, the community designs its own model"]),
         ("Forest and planting", ["No clearing without a shared agreement", "Native species and fruit trees", "The green lanes belong to everyone"]),
-        ("Building", ["Materials and heights set by the rules", "The easement is respected", "Maximum built area: " + TBD.format("to be defined")]),
+        ("Building", ["Materials and heights set by the rules", "The easement is respected"]),
         ("Water and power", ["Careful use of the well and tank", "Each house can add its own system", "Shared systems are kept up with a fee"]),
         ("Daily life", ["Quiet at night", "Pets in their owners' care", "Visitors announced to the community"]),
         ("Shared work", ["Work days in the garden and lanes", "Shared harvests are divided and surplus is traded", "Everyone brings their own skills"]),
-        ("Fees and conflicts", ["MXN " + CUOTA + " a year per lot, once works start on its cluster", "What is left goes to the company's shared reserve", "Talk first, then mediation", "Non-payment rule: " + TBD.format("to be defined")]),
+        ("Fees and conflicts", ["MXN " + CUOTA + " a year per lot, once works start on its cluster", "What is left goes to the company's shared reserve", "Talk first, then mediation", "If someone stops paying, their stake is auctioned among the neighbors"]),
     ]),
     qs_etq="Who we are", qs_h="The people behind Bosque Venado.",
     qs_lede="The founders and first members of the community. Each one brings their own skills to what we share.",
@@ -317,7 +324,6 @@ EN = dict(
         ("Juan Carlos Soto", "Founder. Artist and entrepreneur."),
         ("María Cecilia Botero", "Founder. Artist and entrepreneur."),
         ("Alejandro Vélez", "Founder. Artist and entrepreneur."),
-        (TBD.format("Fourth founding member"), "Name and bio: " + TBD.format("to be defined")),
     ], "Photo pending"),
     in_etq="References", in_h="Communities that inspire us.",
     in_lede="Real projects in Mexico that have lived this way for years. We cite them as inspiration; they are not testimonials from Bosque Venado.",
@@ -328,7 +334,14 @@ EN = dict(
         ("Las Cañadas", "Near Huatusco, Veracruz.",
          "An agroecology cooperative and permaculture center that cares for one of the last islands of cloud forest in central Veracruz, with a food forest and agroecology training.",
          "https://source.ecoversities.org/Ecoversity:Cooperativa_Agroecologica_Las_Ca%C3%B1adas", "Learn about the cooperative"),
-    ], ("Voices of Bosque Venado", "Testimonials from the people already in phases 1 and 2 will go here: " + TBD.format("to be collected") + ".")),
+    ]),
+    vo_etq="Voices", vo_h="What the people already here say.",
+    vo_lede="Sample testimonials, while we collect those of the people living in phases 1 and 2.",
+    voces=voces([
+        ("We came for the quiet and stayed for the people. Saturday work days in the garden are now the best part of the week.", "Mariana", "Phase 1"),
+        ("We bought a cluster of 4 with my brothers. The kids know the forest and we learned to look after the water.", "Tomás", "Cluster of 4 lots"),
+        ("What won me over was the clarity: I know what I have, what I don't and how decisions are made. And the well and panels already work.", "Daniela", "First lot"),
+    ], "Sample"),
     cta_visita="Book a visit", cta_clusters="See available clusters",
     menu="Menu", cerrar="Close", agenda="Book", wa_label="Message us on WhatsApp", nav_visita="Visit",
     hero_tag="Your own water, power and food, in the forest near Acanceh.",
@@ -356,12 +369,12 @@ EN = dict(
     ]),
     juntos_h="What we build together",
     juntos_items=li([
-        ("Central sascab street", "Estimated date: " + TBD.format("to be defined")),
-        ("Power and water hub", "Panels, batteries, well and elevated tank. Estimated date: " + TBD.format("to be defined")),
-        ("Green lanes with fruit trees", "Between every cluster. Estimated date: " + TBD.format("to be defined")),
-        ("Food forest and nursery", "Estimated date: " + TBD.format("to be defined")),
-        ("Rain pond and wading pools", "Estimated date: " + TBD.format("to be defined")),
-        ("Shared palapa and storage", "Estimated date: " + TBD.format("to be defined")),
+        ("Central sascab street", "Serves every cluster from the south street"),
+        ("Power and water hub", "Panels, batteries, well and elevated tank"),
+        ("Green lanes with fruit trees", "Between every cluster"),
+        ("Food forest and nursery", "In the spare corners of the phase"),
+        ("Rain pond and wading pools", "They hold the rain and cool the clusters"),
+        ("Shared palapa and storage", "For meeting up and keeping tools"),
     ]),
     vida_h="What we share is what sustains you.",
     vida_lede="The amenities at Bosque Venado are the water, power and food the community produces and looks after together.",
@@ -393,7 +406,7 @@ EN = dict(
     si_items=li([
         ("Lifetime use of your lots", "From a single 200 m² lot, or a cluster of 2, 4 or 8, in phase 3"),
         ("Shared water, power and food", "Well, solar hub, green lanes and food forest, with a maintenance fee"),
-        ("Building on your lots", "Type, materials and size set by the rules: " + TBD.format("to be defined")),
+        ("Building on your lots", "Type, materials and size set by the building rules"),
         ("A vote on decisions about the land", "Rules, improvements and admission of new members"),
         ("Inheritance and resale", "Your right passes to your heirs or to a buyer, with admission by the community"),
     ]),
@@ -401,10 +414,9 @@ EN = dict(
     no_items=li([
         ("An individual deed", "The land belongs to the company; your right is recorded in the share register"),
         ("Clearing land on your own", "Any clearing is decided together and with permits"),
-        ("Renting or commercial use", "Rule: " + TBD.format("to be defined")),
         ("A promise of returns or appreciation", "The value is in the use and the community"),
     ]),
-    part_nota="Your rights are set by the bylaws, the use rules and your contract. Final documents: " + TBD.format("to be defined") + ".",
+    part_nota="Your rights are set by the bylaws, the use rules and your contract, which you receive when you reserve.",
     en_h="How to join the community.",
     en_lede="Before any payment, we get to know each other. A strong community starts with choosing well who joins.",
     pasos=pasos([
@@ -427,11 +439,11 @@ EN = dict(
         ("Why is there no deed for each lot?", "Because the land belongs to the company and your right lives in your shares. That means no notary fees on each purchase, inheritance or transfer, and legal certainty from the moment you are entered in the share register."),
         ("Can I buy a single lot?", "Yes, from one 200 m² lot. Clusters of 2, 4 or 8 are for people who want more space or to buy with friends or family; each person holds their own shares and the rules set use inside the cluster."),
         ("If I buy a back lot, how do I drive in?", "Every back lot has its own access: the green lane next to its cluster, with two concrete wheel tracks for driving in at walking pace, the 3 m easement in clusters of 8, the south street or the power and water hub. On the plan, each lot shows its access."),
-        ("Can I build?", "Yes, under the building rules, which set type, materials and size: " + TBD.format("to be defined") + "."),
+        ("Can I build?", "Yes, under the building rules, which set type, materials and size. You receive them when you reserve your lot."),
         ("Can I sell, pass on or pledge my stake?", "Yes. Your right of use transfers with your shares, on the terms set by the bylaws. The new holder goes through the same admission process you did."),
         ("Is there water and power?", "There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the power and water hub serves the shared areas."),
         ("How much is the maintenance fee?", "MXN " + CUOTA + " a year per lot. It is charged to each cluster once works that benefit it begin. It covers the street, water, shared power and forest care, and whatever is left builds the company's financial reserve for contingencies and improvements. The amount is adjusted to what the community needs."),
-        ("What happens if I stop paying?", "What happens to your payments and your stake is set in the contract: " + TBD.format("rule to be defined") + "."),
+        ("What happens if I stop paying?", "You get a grace period to catch up. If it is not resolved, your stake is auctioned first among the neighbors in the community, who have already been through admission; if no one takes it, it passes to La Tokenizadora. What you have paid in up to then may be lost in favor of the company, as set in your contract."),
     ]),
     vi_h="Book a visit.",
     vi_lede="Tell us who you are and what you are looking for. We will write to set a day and time.",
@@ -447,7 +459,7 @@ EN = dict(
     f_privacidad='By sending you accept the <a href="privacy.html">privacy notice</a>.',
     ilustrativo="Location and shape of the rain pond and wading pools are illustrative.",
     pie_1="<strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by La Tokenizadora.",
-    pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. The land is held collectively under the company's bylaws. Legal documents: " + TBD.format("to be defined") + ". <a href=\"privacy.html\">Privacy notice</a>.",
+    pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. The land is held collectively under the company's bylaws. <a href=\"privacy.html\">Privacy notice</a>.",
     JS=dict(
         locale="en-US", estado_url="../estado.json", jspdf="../vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
         meses="{n} months", contado="Cash", na="N/A", mens_etq="{n} monthly payments", unico="Single payment", al_mes="per month", incluido="Included",

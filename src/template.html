@@ -376,21 +376,29 @@ tr.activo td{background:var(--hueso-2);font-weight:500}
 .reglas li{padding:.25em 0}
 @media (max-width:980px){.reglas{grid-template-columns:1fr 1fr}.reglas > div:not(:nth-child(4n+1)){padding-left:0;border-left:0}.reglas > div:nth-child(even){padding-left:20px;border-left:1px solid var(--linea-suave)}}
 @media (max-width:560px){.reglas{grid-template-columns:1fr}.reglas > div:nth-child(even){padding-left:0;border-left:0}}
-.gente{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--linea)}
-.gente > div{padding:20px 20px 0 0}
-.gente > div + div{padding-left:20px;border-left:1px solid var(--linea)}
+.gente{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px;border-top:1px solid var(--linea)}
+.gente > div{padding-top:20px;position:relative}
+.gente > div + div::before{content:"";position:absolute;left:-20px;top:0;bottom:0;border-left:1px solid var(--linea)}
 .gente .foto{aspect-ratio:4/5;margin-bottom:14px}
 .gente .foto .pend{left:10px;right:auto}
 .gente h3{font-size:1.25rem}
 .gente p{font-size:.95rem;color:var(--tenue);margin:.5em 0 0}
 .gente .mas{display:flex;flex-direction:column;justify-content:flex-end}
-@media (max-width:880px){.gente{grid-template-columns:1fr 1fr}.gente > div:nth-child(3){border-left:0;padding-left:0}.gente > div:nth-child(n+3){margin-top:24px}}
-.referentes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--linea)}
+@media (max-width:880px){.gente{grid-template-columns:1fr 1fr}.gente > div:nth-child(3)::before{display:none}.gente > div:nth-child(n+3){margin-top:24px}}
+.referentes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--linea)}
 .referentes > article{padding:20px 24px 4px 0}
 .referentes > article + article{padding-left:24px;border-left:1px solid var(--linea)}
 .referentes .lugar{font-size:.75rem;text-transform:uppercase;letter-spacing:.02em;color:var(--tenue);margin:.6em 0 1em}
 .referentes p{font-size:.98rem}
-.referentes .voces{background:var(--hueso-2);padding:20px 24px}
+.voces{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--linea)}
+.voces figure{margin:0;padding:24px 24px 4px 0;display:flex;flex-direction:column;justify-content:space-between}
+.voces figure + figure{padding-left:24px;border-left:1px solid var(--linea)}
+.voces blockquote{margin:0}
+.voces blockquote p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.1rem,1.4vw,1.35rem);line-height:1.42;margin:0 0 1.2em;max-width:34ch}
+.voces figcaption{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:.9rem}
+.voces figcaption span{color:var(--tenue)}
+.voces .ej{font-size:.72rem;border:1px solid var(--linea-suave);padding:1px 6px}
+@media (max-width:880px){.voces{grid-template-columns:1fr}.voces figure + figure{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave);margin-top:16px}}
 @media (max-width:880px){.referentes{grid-template-columns:1fr}.referentes > article + article{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave);margin-top:16px}}
 .tramo{font-size:.9rem;border:1px solid var(--tinta);padding:.7em .9em;margin-top:14px;max-width:46ch}
 .faq{border-top:1px solid var(--linea)}
@@ -636,6 +644,14 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
     <p class="lede">{{qs_lede}}</p>
   </div>
   <div class="gente">{{gente}}</div>
+</section>
+
+<section id="voces" aria-labelledby="voces-t">
+  <div class="sec-head">
+    <div><span class="etq">{{vo_etq}}</span><h2 id="voces-t">{{vo_h}}</h2></div>
+    <p class="lede">{{vo_lede}}</p>
+  </div>
+  <div class="voces">{{voces}}</div>
 </section>
 
 <section id="inspiran" aria-labelledby="inspiran-t">

@@ -1,11 +1,6 @@
 {
- "_nota": "Estado por lote ('lotes') o por cluster completo ('clusters', con su letra). Valores: apartado o vendido; lo que no aparece está disponible. El precio de preventa sube 5% por cada 4 lotes vendidos. Los de abajo son un ejemplo del borrador; bórralos antes de publicar.",
+ "_nota": "Estado por lote ('lotes', por número) o por cluster completo ('clusters', por su letra). Valores: apartado o vendido; lo que no aparece está disponible. El precio de preventa sube 5% por cada 4 lotes vendidos.",
  "actualizado": "2026-11-11",
- "lotes": {
-  "23": "vendido",
-  "24": "vendido"
- },
- "clusters": {
-  "C": "apartado"
- }
+ "lotes": {},
+ "clusters": {}
 }

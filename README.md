@@ -41,7 +41,6 @@ Lo que no aparece está disponible. El precio de preventa sube 5% por cada 4 lot
 ## Antes de lanzar
 
 - Quitar `<meta name="robots" content="noindex, nofollow">` de `src/template.html` y de las páginas de gracias.
-- Quitar el aviso de borrador y llenar todos los campos marcados `.tbd`.
-- Vaciar los clusters de ejemplo en `estado.json`.
+- Llenar los campos marcados `.tbd` (se ven resaltados en amarillo).
 - Apuntar el dominio bosquevenado.com a Netlify (ya están las etiquetas canonical y Open Graph con ese dominio).
 - Activar la detección de formularios en Netlify (Forms > Enable form detection) y las notificaciones por correo.

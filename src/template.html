@@ -15,7 +15,7 @@
 <meta property="og:description" content="{{desc}}">
 <meta property="og:image" content="https://bosquevenado.com/img/camino-1800.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M7 26V12M12 26V7M17 26V14M22 26V9M26 26V16' stroke='%23F2EFE9' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000%22/%3E%3Cg fill=%22none%22 stroke=%22%23F2EFE9%22 stroke-width=%225%22 stroke-linecap=%22square%22 transform=%22translate%2850 52%29 scale%28.92%29 translate%28-50 -50%29%22%3E%3Cpath d=%22M44%2C50 L38%2C36 L33%2C24 L31%2C10%22/%3E%3Cpath d=%22M56%2C50 L62%2C36 L67%2C24 L69%2C10%22/%3E%3Cpath d=%22M38%2C36 L26%2C31%22/%3E%3Cpath d=%22M62%2C36 L74%2C31%22/%3E%3Cpath d=%22M35%2C29 L41%2C16%22/%3E%3Cpath d=%22M65%2C29 L59%2C16%22/%3E%3Cpath d=%22M33%2C24 L21%2C17%22/%3E%3Cpath d=%22M67%2C24 L79%2C17%22/%3E%3Cpath d=%22M38%2C52 L24%2C47 L35%2C59%22/%3E%3Cpath d=%22M62%2C52 L76%2C47 L65%2C59%22/%3E%3Cpath d=%22M38%2C50 L62%2C50 L60%2C66 L50%2C90 L40%2C66 Z%22/%3E%3Ccircle cx=%2244.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3Ccircle cx=%2255.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300&display=swap" rel="stylesheet">
@@ -70,7 +70,9 @@ strong{font-weight:500}
 .wa-redondo{width:52px;height:52px;border-radius:50%;background:var(--blanco);color:var(--tinta);display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.12)}
 .wa-redondo svg{width:24px;height:24px}
 .logo{display:grid;gap:8px;text-decoration:none;color:inherit}
-.logo svg{width:92px;height:auto}
+.logo svg{width:84px;height:auto}
+.logo svg path,.logo svg circle{vector-effect:non-scaling-stroke}
+.logo svg path{stroke-width:1.5px}
 .logo b{font-weight:300;font-size:1.02rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.1}
 body.sobre-foto .lado{background:transparent;color:var(--blanco);border-color:rgba(255,255,255,.55)}
 body.sobre-foto .lado .btn{color:var(--blanco)}
@@ -82,7 +84,7 @@ body.sobre-foto .lado .btn:hover{background:var(--blanco);color:var(--tinta)}
   .lado{display:none}
   .barra-m{display:flex;position:sticky;top:0;z-index:20;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--hueso);border-bottom:1px solid var(--linea)}
   .barra-m .logo{display:flex;align-items:center;gap:10px}
-  .barra-m .logo svg{width:28px}
+  .barra-m .logo svg{width:34px}
   .barra-m .logo b{font-size:.9rem}
   .barra-m .der{display:flex;gap:14px;align-items:center}
   .barra-m .menu-b{background:none;border:1px solid var(--tinta);padding:.55em .8em;font:inherit;font-size:.78rem;text-transform:uppercase;color:inherit;cursor:pointer}

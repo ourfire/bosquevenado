@@ -42,8 +42,8 @@ def capas(items):
     return "".join(f"<div><h3>{a}</h3><p>{b}</p></div>" for a, b in items)
 
 
-LOGO = ('<svg viewBox="0 0 92 70" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">'
-        '<rect x=".8" y=".8" width="90.4" height="68.4"/><path d="M16 69V32M31 69V12M46 69V38M61 69V20M76 69V44"/></svg>')
+LOGO = ('<svg class="venado" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true">'
+        '<path d="M44,50 L38,36 L33,24 L31,10"/><path d="M56,50 L62,36 L67,24 L69,10"/><path d="M38,36 L26,31"/><path d="M62,36 L74,31"/><path d="M35,29 L41,16"/><path d="M65,29 L59,16"/><path d="M33,24 L21,17"/><path d="M67,24 L79,17"/><path d="M38,52 L24,47 L35,59"/><path d="M62,52 L76,47 L65,59"/><path d="M38,50 L62,50 L60,66 L50,90 L40,66 Z"/><circle cx="44.5" cy="63" r="1.6" fill="currentColor" stroke="none"/><circle cx="55.5" cy="63" r="1.6" fill="currentColor" stroke="none"/></svg>')
 
 
 def pilares(items, pend):

@@ -1,0 +1,8 @@
+{
+ "_nota": "Estado de cada cluster: disponible (por omisión), apartado o vendido. Los de abajo son un ejemplo del borrador; bórralos antes de publicar.",
+ "actualizado": "2026-11-11",
+ "clusters": {
+  "3": "apartado",
+  "10": "vendido"
+ }
+}

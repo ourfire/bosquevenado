@@ -1,19 +1,30 @@
 # Bosque Venado
 
-Sitio de Bosque Venado: cinco hectáreas de monte en Acanceh, Yucatán.
+Sitio de Bosque Venado: comunidad neorural en el tablaje 3735 (Seyé, junto a Acanceh, Yucatán). Predio de 7 ha; la etapa 3, de 2 ha, es la que está a la venta en clusters de 2, 4 y 8 lotes de 200 m².
 
-HTML estático en español (`index.html`) e inglés (`en/index.html`). Formulario de visita con Netlify Forms.
+HTML estático en español (`index.html`) e inglés (`en/index.html`). Formulario de visita con Netlify Forms. Cotizador con descarga en PDF (jsPDF desde cdnjs, se carga solo al pedir el PDF).
 
 ## Editar
 
-Los textos están en `src/build.py`, el diseño en `src/template.html` y el plano en `src/plan.py`
-(coordenadas del levantamiento topográfico del tablaje 3735). Después de cambiar algo:
+- Textos: `src/build.py`. Diseño y scripts del cotizador: `src/template.html`.
+- Plano: `src/engine.js` (misma geometría que el trazador interactivo; `CONFIG` define calle, clusters y bloques comunes).
+- Correo de contacto: constante `CORREO` en `src/build.py`.
+
+Después de cambiar algo (necesita Python 3 y Node):
 
 ```
 python3 src/build.py
 ```
 
-Para marcar lotes apartados o vendidos, edita `const ESTADO={}` en `src/template.html`, por ejemplo `{7:"apartado",12:"vendido"}`.
+## Apartados y vendidos
+
+Edita `estado.json` (no hace falta volver a construir el sitio):
+
+```json
+{"actualizado": "2026-11-11", "clusters": {"3": "apartado", "10": "vendido"}}
+```
+
+Los clusters que no aparecen están disponibles. El número es el que se ve en el plano.
 
 ## Cómo trabajamos
 
@@ -22,6 +33,8 @@ Para marcar lotes apartados o vendidos, edita `const ESTADO={}` en `src/template
 
 ## Antes de lanzar
 
-- Quitar `<meta name="robots" content="noindex, nofollow">` de `index.html` y `gracias.html`.
+- Quitar `<meta name="robots" content="noindex, nofollow">` de `src/template.html` y de las páginas de gracias.
 - Quitar el aviso de borrador y llenar todos los campos marcados `.tbd`.
-- Activar la detección de formularios en Netlify (Forms > Enable form detection).
+- Vaciar los clusters de ejemplo en `estado.json`.
+- Poner el correo de contacto en `CORREO`.
+- Activar la detección de formularios en Netlify (Forms > Enable form detection) y las notificaciones por correo.

@@ -1,0 +1,329 @@
+/* Motor del plano de la etapa 3 de Bosque Venado.
+   Genera la geometría (lotes de 200 m² en clusters, calle, caminos verdes, bloques comunes)
+   y los SVG del sitio. Lo usa src/build.py con: node src/engine.js
+   La misma función calc() vive en el trazador interactivo. */
+"use strict";
+const YN0=268.306107, SN=(285.709928-268.306107)/88.431197, SS=26.299639/88.431197;
+const COSN=Math.cos(Math.atan(SN)), COSS=Math.cos(Math.atan(SS));
+const fmt=(n,d=0)=>Number(n).toLocaleString("es-MX",{minimumFractionDigits:d,maximumFractionDigits:d});
+function parseSeq(s){ const v=String(s||"").split(/[^0-9]+/).map(Number).filter(n=>n>=1&&n<=64); return v.length?v:[1]; }
+
+// Diseño elegido: calle central ondulada, clusters de 8, 4 y 2 con caminos verdes de 4 m, centro de energía y agua.
+const CONFIG={area:20000,lote:200,onda:90,norte:{on:false,w:6},sur:0,seq:"8,4,2",gap:4,sobraAgro:true,
+  franjas:[{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:4,m:false},{t:"lotes",w:34,flex:true,h:2}],
+  cruces:[{t:"energia",y:132,w:10,alc:"todo"}]};
+
+// Tablaje completo en el mismo sistema (para el plano general)
+const TABLAJE=[[0,0],[0,268.306107],[184.852186,304.686824],[275.080424,322.443762],[275.080831,81.809663]];
+
+function calc(S){
+  const errs=[], warns=[];
+  const area=Math.min(40000,Math.max(5000,+S.area||20000));
+  const k=(SS-SN)/2, X1=(YN0-Math.sqrt(YN0*YN0-4*k*area))/(2*k);
+  const YS1=SS*X1, YN1=YN0+SN*X1;
+  const G={X1,YS1,YN1,area,este:YN1-YS1,sur:X1*Math.hypot(1,SS),norte:X1*Math.hypot(1,SN)};
+  const n=S.franjas.length;
+  const LOT=Math.max(50,+S.lote||200);
+  const fixed=S.franjas.reduce((s,f)=>s+(f.flex?0:Math.max(0,+f.w||0)),0);
+  const nFlex=S.franjas.filter(f=>f.flex).length;
+  if(fixed>X1+0.005) errs.push(`Las franjas fijas suman ${fmt(fixed,2)} m y la etapa mide ${fmt(X1,2)} m de ancho. Quita ${fmt(fixed-X1,2)} m.`);
+  const flexW=nFlex?Math.max(0,(X1-fixed)/nFlex):0;
+  const W=S.franjas.map(f=>f.flex?flexW:Math.max(0,+f.w||0));
+  const B=[0]; W.forEach(w=>B.push(B[B.length-1]+w));
+  const lam=Math.max(20,+S.onda||90);
+  const off=S.franjas.map((f,i)=>{
+    const a=+f.a||0; if(f.t!=="calle"||a<=0||n===1) return null;
+    const ph=f.m?Math.PI:0, kk=2*Math.PI/lam;
+    if(i===0) return y=>a*(1+Math.sin(kk*y+ph))/2;
+    if(i===n-1) return y=>-a*(1+Math.sin(kk*y+ph))/2;
+    return y=>a*Math.sin(kk*y+ph);
+  });
+  const bo=j=>(off[j-1]||off[j]||null);
+  const nS=S.norte&&S.norte.on?Math.max(0,+S.norte.w||0)/COSN:0;
+  const sS=Math.max(0,+S.sur||0)/COSS;
+  const lo=y=>Math.max(0,(y-(YN0-nS))/SN);
+  const hi=y=>Math.min(X1,(y-sS)/SS);
+
+  const pieces=[];
+  S.franjas.forEach((f,i)=>{
+    let L,R;
+    if(i===0) L=off[0]?off[0]:()=>0;
+    else {const o=bo(i), b=B[i]; L=o?(y=>b+o(y)):(()=>b);}
+    if(i===n-1){const b=B[n]; R=off[i]?(y=>b+off[i](y)):(()=>b);}
+    else {const o=bo(i+1), b=B[i+1]; R=o?(y=>b+o(y)):(()=>b);}
+    const nb=[S.franjas[i-1],S.franjas[i+1]];
+    const frente=(nb[0]&&(nb[0].t==="calle"||nb[0].t==="andador"))?"izq":((nb[1]&&(nb[1].t==="calle"||nb[1].t==="andador"))?"der":"izq");
+    pieces.push({t:f.t,i,L,R,w:W[i],h:f.t==="lotes"&&+f.h===2?2:1,frente});
+  });
+  if(off[0]) pieces.push({t:"agro",i:-1,L:()=>0,R:off[0]});
+  if(n>1&&off[n-1]){const b=B[n]; pieces.push({t:"agro",i:n,L:y=>b+off[n-1](y),R:()=>b});}
+  if(B[n]<X1-0.005) pieces.push({t:"agro",i:n+1,L:()=>B[n],R:()=>X1});
+
+  const calles=S.franjas.map((f,i)=>f.t==="calle"?i:-1).filter(i=>i>=0);
+  const fc=calles.length?calles[0]:-1, lc=calles.length?calles[calles.length-1]:-1;
+  const crosses=(S.cruces||[]).map(c=>({t:c.t,y:+c.y,w:Math.max(0,+c.w||0),alc:c.alc,a:+c.y-(+c.w||0)/2,b:+c.y+(+c.w||0)/2}));
+  const applies=(c,p)=>{ if(p.t==="calle") return false; if(c.alc==="todo"||calles.length<2) return true; return p.i>fc&&p.i<lc; };
+  const PRI={calle:5,andador:4,energia:3,parque:2,agro:1};
+  const crossAt=(p,y)=>{let best=null; for(const c of crosses){ if(y>=c.a&&y<c.b&&applies(c,p)&&(!best||PRI[c.t]>PRI[best.t])) best=c;} return best;};
+  crosses.forEach(c=>{ if(c.b<0||c.a>YN1) warns.push({k:"av",t:`Un bloque transversal queda fuera de la etapa (posición ${fmt(c.y,1)} m).`}); });
+
+  const bps=[]; B.concat([X1]).forEach(b=>{bps.push(SS*b+sS); bps.push(YN0-nS+SN*b);});
+  const width=(p,y)=>Math.max(0,Math.min(p.R(y),hi(y))-Math.max(p.L(y),lo(y)));
+  function shape(p,a,b,step){
+    const ys=[a,b];
+    for(let y=Math.ceil(a/step)*step;y<b;y+=step) ys.push(y);
+    bps.forEach(y=>{if(y>a&&y<b) ys.push(y);});
+    ys.sort((u,v)=>u-v);
+    const Lp=[],Rp=[]; let y0=null,y1=null;
+    for(const y of ys){
+      const l=Math.max(p.L(y),lo(y)); let r=Math.min(p.R(y),hi(y));
+      if(r>=l-1e-6){ r=Math.max(r,l); Lp.push([l,y]); Rp.push([r,y]); if(r-l>1e-3){ if(y0===null) y0=y; y1=y; } }
+    }
+    return {pts:Rp.concat(Lp.reverse()),y0,y1};
+  }
+  const DY=0.02;
+  function integ(p,a,b,dy){ dy=dy||DY; const kk=Math.max(1,Math.ceil((b-a)/dy)), h=(b-a)/kk; let s=0; for(let j=0;j<kk;j++) s+=width(p,a+(j+.5)*h); return s*h; }
+  const sub=(p,s,lado)=>lado==="izq"?{L:p.L,R:y=>Math.min(p.R(y),s)}:{L:y=>Math.max(p.L(y),s),R:p.R};
+
+  const seq=parseSeq(S.seq);
+  let ci=0;
+  const acc={lotes:0,calle:0,andador:0,parque:0,agro:0,energia:0,resto:0};
+  const runs=[], restos=[], slicesAll=[];
+  for(const p of pieces){
+    let cuts=[0,YN1];
+    crosses.forEach(c=>{ if(applies(c,p)){ if(c.a>0&&c.a<YN1) cuts.push(c.a); if(c.b>0&&c.b<YN1) cuts.push(c.b);} });
+    cuts=[...new Set(cuts.map(v=>+v.toFixed(6)))].sort((u,v)=>u-v);
+    for(let q=0;q<cuts.length-1;q++){
+      const a=cuts[q], b=cuts[q+1]; if(b-a<1e-6) continue;
+      const cr=crossAt(p,(a+b)/2); const cat=cr?cr.t:p.t;
+      if(cat!=="lotes"){ const ar=integ(p,a,b); if(ar>0.01){acc[cat]+=ar; runs.push({cat,p,a,b,area:ar});} continue; }
+      // clusters de sur a norte, cada uno seguido de un corredor agroforestal
+      const unit=LOT*p.h, gap=Math.max(0,+S.gap||0);
+      const cutFrom=(y0,A)=>{ let cum=0,y=y0; while(y<b-1e-9){ const hh=Math.min(DY,b-y), dA=width(p,y+hh/2)*hh; if(cum+dA>=A&&dA>0) return y+(A-cum)/dA*hh; cum+=dA; y+=hh; } return null; };
+      const needs=[...new Set(seq.map(v=>Math.max(1,Math.ceil(v/p.h))))].sort((x,z)=>z-x);
+      let y=a;
+      while(y<b-1e-6){
+        const pref=Math.max(1,Math.ceil(seq[ci%seq.length]/p.h));
+        const tryN=[pref].concat(needs.filter(x=>x<pref));
+        if(!S.sobraAgro&&!tryN.includes(1)) tryN.push(1);
+        let got=null;
+        for(const nn of tryN){ const part=[]; let yy=y, ok=true; for(let q2=0;q2<nn;q2++){ const yc=cutFrom(yy,unit); if(yc===null){ok=false;break;} part.push({p,a:yy,b:yc}); yy=yc; } if(ok){ got={part,nn}; break; } }
+        if(!got){ const ar=integ(p,y,b); if(ar>0.5){ restos.push({p,a:y,b,area:ar}); acc.resto+=ar; } break; }
+        if(got.nn===pref) ci++;
+        slicesAll.push({p,part:got.part,suelto:!needs.includes(got.nn)});
+        y=got.part[got.part.length-1].b;
+        if(gap>0&&y<b-1e-6){ const g2=Math.min(b,y+gap), ar=integ(p,y,g2); if(ar>0.01){ acc.agro+=ar; runs.push({cat:"agro",p,a:y,b:g2,area:ar,corredor:true}); } y=g2; }
+      }
+    }
+  }
+  // armar lotes y clusters
+  slicesAll.sort((u,v)=>u.p.i-v.p.i||u.part[0].a-v.part[0].a);
+  const lots=[], clusters=[];
+  slicesAll.forEach(g=>{
+    const p=g.p;
+    const cl={id:clusters.length+1,p,a:g.part[0].a,b:g.part[g.part.length-1].b,lotes:[],suelto:g.suelto,part:g.part};
+    cl.size=g.part.length*p.h; cl.area=cl.size*LOT;
+    g.part.forEach(s=>{
+      let partes;
+      if(p.h===2){
+        let lo2=Math.min(p.L(s.a),p.L(s.b),p.L((s.a+s.b)/2))-1, hi2=Math.max(p.R(s.a),p.R(s.b),p.R((s.a+s.b)/2))+1;
+        for(let it=0;it<40;it++){ const mid=(lo2+hi2)/2; const ar=integ(sub(p,mid,"izq"),s.a,s.b,0.05); if(ar<LOT) lo2=mid; else hi2=mid; }
+        const sp=(lo2+hi2)/2;
+        const izq=sub(p,sp,"izq"), der=sub(p,sp,"der");
+        partes=p.frente==="izq"?[izq,der]:[der,izq];
+      } else partes=[p];
+      partes.forEach((pp,ix)=>{ lots.push({pp,a:s.a,b:s.b,cl,atras:ix===1}); cl.lotes.push(lots.length-1); });
+    });
+    clusters.push(cl);
+  });
+  lots.forEach((l,kx)=>{
+    l.n=kx+1; const sh=shape(l.pp,l.a,l.b,0.5); l.pts=sh.pts;
+    l.frente=Math.max(0.01,(sh.y1??l.b)-(sh.y0??l.a)); l.fondo=LOT/l.frente;
+    const ym=((sh.y0??l.a)+(sh.y1??l.b))/2; const lx=Math.max(l.pp.L(ym),lo(ym)), rx=Math.min(l.pp.R(ym),hi(ym));
+    l.cx=(lx+rx)/2; l.cy=ym; l.ancho=rx-lx;
+  });
+  clusters.forEach(c=>{ const sh=shape(c.p,c.a,c.b,0.5); c.pts=sh.pts; c.frente=(sh.y1??c.b)-(sh.y0??c.a); c.fondo=c.area/Math.max(0.01,c.frente); });
+  acc.lotes=lots.length*LOT;
+  acc.calle+=X1*nS+X1*sS;
+
+  // avisos
+  S.franjas.forEach((f,i)=>{
+    if(f.t!=="lotes") return;
+    const nb=[S.franjas[i-1],S.franjas[i+1]].filter(Boolean);
+    if(!nb.some(x=>x.t==="calle"||x.t==="andador")) warns.push({k:"av",t:`La franja ${i+1} de lotes no toca ninguna calle ni andador. Esos lotes no tendrían entrada.`});
+    if(+f.h===2&&W[i]<20) warns.push({k:"av",t:`La franja ${i+1} tiene dos hileras en ${fmt(W[i],1)} m; cada lote quedaría de ${fmt(W[i]/2,1)} m de fondo.`});
+  });
+  S.franjas.forEach((f,i)=>{ if(f.t==="calle"&&W[i]<5.5) warns.push({k:"av",t:`La calle de la franja ${i+1} mide ${fmt(W[i],2)} m. Dos autos en sentido contrario necesitan al menos 5.5 a 6 m.`}); });
+  if(!nFlex&&B[n]<X1-0.005) warns.push({k:"av",t:`Sobran ${fmt(X1-B[n],2)} m al oriente; quedan como agroforestal.`});
+  const sueltos=clusters.filter(c=>c.suelto).reduce((s,c)=>s+c.size,0);
+  if(sueltos) warns.push({k:"av",t:`${sueltos} ${sueltos===1?"lote queda":"lotes quedan"} fuera de un cluster completo (borde naranja).`});
+  const comun=Math.max(0,area-acc.lotes);
+  return {G,errs,warns,lots,clusters,runs,restos,acc,B,W,pieces,lo,hi,nS,sS,LOT,comun,shape,seq};
+}
+// ---------- geometría lista para dibujar ----------
+const r2=v=>Math.round(v*100)/100;
+const rp=pts=>pts.map(p=>[r2(p[0]),r2(p[1])]);
+function simplifica(pts,tol){ // quita puntos casi colineales
+  if(pts.length<4) return pts;
+  const out=[pts[0]];
+  for(let i=1;i<pts.length-1;i++){
+    const a=out[out.length-1], b=pts[i], c=pts[i+1];
+    const area=Math.abs((b[0]-a[0])*(c[1]-a[1])-(c[0]-a[0])*(b[1]-a[1]));
+    if(area>tol) out.push(b);
+  }
+  out.push(pts[pts.length-1]);
+  return out;
+}
+
+function geometria(){
+  const R=calc(CONFIG);
+  const {X1,YS1,YN1}=R.G;
+  const g={G:R.G,acc:R.acc,comun:R.comun,LOT:R.LOT,etapa:[[0,0],[0,YN0],[X1,YN1],[X1,YS1]],
+    calles:[],ejes:[],energia:[],paneles:[],corredores:[],huellas:[],frutales:[],agro:[],restos:[],serv:[],clusters:[],info:[]};
+  const inside=(r,x,y,m)=>{const l=Math.max(r.p.L(y),R.lo(y)), rr=Math.min(r.p.R(y),R.hi(y)); return x>l+m&&x<rr-m;};
+  R.runs.forEach(r=>{
+    const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length<3) return;
+    const pts=rp(simplifica(sh.pts,0.002));
+    if(r.cat==="calle"){
+      g.calles.push(pts);
+      const e=[]; for(let y=r.a;y<=r.b;y+=1){const l=Math.max(r.p.L(y),R.lo(y)), rr=Math.min(r.p.R(y),R.hi(y)); if(rr-l>0.5) e.push([r2((l+rr)/2),r2(y)]);}
+      g.ejes.push(e);
+      if(!g.info.some(i=>i.k==="calle")){ const yi=58; g.info.push({k:"calle",x:(r.p.L(yi)+r.p.R(yi))/2,y:yi}); }
+    } else if(r.cat==="energia"){
+      g.energia.push(pts);
+      for(let y=r.a+1.5;y<r.b-2.5;y+=3.4){
+        const y2=y+1.7; const l=Math.max(r.p.L(y),R.lo(y),r.p.L(y2),R.lo(y2))+1.2, rr=Math.min(r.p.R(y),R.hi(y),r.p.R(y2),R.hi(y2))-1.2;
+        if(rr-l>2) g.paneles.push(rp([[l,y],[rr,y],[rr,y2],[l,y2]]));
+      }
+      if(!g.info.some(i=>i.k==="energia")) g.info.push({k:"energia",x:X1*0.25,y:(r.a+r.b)/2});
+    } else if(r.cat==="agro"&&r.corredor){
+      g.corredores.push(pts);
+      const ym=(r.a+r.b)/2;
+      [ym-0.75,ym+0.75].forEach(yh=>{
+        const ya=yh-0.3, yb=yh+0.3;
+        const l=Math.max(r.p.L(ya),R.lo(ya),r.p.L(yb),R.lo(yb)), rr=Math.min(r.p.R(ya),R.hi(ya),r.p.R(yb),R.hi(yb));
+        if(rr-l>1) g.huellas.push(rp([[l,ya],[rr,ya],[rr,yb],[l,yb]]));
+      });
+      if(r.b-r.a>=3.8) [r.a+0.7,r.b-0.7].forEach((yy,fi)=>{ for(let x=2+(fi?1.6:0);x<X1;x+=3.2) if(inside(r,x,yy,0.8)) g.frutales.push([r2(x),r2(yy)]); });
+      if(!g.info.some(i=>i.k==="corredor")&&r.p.i===0&&r.a>60){ const l=Math.max(r.p.L(ym),R.lo(ym)); g.info.push({k:"corredor",x:l+9,y:ym}); }
+    } else {
+      g.agro.push(pts);
+    }
+  });
+  let big=null;
+  R.restos.forEach(r=>{ const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length>2) g.restos.push(rp(simplifica(sh.pts,0.002))); if(!big||r.area>big.area) big=r; });
+  if(big&&big.area>40){ const ym=(big.a+big.b)/2; g.info.push({k:"agro",x:(Math.max(big.p.L(ym),R.lo(ym))+Math.min(big.p.R(ym),R.hi(ym)))/2,y:ym}); }
+  const full=R.clusters.filter(c=>!c.suelto);
+  full.forEach((c,ix)=>{
+    const ym=(c.a+c.b)/2;
+    const lots=c.lotes.map(li=>{const l=R.lots[li]; return {n:l.n,atras:l.atras,pts:rp(simplifica(l.pts,0.002))};});
+    // punto de la etiqueta: sobre la línea entre la hilera del frente y la de atrás
+    let lx=(c.p.L(ym)+c.p.R(ym))/2;
+    if(c.p.h===2){ const fr=R.lots[c.lotes[0]]; const xs=fr.pts.map(p=>p[0]); lx=c.p.frente==="izq"?Math.max(...xs):Math.min(...xs); }
+    g.clusters.push({num:ix+1,size:c.size,area:c.area,frente:r2(c.frente),fondo:r2(c.fondo),banda:c.p.i===0?"poniente":"oriente",
+      pts:rp(simplifica(c.pts,0.002)),label:[r2(lx),r2(ym)],lots});
+    if(c.size>=8&&c.part.length>=2){
+      const yb=c.part[Math.floor(c.part.length/2)-1].b;
+      const sh=R.shape(c.p,yb-1.5,yb+1.5,0.5);
+      if(sh.pts.length>2){ g.serv.push(rp(simplifica(sh.pts,0.002))); if(!g.info.some(i=>i.k==="serv")&&c.p.i>0) g.info.push({k:"serv",x:(c.p.L(yb)+c.p.R(yb))/2+4,y:yb}); }
+    }
+  });
+  // ícono de cluster junto a un cluster de 4 del poniente
+  const c4=g.clusters.find(c=>c.banda==="poniente"&&c.size===4);
+  if(c4) g.info.push({k:"cluster",x:c4.label[0]-14,y:c4.label[1]});
+  return g;
+}
+
+// ---------- SVG ----------
+const LBL={
+  es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",
+      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",info:"más información"},
+  en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",
+      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",info:"more information"}
+};
+function svgCapas(g,M,o){
+  const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
+  const path=pts=>"M"+pts.map(P).join("L")+"Z";
+  const line=pts=>"M"+pts.map(P).join("L");
+  const out=[];
+  out.push(`<path class="b-base" d="${path(g.etapa)}"/>`);
+  g.agro.forEach(p=>out.push(`<path class="b-agro" d="${path(p)}"/>`));
+  g.restos.forEach(p=>out.push(`<path class="b-resto" d="${path(p)}"/>`));
+  g.corredores.forEach(p=>out.push(`<path class="b-corr" d="${path(p)}"/>`));
+  g.huellas.forEach(p=>out.push(`<path class="b-huella" d="${path(p)}"/>`));
+  if(o.detalle) g.frutales.forEach(p=>{const q=M(p[0],p[1]); out.push(`<circle class="b-fruta" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r=".62"/>`);});
+  g.energia.forEach(p=>out.push(`<path class="b-energia" d="${path(p)}"/>`));
+  g.paneles.forEach(p=>out.push(`<path class="b-panel" d="${path(p)}"/>`));
+  g.calles.forEach(p=>out.push(`<path class="b-calle" d="${path(p)}"/>`));
+  if(o.detalle) g.ejes.forEach(e=>out.push(`<path class="b-eje" d="${line(e)}"/>`));
+  g.clusters.forEach(c=>{
+    const lots=c.lots.map(l=>`<path class="b-lote" d="${path(l.pts)}"/>`).join("");
+    if(o.detalle){
+      const q=M(c.label[0],c.label[1]);
+      const aria=`${o.L.cl} ${c.num}, ${c.size} ${o.L.lotes}, ${fmt(c.area)} m²`;
+      out.push(`<g class="cl" data-cl="${c.num}" tabindex="0" role="button" aria-label="${aria}">${lots}<path class="b-clb" d="${path(c.pts)}"/>`+
+        `<circle class="b-cln" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="2.9"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.1).toFixed(2)}">${c.num}</text></g>`);
+    } else out.push(`<g class="cl" data-cl="${c.num}">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
+  });
+  g.serv.forEach(p=>out.push(`<path class="b-serv" d="${path(p)}"/>`));
+  out.push(`<path class="b-contorno" d="${path(g.etapa)}"/>`);
+  return out.join("");
+}
+function infoIcons(g,M,L){
+  return g.info.map(i=>{
+    const t=L[i.k]; const w=4.4+t.length*1.55; const q=M(i.x,i.y);
+    return `<g class="b-info" data-info="${i.k}" tabindex="0" role="button" aria-label="${t}: ${L.info}" transform="translate(${q[0].toFixed(2)},${q[1].toFixed(2)})">`+
+      `<rect class="b-info-bg" x="${(-w/2).toFixed(2)}" y="-2.2" width="${w.toFixed(2)}" height="4.4" rx="2.2"/>`+
+      `<circle class="b-info-c" cx="${(-w/2+2.2).toFixed(2)}" cy="0" r="1.5"/><text class="b-info-i" x="${(-w/2+2.2).toFixed(2)}" y=".1">i</text>`+
+      `<text class="b-info-t" x="${(-w/2+4.1).toFixed(2)}" y=".1">${t}</text></g>`;
+  }).join("");
+}
+function svgDetalle(g,lang,titulo){
+  const L=LBL[lang]; const {X1,YN1}=g.G;
+  // girado 90°: el norte apunta a la derecha y la etapa 2 queda abajo
+  const M=(x,y)=>[y,x];
+  const vb=[-16,-9,YN1+34,X1+27];
+  const o=[];
+  o.push(`<svg class="plano-e3" viewBox="${vb.join(" ")}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${titulo}">`);
+  o.push(`<defs><pattern id="rayado-${lang}" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="b-ray-f" width="2.2" height="2.2"/><line class="b-ray-l" x1="0" y1="0" x2="0" y2="2.2"/></pattern></defs>`);
+  o.push(`<path class="b-vecina" d="M${M(X1,0)[0]},${X1} L${YN1+6},${X1} L${YN1+6},${X1+12} L0,${X1+12} Z"/>`);
+  o.push(`<text class="b-rot" x="${(YN1/2).toFixed(1)}" y="${(X1+7).toFixed(1)}">${L.etapa2}</text>`);
+  o.push(svgCapas(g,M,{detalle:true,L}).replace(/class="b-resto"/g,`class="b-resto" fill="url(#rayado-${lang})"`));
+  o.push(infoIcons(g,M,L));
+  o.push(`<text class="b-rot" transform="translate(-7,${(X1/2).toFixed(1)}) rotate(-90)">${L.calleSur}</text>`);
+  // norte y escala
+  const nx=YN1+12, ny=6;
+  o.push(`<g class="b-norte"><path d="M${nx+4},${ny} L${nx-1},${ny-1.6} L${nx},${ny} L${nx-1},${ny+1.6}Z"/><text x="${nx+7}" y="${ny+0.2}">N</text></g>`);
+  const sx=YN1-22, sy=-4.5;
+  o.push(`<g class="b-escala"><line x1="${sx}" y1="${sy}" x2="${sx+20}" y2="${sy}"/><line x1="${sx}" y1="${sy-1}" x2="${sx}" y2="${sy+1}"/><line x1="${sx+10}" y1="${sy-.7}" x2="${sx+10}" y2="${sy+.7}"/><line x1="${sx+20}" y1="${sy-1}" x2="${sx+20}" y2="${sy+1}"/><text x="${sx+24}" y="${sy+.2}">20 m</text></g>`);
+  o.push(`</svg>`);
+  return o.join("");
+}
+function svgGeneral(g,lang,titulo,desc){
+  const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
+  const M=(x,y)=>[x,-y];
+  const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
+  const resto=[[X1,YS1],[X1,YN1]].concat(TABLAJE.slice(2));
+  const o=[];
+  o.push(`<svg class="plano-gral" viewBox="-14 -340 306 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
+  o.push(`<path class="b-vendida" d="M${resto.map(P).join("L")}Z"/>`);
+  o.push(svgCapas(g,M,{detalle:false,L}).replace(/class="b-resto"/g,'class="b-agro"'));
+  o.push(`<path class="b-tablaje" d="M${TABLAJE.map(P).join("L")}Z"/>`);
+  o.push(`<text class="b-gt" x="${(X1+(275-X1)/2).toFixed(1)}" y="-175">${L.etapas12}</text>`);
+  o.push(`<text class="b-gt b-gt-on" x="${(X1/2).toFixed(1)}" y="${-(YN1+9)}">${L.etapa3}</text>`);
+  o.push(`<text class="b-gs" transform="translate(140,${(-(SS*140)+12).toFixed(1)}) rotate(${(-Math.atan(SS)*180/Math.PI).toFixed(2)})">${L.calleSur}</text>`);
+  o.push(`<g class="b-norte"><path d="M2,-334 L-3,-320 L2,-323 L7,-320Z"/></g>`);
+  o.push(`<g class="b-escala"><line x1="225" y1="12" x2="275" y2="12"/><line x1="225" y1="9" x2="225" y2="15"/><line x1="275" y1="9" x2="275" y2="15"/><text x="250" y="22">50 m</text></g>`);
+  o.push(`</svg>`);
+  return o.join("");
+}
+
+if(typeof module!=="undefined"&&require.main===module){
+  const g=geometria();
+  const T=JSON.parse(process.argv[2]||"{}");
+  const out={datos:{G:g.G,acc:g.acc,comun:g.comun,lote:g.LOT,lotes:g.clusters.reduce((s,c)=>s+c.size,0),
+    etapa:g.etapa,calles:g.calles.map(p=>p.filter((_,i)=>i%3===0)),energia:g.energia,
+    clusters:g.clusters.map(c=>({num:c.num,size:c.size,area:c.area,frente:c.frente,fondo:c.fondo,banda:c.banda,pts:c.pts.filter((_,i,a)=>i%2===0||i===a.length-1),lotes:c.lots.map(l=>l.n)}))}};
+  ["es","en"].forEach(l=>{ const t=T[l]||{}; out[l]={detalle:svgDetalle(g,l,t.detalle||""),general:svgGeneral(g,l,t.general||"",t.general_desc||"")}; });
+  process.stdout.write(JSON.stringify(out));
+}

@@ -6,6 +6,7 @@
 <title>{{title}}</title>
 <meta name="description" content="{{desc}}">
 <meta name="robots" content="noindex, nofollow">
+<link rel="alternate" hreflang="{{alt_lang}}" href="{{alt_href}}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2318321F'/%3E%3Ccircle cx='11' cy='13' r='5' fill='%233F6B45'/%3E%3Ccircle cx='20' cy='11' r='4' fill='%23D8B23E'/%3E%3Ccircle cx='19' cy='21' r='6' fill='%233F6B45'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +17,14 @@
   --cenote:#0F5E66; --huano:#D8B23E; --linea:#B8BEB0; --tinta:#18321F; --tenue:#4A5A4C; --camino:#B9A37A;
   --serif:"Alegreya",Georgia,serif; --sans:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
   --ancho:1180px;
+  /* plano: fondo negro, lotes verde pasto, árboles verde oscuro, caminos de sascab */
+  --m-fondo:#000; --m-base:#0B160A; --m-agro:#10230C; --m-fruta:#356B27; --m-ray:#4F6E41;
+  --m-energia:#0E1522; --m-panel:#2D4466; --m-panel-b:#5B7BA6;
+  --m-calle:#EFEBDF; --m-eje:#B8AF98; --m-lote:#7CB342; --m-lote-l:#3F6B1E; --m-lote-hover:#B9DE6E;
+  --m-apartado:#E2B33C; --m-vendido:#3B463B; --m-texto:#ECEFE6; --m-tenue:#9BA59A; --m-vecina:#151915;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--cal);color:var(--tinta);font-family:var(--sans);font-size:1.125rem;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -27,7 +34,7 @@ a:hover{color:var(--monte)}
 :focus-visible{outline:3px solid var(--cenote);outline-offset:3px;border-radius:2px}
 .wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
 h1,h2,h3{font-family:var(--serif);font-weight:800;line-height:1.05;margin:0;letter-spacing:-.01em}
-h2{font-size:clamp(2rem,4.2vw,3.1rem);max-width:18ch}
+h2{font-size:clamp(2rem,4.2vw,3.1rem);max-width:18ch;text-wrap:balance}
 h3{font-size:1.4rem;font-weight:700;line-height:1.2}
 p{margin:0 0 1em;max-width:62ch}
 .lede{font-size:1.25rem;color:var(--tenue)}
@@ -43,37 +50,24 @@ p{margin:0 0 1em;max-width:62ch}
 .nav ul a:hover{text-decoration:underline}
 .nav-der{display:flex;align-items:center;gap:18px}
 .idioma{font-weight:700;color:var(--monte);text-decoration:none;border-bottom:1.5px solid currentColor}
-.btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:1.05rem;padding:.8em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--monte);cursor:pointer;line-height:1.1}
+.btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:1.05rem;padding:.8em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--monte);cursor:pointer;line-height:1.1;background:none;color:var(--monte)}
 .btn-1{background:var(--monte);color:var(--cal)}
 .btn-1:hover{background:var(--hoja);border-color:var(--hoja);color:var(--cal)}
 .btn-2{background:transparent;color:var(--monte)}
 .btn-2:hover{background:var(--cal-2);color:var(--monte)}
-@media (max-width:1040px){.nav ul{display:none}}
+.btn:disabled{opacity:.5;cursor:default}
+@media (max-width:1080px){.nav ul{display:none}}
 @media (max-width:420px){.nav .btn{display:none}}
 @media (max-width:560px){.marca{font-size:1.2rem}.marca svg{width:26px;height:26px}.nav .btn{font-size:.95rem;padding:.65em 1em}.nav{gap:12px}.nav-der{gap:12px}}
 
 .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center;padding:30px 0 56px}
-.hero h1{font-size:clamp(2.4rem,4.6vw,3.9rem);max-width:15ch;margin-bottom:.45em}
+.hero h1{font-size:clamp(2.4rem,4.6vw,3.9rem);max-width:15ch;margin-bottom:.45em;text-wrap:balance}
 .hero .acciones{display:flex;flex-wrap:wrap;gap:12px;margin:1.6em 0 0}
 .plan-fig{margin:0}
-.plan-fig .plan{margin:0 auto;max-height:620px;width:auto}
+.panel-m{background:var(--m-fondo);border-radius:14px;padding:18px}
+.plan-fig .plano-gral{margin:0 auto;max-height:560px;width:auto}
 .plan-fig figcaption{font-size:.92rem;color:var(--tenue);margin-top:.6em;max-width:none}
-.plan .p-land{fill:#D3DACB}
-.plan .t0{fill:var(--hoja);opacity:.95}.plan .t1{fill:var(--hoja-2);opacity:.85}.plan .t2{fill:#2F5536}
-.plan .p-road{fill:var(--camino)}
-.plan .p-lot{fill:var(--huano);stroke:var(--monte);stroke-width:.6}
-.plan .p-cut{stroke:var(--monte);stroke-width:1.4;stroke-dasharray:6 5}
-.plan .p-edge{fill:none;stroke:var(--monte);stroke-width:2}
-.plan .p-edge-soft{fill:none;stroke:var(--monte);stroke-width:1.5}
-.plan .p-common{fill:#E3E0CC}
-.plan .p-green{fill:#C6D3BA}
-.plan text{font-family:var(--sans);font-size:14px;fill:var(--monte)}
-.plan .p-stage{font-family:var(--serif);font-weight:700;font-size:17px}
-.plan .p-sold{font-family:var(--sans);font-weight:500;font-size:13px;fill:var(--tenue)}
-.plan .p-street{font-size:13px;fill:var(--tenue)}
-.plan .p-north path{fill:var(--monte)}
-.plan .p-scale line{stroke:var(--monte);stroke-width:1.5}
-@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding-top:12px}.plan-fig .plan{max-height:none;width:100%}}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding-top:12px}.plan-fig .plano-gral{max-height:none;width:100%}}
 
 .datos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--monte);border-bottom:1px solid var(--linea);margin:0}
 .datos div{padding:18px 18px 20px 0}
@@ -93,41 +87,116 @@ section{padding:96px 0 0}
 .lista small{display:block;color:var(--tenue);font-size:.95rem}
 @media (max-width:760px){.dos{grid-template-columns:1fr;gap:36px}}
 
-/* etapas */
-.etapas{display:grid;grid-template-columns:minmax(0,1fr) 300px minmax(0,1fr);gap:40px;align-items:start}
-.etapas-lista{list-style:none;padding:0;margin:0}
-.etapas-lista li{padding:16px 0;border-top:1px solid var(--linea)}
-.etapas-lista li:first-child{border-top:2px solid var(--monte)}
-.etapas-lista h3{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-.etiqueta{font-family:var(--sans);font-size:.9rem;font-weight:700;border-radius:999px;padding:.15em .7em;white-space:nowrap}
-.et-on{background:var(--huano);color:var(--monte)}
-.et-off{border:1.5px solid var(--linea);color:var(--tenue)}
-.etapas-lista p{font-size:1rem;color:var(--tenue);margin:.4em 0 0}
-.mapa-e3{width:100%;max-width:320px}
-.plan-e3{width:100%;height:auto}
-.plan-e3 .lote{cursor:pointer}
-.plan-e3 .lote polygon{fill:var(--huano);stroke:var(--monte);stroke-width:.8}
-.plan-e3 .lote text{font-size:12px;font-weight:700;pointer-events:none}
-.plan-e3 .lote:hover polygon{fill:#F0D573}
-.plan-e3 .lote:focus{outline:none}
-.plan-e3 .lote:focus-visible polygon{stroke:var(--cenote);stroke-width:3}
-.plan-e3 .lote.apartado polygon{fill:#EFE7C8}
-.plan-e3 .lote.vendido polygon{fill:var(--hoja)}
-.plan-e3 .lote.vendido text{fill:var(--cal)}
-.plan-e3 .lote.sel polygon{fill:var(--monte)}
-.plan-e3 .lote.sel text{fill:var(--cal)}
-.ficha{position:sticky;top:24px;border-top:2px solid var(--monte);padding-top:16px}
-.ficha .vacia{color:var(--tenue)}
-.ficha .num{font-family:var(--serif);font-weight:800;font-size:3rem;line-height:1;margin:.1em 0 .2em}
-.ficha dl{margin:12px 0 18px}
-.ficha dl div{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--linea)}
-.ficha dt{color:var(--tenue)}
-.ficha dd{margin:0;font-weight:700;text-align:right}
-.leyenda{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.95rem;color:var(--tenue)}
-.leyenda span{display:inline-block;width:14px;height:14px;border:1px solid var(--monte);border-radius:2px;vertical-align:-2px;margin-right:6px}
-.cuenta{font-size:.98rem;color:var(--tenue);margin-top:14px}
-@media (max-width:980px){.etapas{grid-template-columns:300px minmax(0,1fr)}.etapas-lista{grid-column:1/-1}}
-@media (max-width:620px){.etapas{grid-template-columns:1fr}.mapa-e3{margin:0 auto}.ficha{position:static}}
+/* agua, energía, comida */
+.pilares{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--monte)}
+.pilares > div{padding:22px 28px 6px 0}
+.pilares > div + div{padding-left:28px;border-left:1px solid var(--linea)}
+.pilares h3{font-size:1.7rem;margin-bottom:.4em}
+.pilares p{font-size:1.02rem;color:var(--tenue)}
+.pilares .lista li{font-size:1rem}
+.sin-show{margin-top:36px;font-family:var(--serif);font-size:1.45rem;font-weight:700;max-width:40ch;line-height:1.3}
+@media (max-width:860px){.pilares{grid-template-columns:1fr}.pilares > div + div{padding-left:0;border-left:0;border-top:1px solid var(--linea)}}
+
+/* plano de la etapa 3 */
+.mapa{position:relative;background:var(--m-fondo);border-radius:14px;padding:14px 14px 10px}
+.mapa-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mapa-scroll svg{width:100%;min-width:860px;height:auto}
+.desliza{display:none;color:var(--m-tenue);font-size:.9rem;margin:6px 4px 0}
+@media (max-width:900px){.desliza{display:block}}
+.ley{list-style:none;margin:0;padding:12px 4px 4px;display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--m-tenue);font-size:.92rem}
+.ley span{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid #333}
+.cuenta{font-size:1rem;color:var(--tenue);margin:14px 0 0}
+.tip{position:absolute;z-index:3;pointer-events:none;background:var(--cal);color:var(--monte);border-radius:8px;padding:9px 12px;font-size:.95rem;line-height:1.4;max-width:300px;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.tip b{font-family:var(--serif);font-size:1.05rem;display:block}
+
+.b-base{fill:var(--m-base)}
+.b-agro,.b-corr{fill:var(--m-agro)}
+.b-ray-f{fill:var(--m-agro)} .b-ray-l{stroke:var(--m-ray);stroke-width:.35}
+.b-fruta{fill:var(--m-fruta)}
+.b-huella{fill:var(--m-calle);opacity:.85}
+.b-energia{fill:var(--m-energia)}
+.b-panel{fill:var(--m-panel);stroke:var(--m-panel-b);stroke-width:.12}
+.b-calle{fill:var(--m-calle)}
+.b-eje{fill:none;stroke:var(--m-eje);stroke-width:.3;stroke-dasharray:2.5 2}
+.b-lote{fill:var(--m-lote);stroke:var(--m-lote-l);stroke-width:.25}
+.b-clb{fill:none;stroke:#000;stroke-width:.9;pointer-events:none}
+.b-cln{fill:#000;opacity:.78}
+.b-clt{fill:#fff;font-family:var(--sans);font-weight:700;font-size:3.1px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.b-serv{fill:var(--m-calle);opacity:.28;stroke:var(--m-calle);stroke-width:.25;stroke-dasharray:1 .8;pointer-events:none}
+.b-contorno{fill:none;stroke:var(--m-texto);stroke-width:.6}
+.b-vecina{fill:var(--m-vecina)}
+.b-rot{fill:var(--m-tenue);font-family:var(--sans);font-size:3.2px;text-anchor:middle;dominant-baseline:central}
+.b-norte path{fill:var(--m-texto)} .b-norte text{fill:var(--m-texto);font-family:var(--sans);font-weight:700;font-size:3.4px;dominant-baseline:central}
+.b-escala line{stroke:var(--m-tenue);stroke-width:.35} .b-escala text{fill:var(--m-tenue);font-family:var(--sans);font-size:2.8px;dominant-baseline:central}
+.plano-e3 .cl{cursor:pointer}
+.plano-e3 .cl:hover .b-lote{fill:var(--m-lote-hover)}
+.plano-e3 .cl:focus{outline:none}
+.plano-e3 .cl:focus-visible .b-clb{stroke:var(--huano);stroke-width:1.4}
+.cl.apartado .b-lote{fill:var(--m-apartado);stroke:#8a6a12}
+.cl.vendido .b-lote{fill:var(--m-vendido);stroke:#222}
+.cl.vendido .b-cln{fill:#222}
+.plano-e3 .cl.sel .b-lote{fill:var(--m-lote-hover)}
+.plano-e3 .cl.sel .b-clb{stroke:#fff;stroke-width:1.3}
+.plano-e3 .cl.sel .b-cln{fill:var(--huano);opacity:1}
+.plano-e3 .cl.sel .b-clt{fill:#000}
+.b-info{cursor:help}
+.b-info:focus{outline:none}
+.b-info-bg{fill:#000;opacity:.8}
+.b-info-c{fill:var(--huano)}
+.b-info:hover .b-info-c,.b-info:focus-visible .b-info-c{fill:#fff}
+.b-info-i{fill:#000;font-family:var(--serif);font-weight:800;font-size:2.7px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.b-info-t{fill:var(--m-texto);font-family:var(--sans);font-weight:700;font-size:2.9px;dominant-baseline:central;pointer-events:none}
+.plano-gral .b-vendida{fill:#1D241D}
+.plano-gral .b-tablaje{fill:none;stroke:var(--m-texto);stroke-width:1.2}
+.plano-gral .b-contorno{stroke-width:1.4}
+.plano-gral .b-clb{stroke-width:1.1}
+.b-gt{fill:var(--m-tenue);font-family:var(--serif);font-weight:700;font-size:11px;text-anchor:middle}
+.b-gt-on{fill:var(--m-texto)}
+.b-gs{fill:var(--m-tenue);font-family:var(--sans);font-size:9px;text-anchor:middle}
+.plano-gral .b-escala line{stroke-width:1.2} .plano-gral .b-escala text{font-size:9px;text-anchor:middle}
+
+/* cotizador */
+.cotiza{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.eleccion{display:grid;gap:26px}
+.grupo{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.grupo legend{font-weight:700;margin-bottom:10px;padding:0}
+.grupo input{position:absolute;opacity:0;pointer-events:none}
+.grupo label{border:2px solid var(--monte);border-radius:999px;padding:.45em 1em;cursor:pointer;font-weight:500;line-height:1.3}
+.grupo label small{font-size:.85rem;color:var(--tenue)}
+.grupo input:checked+label{background:var(--monte);color:var(--cal)}
+.grupo input:checked+label small{color:#C9D2C3}
+.grupo input:focus-visible+label{outline:3px solid var(--cenote);outline-offset:3px}
+.ficha{border-top:2px solid var(--monte);padding-top:14px}
+.ficha .vacia{color:var(--tenue);margin:0}
+.ficha .titulo{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ficha .num{font-family:var(--serif);font-weight:800;font-size:2.4rem;line-height:1}
+.ficha dl{margin:10px 0 0}
+.ficha dl div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--linea)}
+.ficha dt{color:var(--tenue)} .ficha dd{margin:0;font-weight:700;text-align:right}
+.estado{font-size:.9rem;font-weight:700;border-radius:999px;padding:.15em .7em;white-space:nowrap}
+.estado.disponible{background:var(--m-lote);color:#0D1F05}
+.estado.apartado{background:var(--m-apartado);color:#2A2004}
+.estado.vendido{background:var(--m-vendido);color:#fff}
+.resultado{border-top:2px solid var(--monte);padding-top:18px}
+.cifra{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,7vw,5rem);line-height:1;letter-spacing:-.02em;margin:.1em 0 .15em}
+.cifra small{font-family:var(--sans);font-weight:500;font-size:1.1rem;letter-spacing:0;color:var(--tenue)}
+.desglose{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:18px 0 0}
+.desglose div{padding:12px 0;border-bottom:1px solid var(--linea)}
+.desglose dt{font-size:.95rem;color:var(--tenue)}
+.desglose dd{margin:0;font-weight:700;font-size:1.2rem}
+.ahorro{color:var(--hoja)}
+.acciones-c{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.aviso-c{font-size:.95rem;color:var(--tenue);margin:10px 0 0;min-height:1.4em}
+.tabla-wrap{margin-top:40px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:700;padding-bottom:10px}
+th,td{padding:.6em .5em;border-bottom:1px solid var(--linea);text-align:right}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+thead th{font-weight:500;color:var(--tenue);font-size:.95rem;border-bottom:2px solid var(--monte)}
+tr.activo td{background:var(--cal-2);font-weight:700}
+.letra{font-size:.98rem;color:var(--tenue);margin-top:24px}
+@media (max-width:880px){.cotiza{grid-template-columns:1fr}.desglose{grid-template-columns:1fr}}
+@media (max-width:480px){th,td{padding:.55em .3em;font-size:.95rem}}
 
 .banda{background:var(--monte);color:var(--cal);margin-top:96px;padding:88px 0 96px}
 .banda section{padding:0}
@@ -140,31 +209,6 @@ section{padding:96px 0 0}
 .banda .si li::before{content:"+";color:var(--huano)}
 .banda .no li::before{content:"–";color:#C9D2C3}
 .banda .nota{margin-top:32px;color:#C9D2C3;font-size:1rem}
-
-.cotiza{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
-.plazos{border:0;padding:0;margin:0 0 28px;display:flex;flex-wrap:wrap;gap:8px}
-.plazos legend{font-weight:700;margin-bottom:10px;padding:0}
-.plazos input{position:absolute;opacity:0;pointer-events:none}
-.plazos label{border:2px solid var(--monte);border-radius:999px;padding:.45em 1em;cursor:pointer;font-weight:500}
-.plazos input:checked+label{background:var(--monte);color:var(--cal)}
-.plazos input:focus-visible+label{outline:3px solid var(--cenote);outline-offset:3px}
-.resultado{border-top:2px solid var(--monte);padding-top:18px}
-.cifra{font-family:var(--serif);font-weight:800;font-size:clamp(3rem,7vw,5.2rem);line-height:1;letter-spacing:-.02em;margin:.1em 0 .15em}
-.cifra small{font-family:var(--sans);font-weight:500;font-size:1.1rem;letter-spacing:0;color:var(--tenue)}
-.desglose{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:18px 0 0}
-.desglose div{padding:12px 0;border-bottom:1px solid var(--linea)}
-.desglose dt{font-size:.95rem;color:var(--tenue)}
-.desglose dd{margin:0;font-weight:700;font-size:1.2rem}
-.ahorro{color:var(--hoja)}
-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-caption{text-align:left;font-weight:700;padding-bottom:10px}
-th,td{padding:.6em .5em;border-bottom:1px solid var(--linea);text-align:right}
-th:first-child,td:first-child{text-align:left;padding-left:0}
-thead th{font-weight:500;color:var(--tenue);font-size:.95rem;border-bottom:2px solid var(--monte)}
-tr.activo td{background:var(--cal-2);font-weight:700}
-.letra{font-size:.98rem;color:var(--tenue);margin-top:24px}
-@media (max-width:880px){.cotiza{grid-template-columns:1fr}}
-@media (max-width:480px){th,td{padding:.55em .3em;font-size:.95rem}}
 
 .pasos{list-style:none;counter-reset:p;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
 .pasos li{counter-increment:p;border-top:2px solid var(--monte);padding-top:14px}
@@ -188,6 +232,10 @@ tr.activo td{background:var(--cal-2);font-weight:700}
 .faq details p{color:var(--tenue)}
 
 .visita{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start}
+.canales{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:12px}
+.canales li{display:flex;flex-direction:column;border-top:1px solid var(--linea);padding-top:10px}
+.canales span{color:var(--tenue);font-size:.95rem}
+.canales a{font-weight:700;font-size:1.2rem}
 form{display:grid;gap:18px}
 .campo{display:grid;gap:6px}
 .campo label{font-weight:700}
@@ -219,9 +267,9 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
   <nav aria-label="{{nav_label}}">
     <ul>
       <li><a href="#lugar">{{nav_lugar}}</a></li>
-      <li><a href="#etapas">{{nav_etapas}}</a></li>
-      <li><a href="#participacion">{{nav_part}}</a></li>
-      <li><a href="#precios">{{nav_precios}}</a></li>
+      <li><a href="#vida">{{nav_vida}}</a></li>
+      <li><a href="#etapa3">{{nav_etapa}}</a></li>
+      <li><a href="#cotiza">{{nav_cotiza}}</a></li>
       <li><a href="#preguntas">{{nav_faq}}</a></li>
     </ul>
   </nav>
@@ -237,12 +285,12 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
     <h1>{{h1}}</h1>
     <p class="lede">{{hero_lede}}</p>
     <div class="acciones">
-      <a class="btn btn-1" href="#visita">{{cta_visita}}</a>
-      <a class="btn btn-2" href="#etapas">{{cta_lotes}}</a>
+      <a class="btn btn-1" href="#etapa3">{{cta_clusters}}</a>
+      <a class="btn btn-2" href="#visita">{{cta_visita}}</a>
     </div>
   </div>
   <figure class="plan-fig">
-{{PLAN_OVERVIEW}}
+    <div class="panel-m">{{PLANO_GENERAL}}</div>
     <figcaption>{{plan_cap}}</figcaption>
   </figure>
 </div>
@@ -260,40 +308,76 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
     <p class="lede">{{lugar_lede}}</p>
   </div>
   <div class="dos">
-    <div>
-      <h3>{{hoy_h}}</h3>
-      <ul class="lista">{{hoy_items}}</ul>
-    </div>
-    <div>
-      <h3>{{juntos_h}}</h3>
-      <ul class="lista">{{juntos_items}}</ul>
-    </div>
+    <div><h3>{{hoy_h}}</h3><ul class="lista">{{hoy_items}}</ul></div>
+    <div><h3>{{juntos_h}}</h3><ul class="lista">{{juntos_items}}</ul></div>
   </div>
 </section>
 
-<section id="etapas" aria-labelledby="etapas-t">
+<section id="vida" aria-labelledby="vida-t">
   <div class="sec-head">
-    <h2 id="etapas-t">{{et_h}}</h2>
-    <p class="lede">{{et_lede}}</p>
+    <h2 id="vida-t">{{vida_h}}</h2>
+    <p class="lede">{{vida_lede}}</p>
   </div>
-  <div class="etapas">
-    <ol class="etapas-lista">
-      <li><h3>{{e3_n}} <span class="etiqueta et-on">{{e3_tag}}</span></h3><p>{{e3_p}}</p></li>
-      <li><h3>{{e2_n}} <span class="etiqueta et-off">{{e12_tag}}</span></h3><p>{{e2_p}}</p></li>
-      <li><h3>{{e1_n}} <span class="etiqueta et-off">{{e12_tag}}</span></h3><p>{{e1_p}}</p></li>
-    </ol>
-    <div class="mapa-e3">
-{{PLAN_DETAIL}}
+  <div class="pilares">{{pilares}}</div>
+  <p class="sin-show">{{sin_show}}</p>
+</section>
+
+<section id="etapa3" aria-labelledby="etapa3-t">
+  <div class="sec-head">
+    <h2 id="etapa3-t">{{e3_h}}</h2>
+    <p class="lede">{{e3_lede}}</p>
+  </div>
+  <div class="mapa" id="mapa">
+    <div class="mapa-scroll">{{PLANO_DETALLE}}</div>
+    <p class="desliza">{{desliza}}</p>
+    <ul class="ley">
+      <li><span style="background:var(--m-lote)"></span>{{st_disp}}</li>
+      <li><span style="background:var(--m-apartado)"></span>{{st_apar}}</li>
+      <li><span style="background:var(--m-vendido)"></span>{{st_vend}}</li>
+      <li><span style="background:var(--m-calle)"></span>{{z_calle}}</li>
+      <li><span style="background:var(--m-agro);border-color:var(--m-fruta)"></span>{{z_agro}}</li>
+      <li><span style="background:var(--m-panel)"></span>{{z_energia}}</li>
+    </ul>
+    <div class="tip" id="tip" hidden></div>
+  </div>
+  <p class="cuenta" id="cuenta"></p>
+</section>
+
+<section id="cotiza" aria-labelledby="cotiza-t">
+  <div class="sec-head">
+    <h2 id="cotiza-t">{{co_h}}</h2>
+    <p class="lede">{{co_lede}}</p>
+  </div>
+  <div class="cotiza">
+    <div class="eleccion">
+      <div class="ficha" id="ficha" aria-live="polite"><p class="vacia">{{ficha_vacia}}</p></div>
+      <fieldset class="grupo" id="tamanos"><legend>{{co_tam}}</legend></fieldset>
+      <fieldset class="grupo" id="plazos"><legend>{{co_plazo}}</legend></fieldset>
     </div>
-    <div class="ficha" aria-live="polite">
-      <div id="ficha"><p class="vacia">{{ficha_vacia}}</p></div>
-      <ul class="leyenda">
-        <li><span style="background:#D8B23E"></span>{{st_disp}}</li>
-        <li><span style="background:#EFE7C8"></span>{{st_apar}}</li>
-        <li><span style="background:#3F6B45"></span>{{st_vend}}</li>
-      </ul>
-      <p class="cuenta" id="cuenta"></p>
+    <div class="resultado" aria-live="polite">
+      <div id="r-etq"></div>
+      <div class="cifra" id="r-cifra"></div>
+      <dl class="desglose">
+        <div><dt>{{pr_eng}}</dt><dd id="r-eng"></dd></div>
+        <div><dt>{{pr_total}}</dt><dd id="r-total"></dd></div>
+        <div><dt>{{pr_m2}}</dt><dd id="r-m2"></dd></div>
+        <div><dt>{{pr_ahorro}}</dt><dd id="r-ahorro"></dd></div>
+      </dl>
+      <div class="acciones-c">
+        <button class="btn btn-1" type="button" id="pdf">{{co_pdf}}</button>
+        <a class="btn btn-2" href="#visita" id="pedir">{{co_pedir}}</a>
+        <a class="btn btn-2" id="wa-c" href="https://wa.me/529999910450" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <p class="aviso-c" id="pdf-msg" role="status"></p>
     </div>
+  </div>
+  <div class="tabla-wrap">
+    <table>
+      <caption id="t-cap"></caption>
+      <thead><tr><th scope="col">{{pr_th1}}</th><th scope="col">{{pr_th2}}</th><th scope="col">{{pr_th3}}</th><th scope="col">{{pr_th4}}</th></tr></thead>
+      <tbody id="tabla"></tbody>
+    </table>
+    <p class="letra">{{pr_letra}}</p>
   </div>
 </section>
 </main>
@@ -316,36 +400,6 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
 </div>
 
 <div class="wrap">
-<section id="precios" aria-labelledby="precios-t">
-  <div class="sec-head">
-    <h2 id="precios-t">{{pr_h}}</h2>
-    <p class="lede">{{pr_lede}}</p>
-  </div>
-  <div class="cotiza">
-    <div>
-      <fieldset class="plazos" id="plazos"><legend>{{pr_elige}}</legend></fieldset>
-      <div class="resultado" aria-live="polite">
-        <div id="r-etq"></div>
-        <div class="cifra" id="r-cifra"></div>
-        <dl class="desglose">
-          <div><dt>{{pr_eng}}</dt><dd id="r-eng"></dd></div>
-          <div><dt>{{pr_total}}</dt><dd id="r-total"></dd></div>
-          <div><dt>{{pr_m2}}</dt><dd id="r-m2"></dd></div>
-          <div><dt>{{pr_ahorro}}</dt><dd id="r-ahorro"></dd></div>
-        </dl>
-      </div>
-    </div>
-    <div>
-      <table>
-        <caption>{{pr_tabla}}</caption>
-        <thead><tr><th scope="col">{{pr_th1}}</th><th scope="col">{{pr_th2}}</th><th scope="col">{{pr_th3}}</th><th scope="col">{{pr_th4}}</th></tr></thead>
-        <tbody id="tabla"></tbody>
-      </table>
-      <p class="letra">{{pr_letra}}</p>
-    </div>
-  </div>
-</section>
-
 <section id="entrar" aria-labelledby="entrar-t">
   <div class="sec-head">
     <h2 id="entrar-t">{{en_h}}</h2>
@@ -372,11 +426,15 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
     <div>
       <h2 id="visita-t">{{vi_h}}</h2>
       <p class="lede">{{vi_lede}}</p>
-      <p>{{vi_wa}} <a href="https://wa.me/529999910450">999 991 0450</a></p>
+      <ul class="canales">
+        <li><span>WhatsApp</span><a href="https://wa.me/529999910450" target="_blank" rel="noopener">999 991 0450</a></li>
+        <li><span>{{vi_correo}}</span>{{CORREO_HTML}}</li>
+      </ul>
     </div>
     <form name="visita" method="POST" action="{{form_action}}" data-netlify="true" netlify-honeypot="bot-field" id="form-visita" novalidate>
       <input type="hidden" name="form-name" value="visita">
       <input type="hidden" name="idioma" value="{{lang}}">
+      <input type="hidden" name="cotizacion" id="f-cotizacion" value="">
       <p class="oculto"><label>{{f_honey}} <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="campo"><label for="f-nombre">{{f_nombre}}</label><input id="f-nombre" type="text" name="nombre" autocomplete="name" required></div>
       <div class="fila">
@@ -384,7 +442,7 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
         <div class="campo"><label for="f-wa">WhatsApp</label><input id="f-wa" type="tel" name="whatsapp" autocomplete="tel"></div>
       </div>
       <div class="fila">
-        <div class="campo"><label for="f-lote">{{f_lote}}</label><input id="f-lote" type="text" name="lote" inputmode="numeric" placeholder="{{f_lote_ph}}"></div>
+        <div class="campo"><label for="f-cluster">{{f_cluster}}</label><input id="f-cluster" type="text" name="cluster" inputmode="numeric" placeholder="{{f_cluster_ph}}"></div>
         <div class="campo"><label for="f-plazo">{{f_plazo}}</label>
           <select id="f-plazo" name="plazo">{{f_plazo_opts}}</select>
         </div>
@@ -406,58 +464,178 @@ footer{margin-top:110px;border-top:2px solid var(--monte);padding:36px 0 56px;fo
 
 <script>
 const T={{JS}};
-const LOTES={{LOTES}};
-/* Estado de cada lote. Por omisión todos están disponibles.
-   Ejemplo: const ESTADO={7:"apartado",12:"vendido"}; */
-const ESTADO={};
-const planes=[
-  {id:"60",m:60,mens:1500},{id:"48",m:48,mens:1750},{id:"36",m:36,mens:2200},
-  {id:"24",m:24,mens:3050},{id:"12",m:12,mens:5700},{id:"c",m:0,total:73000}
-];
-const ENG=10000,BASE=100000,M2=200;
+const D={{DATOS}};
+/* Estado de cada cluster. Se edita en estado.json (sin volver a construir el sitio). */
+let ESTADO={{ESTADO}};
+const PLANES=[{id:"60",m:60,mens:1500},{id:"48",m:48,mens:1750},{id:"36",m:36,mens:2200},{id:"24",m:24,mens:3050},{id:"12",m:12,mens:5700},{id:"c",m:0,total:73000}];
+const ENG=10000, BASE=100000, LOTE=D.lote;
+PLANES.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE;});
 const $=n=>"$"+Math.round(n).toLocaleString("en-US");
-const nombre=p=>p.m?T.meses.replace("{n}",p.m):T.contado;
-planes.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE});
-const fs=document.getElementById("plazos"),tb=document.getElementById("tabla");
-planes.forEach((p,i)=>{
-  fs.insertAdjacentHTML("beforeend",`<input type="radio" name="plazo-c" id="pl-${p.id}" value="${p.id}" ${i===0?"checked":""}><label for="pl-${p.id}">${nombre(p)}</label>`);
-  tb.insertAdjacentHTML("beforeend",`<tr id="tr-${p.id}"><td>${nombre(p)}</td><td>${p.m?$(p.mens):T.na}</td><td>${$(p.total)}</td><td>${p.desc?(p.desc*100).toFixed(1)+"%":"0%"}</td></tr>`);
-});
-function pinta(id){
-  const p=planes.find(x=>x.id===id);
-  document.getElementById("r-etq").textContent=p.m?T.mens_etq.replace("{n}",p.m):T.unico;
-  document.getElementById("r-cifra").innerHTML=p.m?`${$(p.mens)} <small>${T.al_mes}</small>`:$(p.total);
-  document.getElementById("r-eng").textContent=p.m?$(ENG):T.incluido;
-  document.getElementById("r-total").textContent=$(p.total);
-  document.getElementById("r-m2").textContent=$(p.total/M2);
-  const ah=BASE-p.total,el=document.getElementById("r-ahorro");
-  el.textContent=ah?`${$(ah)} (${(p.desc*100).toFixed(1)}%)`:"$0";el.className=ah?"ahorro":"";
-  document.querySelectorAll("#tabla tr").forEach(r=>r.classList.toggle("activo",r.id==="tr-"+id));
-}
-fs.addEventListener("change",e=>pinta(e.target.value));
-pinta("60");
+const m2=n=>Math.round(n).toLocaleString("en-US")+" m²";
+const nomPlan=p=>p.m?T.meses.replace("{n}",p.m):T.contado;
+const est=n=>(ESTADO[n]||ESTADO[String(n)]||"disponible");
+const CL={}; D.clusters.forEach(c=>CL[c.num]=c);
+const S={size:4,cl:null,plan:"60"};
 
-const est=n=>ESTADO[n]||"disponible";
-const lotes=[...document.querySelectorAll(".plan-e3 .lote")];
-lotes.forEach(g=>{const n=+g.dataset.lote;g.classList.add(est(n));g.setAttribute("aria-label",`${T.lote} ${n}, ${T.st[est(n)]}`)});
-const disp=lotes.filter(g=>est(+g.dataset.lote)==="disponible").length;
-document.getElementById("cuenta").textContent=T.cuenta.replace("{d}",disp).replace("{t}",lotes.length);
-function elige(g){
-  lotes.forEach(x=>x.classList.remove("sel"));g.classList.add("sel");
-  const n=+g.dataset.lote,info=LOTES[n],e=est(n);
-  document.getElementById("ficha").innerHTML=`<div>${T.lote}</div><div class="num">${n}</div>
-  <dl><div><dt>${T.sup}</dt><dd>200 m²</dd></div><div><dt>${T.medidas}</dt><dd>${T.med}</dd></div>
-  <div><dt>${T.estado}</dt><dd>${T.st[e]}</dd></div>
-  <div><dt>${T.desde}</dt><dd>${$(1500)} ${T.al_mes}</dd></div><div><dt>${T.contado}</dt><dd>${$(73000)}</dd></div></dl>
-  ${e==="disponible"?`<a class="btn btn-1" href="#visita" id="pedir">${T.pedir}</a>`:""}`;
-  const b=document.getElementById("pedir");
-  if(b)b.addEventListener("click",()=>{document.getElementById("f-lote").value=n});
+// ---------- estados en el plano ----------
+function pintaEstados(){
+  document.querySelectorAll("svg .cl").forEach(g=>{
+    const n=+g.dataset.cl, e=est(n);
+    g.classList.remove("disponible","apartado","vendido"); g.classList.add(e);
+    if(g.hasAttribute("aria-label")) g.setAttribute("aria-label",`${T.cluster} ${n}, ${CL[n].size} ${T.lotes}, ${T.st[e]}`);
+  });
+  const libres=D.clusters.filter(c=>est(c.num)==="disponible");
+  document.getElementById("cuenta").textContent=T.cuenta.replace("{d}",libres.length).replace("{t}",D.clusters.length).replace("{l}",libres.reduce((s,c)=>s+c.size,0));
 }
-lotes.forEach(g=>{
-  g.addEventListener("click",()=>elige(g));
-  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();elige(g)}});
-});
+pintaEstados();
+fetch(T.estado_url,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.clusters){ ESTADO=j.clusters; pintaEstados(); if(S.cl) ficha(); } }).catch(()=>{});
 
+// ---------- tooltips de información ----------
+const mapa=document.getElementById("mapa"), tip=document.getElementById("tip");
+function muestraTip(html,x,y){
+  tip.innerHTML=html; tip.hidden=false;
+  const r=mapa.getBoundingClientRect(); let l=x-r.left+14, t=y-r.top+14;
+  if(l+tip.offsetWidth>r.width-8) l=x-r.left-tip.offsetWidth-14;
+  if(t+tip.offsetHeight>r.height-8) t=y-r.top-tip.offsetHeight-14;
+  tip.style.left=Math.max(8,l)+"px"; tip.style.top=Math.max(8,t)+"px";
+}
+const htmlInfo=k=>`<b>${T.info[k].t}</b>${T.info[k].d}`;
+const htmlCl=n=>{const c=CL[n]; return `<b>${T.cluster} ${n}</b>${c.size} ${T.lotes}, ${m2(c.area)}<br>${T.st[est(n)]}`;};
+mapa.addEventListener("pointermove",e=>{
+  const i=e.target.closest(".b-info"); if(i){ muestraTip(htmlInfo(i.dataset.info),e.clientX,e.clientY); return; }
+  const g=e.target.closest(".plano-e3 .cl"); if(g&&e.pointerType==="mouse"){ muestraTip(htmlCl(+g.dataset.cl),e.clientX,e.clientY); return; }
+  tip.hidden=true;
+});
+mapa.addEventListener("pointerleave",()=>{tip.hidden=true;});
+mapa.addEventListener("click",e=>{
+  const i=e.target.closest(".b-info"); if(i){ const b=i.getBoundingClientRect(); muestraTip(htmlInfo(i.dataset.info),b.left,b.bottom); return; }
+  const g=e.target.closest(".plano-e3 .cl"); if(g){ elige(+g.dataset.cl); }
+});
+mapa.addEventListener("keydown",e=>{
+  if(e.key!=="Enter"&&e.key!==" ") return;
+  const g=e.target.closest(".plano-e3 .cl"); if(g){ e.preventDefault(); elige(+g.dataset.cl); }
+  const i=e.target.closest(".b-info"); if(i){ e.preventDefault(); const b=i.getBoundingClientRect(); muestraTip(htmlInfo(i.dataset.info),b.left,b.bottom); }
+});
+mapa.addEventListener("focusin",e=>{ const i=e.target.closest(".b-info"); if(i){ const b=i.getBoundingClientRect(); muestraTip(htmlInfo(i.dataset.info),b.left,b.bottom); } });
+mapa.addEventListener("focusout",()=>{tip.hidden=true;});
+
+// ---------- cotizador ----------
+const fsT=document.getElementById("tamanos"), fsP=document.getElementById("plazos"), tb=document.getElementById("tabla");
+[2,4,8].forEach(n=>fsT.insertAdjacentHTML("beforeend",`<input type="radio" name="tam" id="tam-${n}" value="${n}" ${n===S.size?"checked":""}><label for="tam-${n}">${n} ${T.lotes} <small>${m2(n*LOTE)}</small></label>`));
+PLANES.forEach(p=>fsP.insertAdjacentHTML("beforeend",`<input type="radio" name="plan" id="pl-${p.id}" value="${p.id}" ${p.id===S.plan?"checked":""}><label for="pl-${p.id}">${nomPlan(p)}</label>`));
+function ficha(){
+  const el=document.getElementById("ficha");
+  if(!S.cl){ el.innerHTML=`<p class="vacia">${T.ficha_vacia}</p>`; return; }
+  const c=CL[S.cl], e=est(c.num);
+  el.innerHTML=`<div class="titulo"><span>${T.cluster}</span><span class="estado ${e}">${T.st[e]}</span></div><div class="num">${c.num}</div>
+    <dl><div><dt>${T.tam}</dt><dd>${c.size} ${T.lotes} ${T.de} ${LOTE} m²</dd></div><div><dt>${T.sup}</dt><dd>${m2(c.area)}</dd></div>
+    <div><dt>${T.frente}</dt><dd>${c.frente.toFixed(1)} m</dd></div><div><dt>${T.fondo}</dt><dd>${c.fondo.toFixed(1)} m</dd></div>
+    <div><dt>${T.ubic}</dt><dd>${T.banda[c.banda]}</dd></div></dl>
+    <p style="margin:12px 0 0"><button class="btn btn-2" type="button" id="quitar">${T.quitar}</button></p>`;
+  document.getElementById("quitar").addEventListener("click",()=>{ S.cl=null; marcaSel(); ficha(); pinta(); });
+}
+function marcaSel(){ document.querySelectorAll(".plano-e3 .cl").forEach(g=>g.classList.toggle("sel",+g.dataset.cl===S.cl)); }
+function elige(n){
+  S.cl=n; S.size=CL[n].size; document.getElementById("tam-"+S.size).checked=true;
+  marcaSel(); ficha(); pinta();
+  document.getElementById("cotiza").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+}
+function calcula(id,size){ const p=PLANES.find(x=>x.id===id); return {p,mens:p.m?p.mens*size:0,eng:p.m?ENG*size:0,total:p.total*size,base:BASE*size}; }
+function pinta(){
+  const k=calcula(S.plan,S.size), p=k.p;
+  document.getElementById("r-etq").textContent=(S.cl?`${T.cluster} ${S.cl}, `:"")+`${S.size} ${T.lotes}. `+(p.m?T.mens_etq.replace("{n}",p.m):T.unico);
+  document.getElementById("r-cifra").innerHTML=p.m?`${$(k.mens)} <small>${T.al_mes}</small>`:$(k.total);
+  document.getElementById("r-eng").textContent=p.m?$(k.eng):T.incluido;
+  document.getElementById("r-total").textContent=$(k.total);
+  document.getElementById("r-m2").textContent=$(k.total/(S.size*LOTE));
+  const ah=k.base-k.total, el=document.getElementById("r-ahorro");
+  el.textContent=ah?`${$(ah)} (${(p.desc*100).toFixed(1)}%)`:"$0"; el.className=ah?"ahorro":"";
+  document.getElementById("t-cap").textContent=T.t_cap.replace("{n}",S.size).replace("{m}",m2(S.size*LOTE));
+  tb.innerHTML=PLANES.map(q=>{const r=calcula(q.id,S.size); return `<tr class="${q.id===S.plan?"activo":""}"><td>${nomPlan(q)}</td><td>${q.m?$(r.mens):T.na}</td><td>${$(r.total)}</td><td>${q.desc?(q.desc*100).toFixed(1)+"%":"0%"}</td></tr>`;}).join("");
+  const resumen=`${S.cl?T.cluster+" "+S.cl+", ":""}${S.size} ${T.lotes}, ${nomPlan(p)}: ${p.m?$(k.mens)+" "+T.al_mes+", ":""}${T.total_c} ${$(k.total)}`;
+  document.getElementById("wa-c").href="https://wa.me/529999910450?text="+encodeURIComponent(T.wa_txt+" "+resumen);
+  document.getElementById("f-cotizacion").value=resumen;
+  const disp=!S.cl||est(S.cl)==="disponible";
+  document.getElementById("pedir").hidden=!disp;
+}
+fsT.addEventListener("change",e=>{ S.size=+e.target.value; if(S.cl&&CL[S.cl].size!==S.size){ S.cl=null; marcaSel(); ficha(); } pinta(); });
+fsP.addEventListener("change",e=>{ S.plan=e.target.value; pinta(); });
+document.getElementById("pedir").addEventListener("click",()=>{
+  if(S.cl) document.getElementById("f-cluster").value=S.cl;
+  const p=PLANES.find(x=>x.id===S.plan); const sel=document.getElementById("f-plazo");
+  [...sel.options].forEach(o=>{ if(o.text===nomPlan(p)) sel.value=o.value||o.text; });
+});
+pinta();
+
+// ---------- PDF de la cotización ----------
+function cargaJsPDF(){
+  if(window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
+  return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"; s.onload=()=>ok(window.jspdf.jsPDF); s.onerror=no; document.head.appendChild(s); });
+}
+document.getElementById("pdf").addEventListener("click",async()=>{
+  const msg=document.getElementById("pdf-msg"), b=document.getElementById("pdf");
+  b.disabled=true; msg.textContent=T.pdf_gen;
+  try{ const jsPDF=await cargaJsPDF(); generaPDF(jsPDF); msg.textContent=T.pdf_ok; }
+  catch(e){ msg.textContent=T.pdf_err; }
+  b.disabled=false;
+});
+function generaPDF(jsPDF){
+  const doc=new jsPDF({unit:"mm",format:"a4"});
+  const txt=doc.text.bind(doc), fix=v=>String(v).replace(/²/g,"2").replace(/…/g,"...");
+  doc.text=(v,...a)=>txt(Array.isArray(v)?v.map(fix):fix(v),...a);
+  const k=calcula(S.plan,S.size), p=k.p, c=S.cl?CL[S.cl]:null;
+  const hoy=new Date(), fecha=hoy.toLocaleDateString(T.locale,{year:"numeric",month:"long",day:"numeric"});
+  const folio="BV-"+hoy.toISOString().slice(2,10).replace(/-/g,"")+"-"+(c?c.num:"T"+S.size)+"-"+p.id;
+  const verde=[24,50,31], tenue=[90,104,92];
+  doc.setFillColor(...verde); doc.rect(0,0,210,28,"F");
+  doc.setTextColor(232,234,226); doc.setFont("helvetica","bold"); doc.setFontSize(20); doc.text("Bosque Venado",16,15);
+  doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.text(T.pdf_sub,16,22);
+  doc.text(`${T.pdf_folio} ${folio}`,194,15,{align:"right"}); doc.text(fecha,194,22,{align:"right"});
+  doc.setTextColor(...verde); doc.setFont("helvetica","bold"); doc.setFontSize(16);
+  doc.text(c?`${T.cluster} ${c.num}`:T.pdf_sin.replace("{n}",S.size),16,42);
+  doc.setFont("helvetica","normal"); doc.setFontSize(10.5); doc.setTextColor(40,40,40);
+  let y=50;
+  const filas=[[T.tam,`${S.size} ${T.lotes} ${T.de} ${LOTE} m²`],[T.sup,m2(S.size*LOTE)]];
+  if(c){ filas.push([T.frente+" / "+T.fondo,`${c.frente.toFixed(1)} m / ${c.fondo.toFixed(1)} m`],[T.ubic,T.banda[c.banda]],[T.estado,T.st[est(c.num)]]); }
+  filas.push([T.co_plazo,nomPlan(p)],[T.pr_eng,p.m?$(k.eng):T.incluido]);
+  if(p.m) filas.push([T.mens_pdf.replace("{n}",p.m),$(k.mens)]);
+  filas.push([T.pr_total,$(k.total)],[T.pr_m2,$(k.total/(S.size*LOTE))],[T.pr_ahorro,k.base-k.total?`${$(k.base-k.total)} (${(p.desc*100).toFixed(1)}%)`:"$0"]);
+  filas.forEach(([a,v])=>{ doc.setTextColor(...tenue); doc.text(a,16,y); doc.setTextColor(30,30,30); doc.setFont("helvetica","bold"); doc.text(v,120,y,{align:"right"}); doc.setFont("helvetica","normal"); doc.setDrawColor(210,214,205); doc.line(16,y+2.2,120,y+2.2); y+=8; });
+  // tabla de todos los planes
+  y+=6; doc.setFont("helvetica","bold"); doc.setTextColor(...verde); doc.setFontSize(12); doc.text(T.t_cap.replace("{n}",S.size).replace("{m}",m2(S.size*LOTE)),16,y); y+=7;
+  doc.setFontSize(9.5); doc.setTextColor(...tenue); doc.setFont("helvetica","normal");
+  const cols=[16,70,105,140]; [T.pr_th1,T.pr_th2,T.pr_th3,T.pr_th4].forEach((h,i)=>doc.text(h,i?cols[i]+30:cols[i],y,{align:i?"right":"left"}));
+  doc.setDrawColor(...verde); doc.line(16,y+2,170,y+2); y+=7;
+  PLANES.forEach(q=>{ const r=calcula(q.id,S.size);
+    if(q.id===S.plan){ doc.setFillColor(221,225,213); doc.rect(15,y-4.6,156,6.6,"F"); doc.setFont("helvetica","bold"); } else doc.setFont("helvetica","normal");
+    doc.setTextColor(30,30,30);
+    [nomPlan(q),q.m?$(r.mens):T.na,$(r.total),q.desc?(q.desc*100).toFixed(1)+"%":"0%"].forEach((v,i)=>doc.text(v,i?cols[i]+30:cols[i],y,{align:i?"right":"left"}));
+    y+=7; });
+  // plano de ubicación
+  const ox=150, oy=128, sc=0.27;
+  const X=x=>ox+x*sc, Y=yy=>oy-yy*sc;
+  const poly=(pts,estilo)=>{ const d=[]; for(let i=1;i<pts.length;i++) d.push([(pts[i][0]-pts[i-1][0])*sc,-(pts[i][1]-pts[i-1][1])*sc]); doc.lines(d,X(pts[0][0]),Y(pts[0][1]),[1,1],estilo,true); };
+  doc.setFillColor(20,30,20); poly(D.etapa,"F");
+  doc.setFillColor(239,235,223); D.calles.forEach(pp=>poly(pp,"F"));
+  doc.setFillColor(45,68,102); D.energia.forEach(pp=>poly(pp,"F"));
+  doc.setLineWidth(0.15); doc.setDrawColor(0,0,0);
+  D.clusters.forEach(q=>{ const e=est(q.num); if(c&&q.num===c.num) doc.setFillColor(216,178,62); else if(e==="vendido") doc.setFillColor(59,70,59); else if(e==="apartado") doc.setFillColor(160,130,50); else doc.setFillColor(124,179,66); poly(q.pts,"FD"); });
+  doc.setLineWidth(0.3); doc.setDrawColor(24,50,31); poly(D.etapa,"S");
+  doc.setFontSize(8); doc.setTextColor(...tenue); doc.text(T.pdf_mapa,X(D.G.X1/2),Y(D.G.YN1)-4,{align:"center"});
+  doc.text("N",X(D.G.X1)+6,Y(D.G.YN1)+2); doc.setFillColor(24,50,31); doc.triangle(X(D.G.X1)+6.6,Y(D.G.YN1)+4,X(D.G.X1)+5.4,Y(D.G.YN1)+7,X(D.G.X1)+7.8,Y(D.G.YN1)+7,"F");
+  doc.text(T.pdf_calle,X(D.G.X1/2),Y(0)+6,{align:"center"});
+  // notas
+  y=Math.max(y+6,140); doc.setFontSize(8.6); doc.setTextColor(70,70,70);
+  const notas=doc.splitTextToSize(T.pdf_notas,178); doc.text(notas,16,y); y+=notas.length*4+6;
+  doc.setFont("helvetica","bold"); doc.setTextColor(...verde); doc.setFontSize(10.5); doc.text(T.pdf_contacto,16,y); y+=6;
+  doc.setFont("helvetica","normal"); doc.setTextColor(30,30,30);
+  const canales=[`WhatsApp: 999 991 0450`]; if(T.correo) canales.push(`${T.vi_correo}: ${T.correo}`); canales.push(location.origin.startsWith("http")?location.origin+location.pathname:"");
+  canales.filter(Boolean).forEach(t=>{ doc.text(t,16,y); y+=5; });
+  doc.setFontSize(7.5); doc.setTextColor(...tenue); doc.text(doc.splitTextToSize(T.pdf_legal,178),16,282);
+  doc.save(`${T.pdf_archivo}-${c?"cluster-"+c.num:S.size+"-"+T.lotes}.pdf`);
+}
+
+// ---------- formulario ----------
 const f=document.getElementById("form-visita"),err=document.getElementById("f-error");
 f.addEventListener("submit",e=>{
   if(!f.nombre.value.trim()){e.preventDefault();err.textContent=T.err_nombre;f.nombre.focus();return}

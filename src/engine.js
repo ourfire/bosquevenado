@@ -179,7 +179,7 @@ function geometria(){
   const R=calc(CONFIG);
   const {X1,YS1,YN1}=R.G;
   const g={G:R.G,acc:R.acc,comun:R.comun,LOT:R.LOT,etapa:[[0,0],[0,YN0],[X1,YN1],[X1,YS1]],
-    calles:[],ejes:[],energia:[],paneles:[],corredores:[],huellas:[],frutales:[],agro:[],restos:[],serv:[],clusters:[],info:[]};
+    calles:[],ejes:[],energia:[],paneles:[],aguadas:[],corredores:[],huellas:[],frutales:[],agro:[],restos:[],serv:[],clusters:[],info:[]};
   const inside=(r,x,y,m)=>{const l=Math.max(r.p.L(y),R.lo(y)), rr=Math.min(r.p.R(y),R.hi(y)); return x>l+m&&x<rr-m;};
   R.runs.forEach(r=>{
     const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length<3) return;
@@ -189,6 +189,13 @@ function geometria(){
       const e=[]; for(let y=r.a;y<=r.b;y+=1){const l=Math.max(r.p.L(y),R.lo(y)), rr=Math.min(r.p.R(y),R.hi(y)); if(rr-l>0.5) e.push([r2((l+rr)/2),r2(y)]);}
       g.ejes.push(e);
       if(!g.info.some(i=>i.k==="calle")){ const yi=58; g.info.push({k:"calle",x:(r.p.L(yi)+r.p.R(yi))/2,y:yi}); }
+    } else if(r.cat==="energia"&&r.p.i===2){
+      // del lado oriente, una aguada que guarda agua de lluvia
+      g.energia.push(pts);
+      const cy=(r.a+r.b)/2, l=Math.max(r.p.L(cy),R.lo(cy))+2.5, rr=Math.min(r.p.R(cy),R.hi(cy))-1.5;
+      const cx=(l+rr)/2, rx=(rr-l)*0.4, ry=(r.b-r.a)*0.38;
+      g.aguadas.push({c:[r2(cx),r2(cy)],rx,ry});
+      g.info.push({k:"aguada",x:cx,y:cy});
     } else if(r.cat==="energia"){
       g.energia.push(pts);
       for(let y=r.a+1.5;y<r.b-2.5;y+=3.4){
@@ -210,9 +217,10 @@ function geometria(){
       g.agro.push(pts);
     }
   });
-  let big=null;
-  R.restos.forEach(r=>{ const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length>2) g.restos.push(rp(simplifica(sh.pts,0.002))); if(!big||r.area>big.area) big=r; });
-  if(big&&big.area>40){ const ym=(big.a+big.b)/2; g.info.push({k:"agro",x:(Math.max(big.p.L(ym),R.lo(ym))+Math.min(big.p.R(ym),R.hi(ym)))/2,y:ym}); }
+  R.restos.forEach(r=>{ const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length>2) g.restos.push(rp(simplifica(sh.pts,0.002))); });
+  // la etiqueta del bosque va en el sobrante más grande que no choque con otra etiqueta
+  const libre=(x,y)=>g.info.every(i=>Math.abs(i.y-y)>24||Math.abs(i.x-x)>12);
+  for(const r of [...R.restos].sort((a,b)=>b.area-a.area)){ if(r.area<40) break; const ym=(r.a+r.b)/2, x=(Math.max(r.p.L(ym),R.lo(ym))+Math.min(r.p.R(ym),R.hi(ym)))/2; if(libre(x,ym)){ g.info.push({k:"agro",x,y:ym}); break; } }
   const full=R.clusters.filter(c=>!c.suelto);
   const corr=R.runs.filter(r=>r.corredor), ener=R.runs.filter(r=>r.cat==="energia");
   const toca=(lista,i,a,b)=>lista.some(q=>q.p.i===i&&(Math.abs(q.b-a)<0.05||Math.abs(q.a-b)<0.05));
@@ -244,9 +252,9 @@ function geometria(){
 
 // ---------- SVG ----------
 const LBL={
-  es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",
+  es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",aguada:"Aguada",
       calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",e1:"Etapa 1",e2:"Etapa 2",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
-  en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",
+  en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",aguada:"Rain pond",
       calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
 };
 // Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
@@ -259,6 +267,34 @@ function blobD(q,r,R){ // contorno irregular suavizado alrededor de q (coordenad
   for(let i=0;i<n;i++){const m=mid(pts[i],pts[(i+1)%n]); d+=`Q${f(pts[i][0])},${f(pts[i][1])} ${f(m[0])},${f(m[1])}`;}
   return d+"Z";
 }
+// especies con su color de plumón; los pesos dan la mezcla del monte
+const ESPECIES=[["claro",34],["medio",24],["oscuro",12],["oro",8],["maculis",12],["flamboyan",6],["olivo",4]];
+const PESO=ESPECIES.reduce((a,e)=>a+e[1],0);
+function especie(R){ let x=R()*PESO; for(const [k,w] of ESPECIES){ if((x-=w)<0) return k; } return "claro"; }
+function arbol(q,r,R,sh,sp){
+  const f=v=>v.toFixed(2), som=`<circle class="b-som" cx="${f(q[0]+sh)}" cy="${f(q[1]+sh)}" r="${f(r*.86)}"/>`;
+  if(sp==="oscuro"||sp==="oro"){ // copa vista desde arriba con ramas radiales
+    let d=""; const n=9; for(let i=0;i<n;i++){const a=i/n*Math.PI*2+R()*.3; d+=`M${f(q[0])},${f(q[1])}L${f(q[0]+Math.cos(a)*r*.82)},${f(q[1]+Math.sin(a)*r*.82)}`;}
+    return som+`<circle class="t-${sp}" cx="${f(q[0])}" cy="${f(q[1])}" r="${f(r*.86)}"/><path class="t-ramas" d="${d}"/>`;
+  }
+  if(sp==="maculis"){ // racimo de flores rosas
+    let o=som; const n=4+Math.floor(R()*3);
+    for(let i=0;i<n;i++){const a=i/n*Math.PI*2+R(), d=r*.42; o+=`<circle class="t-maculis" cx="${f(q[0]+Math.cos(a)*d)}" cy="${f(q[1]+Math.sin(a)*d)}" r="${f(r*.38)}"/>`;}
+    return o;
+  }
+  return `<path class="b-som" d="${blobD([q[0]+sh,q[1]+sh],r,rng(Math.floor(q[0]*91+q[1]*37)))}"/><path class="t-${sp}" d="${blobD(q,r,rng(Math.floor(q[0]*91+q[1]*37)))}"/>`;
+}
+function aguada(a,M,R,id){ // cuerpo de agua: contorno irregular, piedras en la orilla y destellos
+  const n=16, pts=[];
+  for(let i=0;i<n;i++){const t=i/n*Math.PI*2, k=0.82+R()*0.3; pts.push([a.c[0]+Math.cos(t)*a.rx*k,a.c[1]+Math.sin(t)*a.ry*k]);}
+  const q=pts.map(p=>M(p[0],p[1])), f=v=>v.toFixed(2), mid=(u,v)=>[(u[0]+v[0])/2,(u[1]+v[1])/2];
+  let d=`M${f(mid(q[n-1],q[0])[0])},${f(mid(q[n-1],q[0])[1])}`;
+  for(let i=0;i<n;i++){const m=mid(q[i],q[(i+1)%n]); d+=`Q${f(q[i][0])},${f(q[i][1])} ${f(m[0])},${f(m[1])}`;}
+  const c=M(a.c[0],a.c[1]); let o=`<path class="b-agua" fill="url(#agua-${id})" d="${d}"/>`;
+  for(let i=0;i<18;i++){ const t=R()*Math.PI*2, k=.6+R()*.3; const p=M(a.c[0]+Math.cos(t)*a.rx*k,a.c[1]+Math.sin(t)*a.ry*k); o+=`<circle class="b-brillo" cx="${f(p[0])}" cy="${f(p[1])}" r="${f(.15+R()*.2)}"/>`; }
+  pts.forEach((p,i)=>{ if(i%2) return; const t=i/n*Math.PI*2; const s=M(p[0]+Math.cos(t)*.9,p[1]+Math.sin(t)*.9); o+=`<ellipse class="b-piedra" cx="${f(s[0])}" cy="${f(s[1])}" rx="${f(.6+R()*.4)}" ry="${f(.45+R()*.3)}"/>`; });
+  return o;
+}
 function arboles(poly,M,R,o){ // árboles dentro de un polígono (coordenadas locales)
   const xs=poly.map(p=>p[0]), ys=poly.map(p=>p[1]), out=[];
   const sp=o.sp||4.2, rmin=o.rmin||1.5, rmax=o.rmax||2.6, sh=o.sh||0.9;
@@ -266,9 +302,7 @@ function arboles(poly,M,R,o){ // árboles dentro de un polígono (coordenadas lo
     for(let x=Math.min(...xs)+sp/2+((Math.round(y/sp)%2)?sp/2:0);x<Math.max(...xs);x+=sp){
       const px=x+(R()-.5)*sp*.5, py=y+(R()-.5)*sp*.5, r=rmin+R()*(rmax-rmin);
       const m=Math.min(r*.6,1.2); if(![[px,py],[px+m,py],[px-m,py],[px,py+m],[px,py-m]].every(p=>pip(p,poly))) continue;
-      const q=M(px,py);
-      if(R()<(o.redondos||0.25)){ out.push(`<circle class="b-som" cx="${(q[0]+sh).toFixed(2)}" cy="${(q[1]+sh).toFixed(2)}" r="${(r*.62).toFixed(2)}"/><circle class="b-arb2" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="${(r*.62).toFixed(2)}"/>`); }
-      else { const sR=rng(Math.floor(px*97+py*31)); const d=blobD(q,r,sR); const d2=blobD([q[0]+sh,q[1]+sh],r,rng(Math.floor(px*97+py*31))); out.push(`<path class="b-som" d="${d2}"/><path class="b-arb" d="${d}"/>`); }
+      out.push(arbol(M(px,py),r,R,sh,especie(R)));
     }
   }
   return out.join("");
@@ -279,6 +313,7 @@ function defs(id,esc){ // tramas y filtro de tinta; esc ajusta al tamaño del pl
   `<pattern id="tr-densa-${id}" width="${.4*esc}" height="${.4*esc}" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><line class="b-tl" x1="0" y1="0" x2="0" y2="${.4*esc}" stroke-width="${.08*esc}"/></pattern>`+
   `<pattern id="tr-panel-${id}" width="${.42*esc}" height="${.42*esc}" patternUnits="userSpaceOnUse"><line class="b-tl" x1="0" y1="0" x2="0" y2="${.42*esc}" stroke-width="${.07*esc}"/></pattern>`+
   `<pattern id="tr-vend-${id}" width="${2.2*esc}" height="${2.2*esc}" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="b-tl b-tl-suave" x1="0" y1="0" x2="0" y2="${2.2*esc}" stroke-width="${.12*esc}"/></pattern>`+
+  `<radialGradient id="agua-${id}" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#5E8FD6"/><stop offset=".65" stop-color="#93BCEB"/><stop offset="1" stop-color="#D3E6F7"/></radialGradient>`+
   `<filter id="tinta-${id}" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="${(.32/esc).toFixed(3)}" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="${(.55*esc).toFixed(2)}"/></filter>`+
   `</defs>`;
 }
@@ -288,9 +323,12 @@ function svgCapas(g,M,o){
   const id=o.id, sh=o.sombra, R=rng(o.det?11:23), out=[];
   out.push(`<path class="b-base" d="${path(g.etapa)}"/>`);
   // vegetación: bosque agroforestal en los sobrantes y frutales en los caminos verdes
+  g.restos.concat(g.agro).concat(g.corredores).forEach(pp=>out.push(`<path class="b-pasto" d="${path(pp)}"/>`));
   g.restos.concat(g.agro).forEach(pp=>out.push(arboles(pp,M,R,o.det?{sp:4.2,rmin:1.5,rmax:2.6,sh}:{sp:6,rmin:2.2,rmax:3.4,sh})));
+  g.energia.forEach(pp=>out.push(`<path class="b-pasto" d="${path(pp)}"/>`));
+  g.aguadas.forEach(a=>out.push(aguada(a,M,rng(41),id)));
   g.huellas.forEach(pp=>out.push(`<path class="b-huella" fill="url(#tr-densa-${id})" d="${path(pp)}"/>`));
-  if(o.det) g.frutales.forEach(p=>{const q=M(p[0],p[1]); out.push(`<circle class="b-som" cx="${(q[0]+sh*.6).toFixed(2)}" cy="${(q[1]+sh*.6).toFixed(2)}" r=".72"/><circle class="b-fruta" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r=".72"/>`);});
+  if(o.det){ const RF=rng(77); g.frutales.forEach(p=>{const q=M(p[0],p[1]), x=RF(), cls=x<.18?"t-maculis":x<.3?"t-flamboyan":x<.42?"t-oro":"b-fruta"; out.push(`<circle class="b-som" cx="${(q[0]+sh*.6).toFixed(2)}" cy="${(q[1]+sh*.6).toFixed(2)}" r=".72"/><circle class="${cls}" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r=".72"/>`);}); }
   g.paneles.forEach(pp=>{ const q=pp.map(p=>M(p[0],p[1])); const d="M"+q.map(v=>(v[0]+sh*.8).toFixed(2)+","+(v[1]+sh*.8).toFixed(2)).join("L")+"Z"; out.push(`<path class="b-som" d="${d}"/><path class="b-panel" fill="url(#tr-panel-${id})" d="${path(pp)}"/>`); });
   // tinta: calles, lotes y contorno con trazo de mano
   const tinta=[];

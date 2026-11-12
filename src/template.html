@@ -216,6 +216,21 @@ section{padding:110px 0 0}
 .b-base{fill:var(--papel)}
 .b-tl{stroke:var(--tinta)} .b-tl-suave{stroke:#8f8b7e}
 .b-arb{fill:var(--plumon);stroke:#3b3d24;stroke-width:.14;stroke-dasharray:2.6 1.1}
+.b-pasto{fill:#E7EEC6}
+.t-claro{fill:#B5DCA5;stroke:#2f3a28;stroke-width:.13;stroke-dasharray:2.4 1}
+.t-medio{fill:#86BF78;stroke:#2f3a28;stroke-width:.13;stroke-dasharray:2.4 1}
+.t-olivo{fill:var(--plumon);stroke:#3b3d24;stroke-width:.13;stroke-dasharray:2.4 1}
+.t-flamboyan{fill:#E8805A;stroke:#4a2a1e;stroke-width:.13}
+.t-oscuro{fill:#4F8460;stroke:var(--tinta);stroke-width:.14}
+.t-oro{fill:#D7CF4E;stroke:var(--tinta);stroke-width:.14}
+.t-ramas{fill:none;stroke:var(--tinta);stroke-width:.1}
+.t-maculis{fill:#E7B8DF;stroke:#4a3048;stroke-width:.1}
+.b-agua{stroke:var(--tinta);stroke-width:.2}
+.b-brillo{fill:#fff;opacity:.85}
+.b-piedra{fill:#CFCBC1;stroke:var(--tinta);stroke-width:.08}
+.plano-gral .t-claro,.plano-gral .t-medio,.plano-gral .t-olivo{stroke-width:.28;stroke-dasharray:5 2}
+.plano-gral .t-oscuro,.plano-gral .t-oro,.plano-gral .t-maculis,.plano-gral .t-flamboyan{stroke-width:.25}
+.plano-gral .t-ramas{stroke-width:.2}
 .b-arb2{fill:var(--plumon-2);stroke:var(--tinta);stroke-width:.16}
 .b-fruta{fill:var(--plumon-2);stroke:var(--tinta);stroke-width:.12}
 .b-som{fill:#5b5d48;opacity:.32}
@@ -517,8 +532,9 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
       <li><span style="background:var(--apartado)"></span>{{st_apar}}</li>
       <li><span style="background:var(--vendido)"></span>{{st_vend}}</li>
       <li><span style="background:repeating-linear-gradient(118deg,var(--tinta) 0 1px,var(--papel) 1px 4px)"></span>{{z_calle}}</li>
-      <li><span style="background:var(--plumon);border-radius:50%"></span>{{z_agro}}</li>
+      <li><span style="background:conic-gradient(#86BF78 0 40%,#E7B8DF 0 60%,#D7CF4E 0 78%,#E8805A 0);border-radius:50%"></span>{{z_agro}}</li>
       <li><span style="background:repeating-linear-gradient(90deg,var(--tinta) 0 1px,var(--papel) 1px 3px)"></span>{{z_energia}}</li>
+      <li><span style="background:radial-gradient(#5E8FD6,#D3E6F7);border-radius:50%"></span>{{z_agua}}</li>
     </ul>
     <div class="tip" id="tip" hidden></div>
   </div>

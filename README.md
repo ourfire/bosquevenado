@@ -1,6 +1,6 @@
 # Bosque Venado
 
-Sitio de Bosque Venado: comunidad neorural en el tablaje 3735 (Seyé, junto a Acanceh, Yucatán). Predio de 7 ha; la etapa 3, de 2 ha, es la que está a la venta en clusters de 2, 4 y 8 lotes de 200 m².
+Sitio de Bosque Venado: comunidad neorural en el tablaje 3735 (Seyé, junto a Acanceh, Yucatán). Predio de 7 ha; la etapa 3, de 3 ha, es la que está a la venta en clusters de 2, 4 y 8 lotes de 200 m².
 
 HTML estático en español (`index.html`) e inglés (`en/index.html`). Formulario de visita con Netlify Forms. Cotizador con descarga en PDF (jsPDF desde cdnjs, se carga solo al pedir el PDF).
 

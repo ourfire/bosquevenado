@@ -8,10 +8,10 @@ const COSN=Math.cos(Math.atan(SN)), COSS=Math.cos(Math.atan(SS));
 const fmt=(n,d=0)=>Number(n).toLocaleString("es-MX",{minimumFractionDigits:d,maximumFractionDigits:d});
 function parseSeq(s){ const v=String(s||"").split(/[^0-9]+/).map(Number).filter(n=>n>=1&&n<=64); return v.length?v:[1]; }
 
-// Diseño elegido: calle central ondulada, clusters de 8, 4 y 2 con caminos verdes de 4 m, centro de energía y agua.
-const CONFIG={area:20000,lote:200,onda:90,norte:{on:false,w:6},sur:0,seq:"8,4,2",gap:4,sobraAgro:true,
-  franjas:[{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:4,m:false},{t:"lotes",w:34,flex:true,h:2}],
-  cruces:[{t:"energia",y:132,w:10,alc:"todo"}]};
+// Diseño elegido: dos calles onduladas, clusters de 8, 4 y 2 con caminos verdes de 4 m, centro de energía y agua.
+const CONFIG={area:30000,lote:200,onda:140,norte:{on:false,w:6},sur:0,seq:"8,8,2,4",gap:4,sobraAgro:true,
+  franjas:[{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:3,m:false},{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:3,m:true},{t:"lotes",w:34,flex:true,h:2}],
+  cruces:[{t:"energia",y:140,w:10,alc:"todo"}]};
 
 // Tablaje completo en el mismo sistema (para el plano general)
 const TABLAJE=[[0,0],[0,268.306107],[184.852186,304.686824],[275.080424,322.443762],[275.080831,81.809663]];
@@ -219,31 +219,37 @@ function geometria(){
   });
   R.restos.forEach(r=>{ const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length>2) g.restos.push(rp(simplifica(sh.pts,0.002))); });
   // la etiqueta del bosque va en el sobrante más grande que no choque con otra etiqueta
-  const libre=(x,y)=>g.info.every(i=>Math.abs(i.y-y)>24||Math.abs(i.x-x)>12);
-  for(const r of [...R.restos].sort((a,b)=>b.area-a.area)){ if(r.area<40) break; const ym=(r.a+r.b)/2, x=(Math.max(r.p.L(ym),R.lo(ym))+Math.min(r.p.R(ym),R.hi(ym)))/2; if(libre(x,ym)){ g.info.push({k:"agro",x,y:ym}); break; } }
   const full=R.clusters.filter(c=>!c.suelto);
   const corr=R.runs.filter(r=>r.corredor), ener=R.runs.filter(r=>r.cat==="energia");
   const toca=(lista,i,a,b)=>lista.some(q=>q.p.i===i&&(Math.abs(q.b-a)<0.05||Math.abs(q.a-b)<0.05));
+  const S_ULT=CONFIG.franjas.length-1;
+  const esCalle=i=>{const f=CONFIG.franjas[i]; return !!f&&(f.t==="calle"||f.t==="andador");};
   full.forEach((c,ix)=>{
     const ym=(c.a+c.b)/2;
+    const dosCalles=esCalle(c.p.i-1)&&esCalle(c.p.i+1);
     const mid=Math.floor(c.part.length/2);
     const lots=c.lotes.map(li=>{const l=R.lots[li];
       let acceso="calle";
-      if(l.atras){ const k=c.part.findIndex(s=>Math.abs(s.a-l.a)<1e-6);
+      if(l.atras&&dosCalles) acceso="calle2";
+      else if(l.atras){ const k=c.part.findIndex(s=>Math.abs(s.a-l.a)<1e-6);
         acceso=toca(corr,c.p.i,l.a,l.b)?"camino":(c.size>=8&&(k===mid-1||k===mid))?"serv":l.a<0.05?"sur":toca(ener,c.p.i,l.a,l.b)?"energia":"camino"; }
       const pts=rp(simplifica(l.pts,0.002));
       return {n:l.n,atras:l.atras,acceso,frente:r2(l.frente),fondo:r2(l.fondo),centro:[r2(l.cx),r2(l.cy)],pts};});
     // punto de la etiqueta: sobre la línea entre la hilera del frente y la de atrás
     let lx=(c.p.L(ym)+c.p.R(ym))/2;
     if(c.p.h===2){ const fr=R.lots[c.lotes[0]]; const xs=fr.pts.map(p=>p[0]); lx=c.p.frente==="izq"?Math.max(...xs):Math.min(...xs); }
-    g.clusters.push({num:ix+1,letra:String.fromCharCode(65+ix),size:c.size,area:c.area,frente:r2(c.frente),fondo:r2(c.fondo),banda:c.p.i===0?"poniente":"oriente",
+    g.clusters.push({num:ix+1,letra:String.fromCharCode(65+ix),size:c.size,area:c.area,frente:r2(c.frente),fondo:r2(c.fondo),banda:c.p.i===0?"poniente":(c.p.i===S_ULT?"oriente":"centro"),
       pts:rp(simplifica(c.pts,0.002)),label:[r2(lx),r2(ym)],lots});
-    if(c.size>=8&&c.part.length>=2){
+    if(c.size>=8&&c.part.length>=2&&!dosCalles){
       const yb=c.part[Math.floor(c.part.length/2)-1].b;
       const sh=R.shape(c.p,yb-1.5,yb+1.5,0.5);
       if(sh.pts.length>2){ g.serv.push(rp(simplifica(sh.pts,0.002))); if(!g.info.some(i=>i.k==="serv")&&c.p.i>0) g.info.push({k:"serv",x:(c.p.L(yb)+c.p.R(yb))/2+4,y:yb}); }
     }
   });
+  // ícono del bosque agroforestal: lejos de otros íconos y de los chapoteaderos
+  const libre=(x,y)=>g.info.every(i=>Math.abs(i.y-y)>24||Math.abs(i.x-x)>12)&&g.clusters.every(c=>c.label[1]-y<-6||c.label[1]-y>30||Math.abs(c.label[0]-x)>8);
+  agro: for(const r of [...R.restos].sort((a,b)=>b.area-a.area)){ if(r.area<40) break; const ym=(r.a+r.b)/2, l=Math.max(r.p.L(ym),R.lo(ym)), rr=Math.min(r.p.R(ym),R.hi(ym)), xm=(l+rr)/2;
+    for(const d of [0,-4,4,-8,8,-12,12,-16,16]){ const x=xm+d; if(x<l+3||x>rr-3) continue; if(libre(x,ym)){ g.info.push({k:"agro",x,y:ym}); break agro; } } }
   // ícono de cluster junto a un cluster de 4 del poniente
   const c4=g.clusters.find(c=>c.banda==="poniente"&&c.size===4);
   if(c4) g.info.push({k:"cluster",x:c4.label[0]-14,y:c4.label[1]});
@@ -252,9 +258,9 @@ function geometria(){
 
 // ---------- SVG ----------
 const LBL={
-  es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",aguada:"Aguada",
+  es:{calle:"Calles",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",aguada:"Aguada",
       calleSur:"Calle al sur",etapa2:"Etapa 2 (proyecto privado)",etapas12:"Etapas 1 y 2",e1:"Etapa 1",e2:"Etapa 2",e1s:"La Villa Vikinga",e2s:"Proyecto privado",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
-  en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",aguada:"Rain pond",
+  en:{calle:"Streets",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",aguada:"Rain pond",
       calleSur:"South street",etapa2:"Phase 2 (private project)",etapas12:"Phases 1 and 2",e1:"Phase 1",e2:"Phase 2",e1s:"La Villa Vikinga",e2s:"Private project",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
 };
 // Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
@@ -391,8 +397,8 @@ function svgGeneral(g,lang,titulo,desc){
   const L=LBL[lang]; const {X1,YS1,YN1}=g.G; const id="g"+lang;
   const M=(x,y)=>[x,-y];
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
-  // etapas 1 y 2 (5 ha); el corte entre ellas es ilustrativo, a partes iguales
-  const k=(SS-SN)/2, C=(YN0-Math.sqrt(YN0*YN0-4*k*(g.G.area+25000)))/(2*k);
+  // etapas 1 y 2 (2 ha cada una); el corte entre ellas es ilustrativo
+  const k=(SS-SN)/2, C=(YN0-Math.sqrt(YN0*YN0-4*k*(g.G.area+20000)))/(2*k);
   const e2=[[X1,YS1],[X1,YN1],[C,YN0+SN*C],[C,SS*C]];
   const e1=[[C,SS*C],[C,YN0+SN*C]].concat(TABLAJE.slice(2));
   const casas=[[206,172,10,7],[229,190,13,9],[217,211,8,6]];

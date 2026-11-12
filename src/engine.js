@@ -295,6 +295,13 @@ function aguada(a,M,R,id){ // cuerpo de agua: contorno irregular, piedras en la 
   pts.forEach((p,i)=>{ if(i%2) return; const t=i/n*Math.PI*2; const s=M(p[0]+Math.cos(t)*.9,p[1]+Math.sin(t)*.9); o+=`<ellipse class="b-piedra" cx="${f(s[0])}" cy="${f(s[1])}" rx="${f(.6+R()*.4)}" ry="${f(.45+R()*.3)}"/>`; });
   return o;
 }
+function chapo(q,R,id){ // chapoteadero en el cruce de los lotes del cluster; sirve de botón
+  const f=v=>v.toFixed(2); let o="";
+  for(let i=0;i<7;i++){ const t=i/7*Math.PI*2+R()*.4, d=3.25+R()*.3; o+=`<ellipse class="b-piedra" cx="${f(q[0]+Math.cos(t)*d)}" cy="${f(q[1]+Math.sin(t)*d)}" rx="${f(.55+R()*.3)}" ry="${f(.42+R()*.2)}"/>`; }
+  o+=`<path class="b-chapo" fill="url(#agua-${id})" d="${blobD(q,3,R)}"/>`;
+  for(let i=0;i<5;i++){ const t=R()*Math.PI*2, d=1.6+R()*.9; o+=`<circle class="b-brillo" cx="${f(q[0]+Math.cos(t)*d)}" cy="${f(q[1]+Math.sin(t)*d)}" r="${f(.12+R()*.12)}"/>`; }
+  return o;
+}
 function arboles(poly,M,R,o){ // árboles dentro de un polígono (coordenadas locales)
   const xs=poly.map(p=>p[0]), ys=poly.map(p=>p[1]), out=[];
   const sp=o.sp||4.2, rmin=o.rmin||1.5, rmax=o.rmax||2.6, sh=o.sh||0.9;
@@ -345,7 +352,7 @@ function svgCapas(g,M,o){
   if(o.det){
     g.clusters.forEach(c=>c.lots.forEach(l=>{ const q=M(l.centro[0],l.centro[1]); out.push(`<text class="b-ln" x="${q[0].toFixed(2)}" y="${(q[1]+.1).toFixed(2)}">${l.n}</text>`); }));
     g.clusters.forEach(c=>{ const q=M(c.label[0],c.label[1]);
-      out.push(`<g class="cl-et" data-cl="${c.num}" tabindex="0" role="button" aria-label="${o.L.cl} ${c.letra}, ${c.size} ${o.L.lotes}"><rect class="b-cln" x="${(q[0]-2.4).toFixed(2)}" y="${(q[1]-2.4).toFixed(2)}" width="4.8" height="4.8"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.15).toFixed(2)}">${c.letra}</text></g>`); });
+      out.push(`<g class="cl-et" data-cl="${c.num}" tabindex="0" role="button" aria-label="${o.L.cl} ${c.letra}, ${c.size} ${o.L.lotes}">${chapo(q,rng(c.num*13),id)}<text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.2).toFixed(2)}">${c.letra}</text></g>`); });
   }
   return out.join("");
 }
@@ -415,7 +422,7 @@ if(typeof module!=="undefined") module.exports={calc,CONFIG,geometria};
 if(typeof module!=="undefined"&&require.main===module){
   const g=geometria();
   const T=JSON.parse(process.argv[2]||"{}");
-  const out={datos:{G:g.G,acc:g.acc,comun:g.comun,lote:g.LOT,lotes:g.clusters.reduce((s,c)=>s+c.size,0),
+  const out={datos:{G:g.G,acc:g.acc,comun:g.comun,lote:g.LOT,
     etapa:g.etapa,calles:g.calles.map(p=>p.filter((_,i)=>i%3===0)),energia:g.energia,
     clusters:g.clusters.map(c=>({num:c.num,letra:c.letra,size:c.size,area:c.area,frente:c.frente,fondo:c.fondo,banda:c.banda,pts:c.pts.filter((_,i,a)=>i%2===0||i===a.length-1),lotes:c.lots.map(l=>l.n)})),
     lotes:g.clusters.flatMap(c=>c.lots.map(l=>({n:l.n,cl:c.num,atras:l.atras,acceso:l.acceso,frente:l.frente,fondo:l.fondo,pts:l.pts.filter((_,i,a)=>i%2===0||i===a.length-1)})))}};

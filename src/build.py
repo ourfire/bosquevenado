@@ -24,7 +24,7 @@ TITULOS = {
 GEO = json.loads(subprocess.run(["node", str(ROOT / "src" / "engine.js"), json.dumps(TITULOS)],
                                 capture_output=True, text=True, check=True).stdout)
 DAT = GEO["datos"]
-N_LOTES = DAT["lotes"]
+N_LOTES = len(DAT["lotes"])
 N_CL = len(DAT["clusters"])
 COMUN = f'{DAT["comun"] / DAT["G"]["area"] * 100:.0f}%'
 POR_TAM = {t: sum(1 for c in DAT["clusters"] if c["size"] == t) for t in (8, 4, 2)}
@@ -172,7 +172,7 @@ ES = dict(
     ], "Foto pendiente"),
     sin_show="Autosuficiencia sin show: sin búnker y sin alambre de púas. Agua, energía, comida y vecinos que se conocen.",
     e3_h="La etapa 3, cluster por cluster.",
-    e3_lede=f"Dos hectáreas al poniente del predio. Una calle central ondulada de 6 m reparte {N_LOTES} lotes a los dos lados, agrupados en {N_CL} clusters: {POR_TAM[8]} de 8 lotes, {POR_TAM[4]} de 4 y {POR_TAM[2]} de 2. Toca un lote para cotizarlo solo, la letra de un cluster para cotizarlo completo, o un ícono i para saber qué es cada zona.",
+    e3_lede=f"Dos hectáreas al poniente del predio. Una calle central ondulada de 6 m reparte {N_LOTES} lotes a los dos lados, agrupados en {N_CL} clusters: {POR_TAM[8]} de 8 lotes, {POR_TAM[4]} de 4 y {POR_TAM[2]} de 2. Toca un lote para cotizarlo solo, el chapoteadero de un cluster para cotizarlo completo, o un ícono i para saber qué es cada zona.",
     desliza="Desliza para ver todo el plano.",
     st_disp="Disponible", st_apar="Apartado", st_vend="Vendido",
     z_calle="Calle y huellas", z_agro="Bosque agroforestal", z_energia="Energía", z_agua="Aguada",
@@ -274,7 +274,7 @@ ES = dict(
             "energia": {"t": "Centro de energía y agua", "d": "Paneles solares, baterías y el pozo con su tanque elevado. Puede alojar un estacionamiento compartido."},
             "aguada": {"t": "Aguada", "d": "Un estanque que guarda el agua de lluvia, riega los frutales y da refugio a aves y fauna. Ubicación y tamaño ilustrativos."},
             "agro": {"t": "Bosque agroforestal", "d": "Los rincones que no completan un cluster se siembran como huerto común: frutales, milpa y árboles nativos como el maculís, el flamboyán y la lluvia de oro."},
-            "cluster": {"t": "Cluster", "d": "Lotes de 200 m² que se compran juntos, de 2, 4 u 8. El lote del frente da a la calle y el de atrás al camino verde."},
+            "cluster": {"t": "Cluster", "d": "Grupo de 2, 4 u 8 lotes de 200 m² para comprar con amigos o familia. En el cruce de sus lotes hay un chapoteadero con la letra del cluster; tócalo para cotizarlo completo."},
             "serv": {"t": "Servidumbre de paso", "d": "Franja de 3 m dentro de los clusters de 8 para que cada lote de atrás tenga entrada, aunque el cluster lo compartan varias familias. No cambia la superficie de los lotes."},
         },
         err_nombre="Escribe tu nombre.", err_email="Escribe un correo válido, por ejemplo nombre@dominio.com."),
@@ -372,7 +372,7 @@ EN = dict(
     ], "Photo pending"),
     sin_show="Self-reliance without the show: no bunker, no barbed wire. Water, power, food and neighbors who know each other.",
     e3_h="Phase 3, cluster by cluster.",
-    e3_lede=f"Two hectares on the west side of the parcel. A winding 6 m central street serves {N_LOTES} lots on both sides, grouped in {N_CL} clusters: {POR_TAM[8]} of 8 lots, {POR_TAM[4]} of 4 and {POR_TAM[2]} of 2. Tap a lot to get a quote for it, a cluster letter to quote the whole cluster, or an i icon to learn what each area is.",
+    e3_lede=f"Two hectares on the west side of the parcel. A winding 6 m central street serves {N_LOTES} lots on both sides, grouped in {N_CL} clusters: {POR_TAM[8]} of 8 lots, {POR_TAM[4]} of 4 and {POR_TAM[2]} of 2. Tap a lot to get a quote for it, a cluster's wading pool to quote the whole cluster, or an i icon to learn what each area is.",
     desliza="Swipe to see the whole plan.",
     st_disp="Available", st_apar="Reserved", st_vend="Sold",
     z_calle="Street and wheel tracks", z_agro="Food forest", z_energia="Power", z_agua="Rain pond",
@@ -474,7 +474,7 @@ EN = dict(
             "energia": {"t": "Power and water hub", "d": "Solar panels, batteries and the well with its elevated tank. It can also hold shared parking."},
             "aguada": {"t": "Rain pond", "d": "A pond that stores rainwater, waters the fruit trees and gives shelter to birds and wildlife. Location and size are illustrative."},
             "agro": {"t": "Food forest", "d": "Corners too small for a cluster are planted as a shared garden: fruit trees, milpa and trees such as maculís, flame tree and golden shower."},
-            "cluster": {"t": "Cluster", "d": "Lots of 200 m² bought together, in groups of 2, 4 or 8. The front lot faces the street and the back lot faces the green lane."},
+            "cluster": {"t": "Cluster", "d": "A group of 2, 4 or 8 lots of 200 m² to buy with friends or family. Where its lots meet there is a wading pool with the cluster's letter; tap it to quote the whole cluster."},
             "serv": {"t": "Easement", "d": "A 3 m strip inside clusters of 8 so every back lot has access, even when several families share the cluster. It does not change lot areas."},
         },
         err_nombre="Enter your name.", err_email="Enter a valid email, for example name@domain.com."),

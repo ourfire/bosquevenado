@@ -241,66 +241,99 @@ const LBL={
   en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",
       calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",info:"more information"}
 };
+// Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function pip(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if(((a[1]>pt[1])!==(b[1]>pt[1]))&&(pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0]))c=!c;}return c;}
+function blobD(q,r,R){ // contorno irregular suavizado alrededor de q (coordenadas de pantalla)
+  const n=11, pts=[]; for(let i=0;i<n;i++){const a=i/n*Math.PI*2, rr=r*(0.74+R()*0.42); pts.push([q[0]+Math.cos(a)*rr,q[1]+Math.sin(a)*rr]);}
+  const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2], f=v=>v.toFixed(2);
+  let d=`M${f(mid(pts[n-1],pts[0])[0])},${f(mid(pts[n-1],pts[0])[1])}`;
+  for(let i=0;i<n;i++){const m=mid(pts[i],pts[(i+1)%n]); d+=`Q${f(pts[i][0])},${f(pts[i][1])} ${f(m[0])},${f(m[1])}`;}
+  return d+"Z";
+}
+function arboles(poly,M,R,o){ // árboles dentro de un polígono (coordenadas locales)
+  const xs=poly.map(p=>p[0]), ys=poly.map(p=>p[1]), out=[];
+  const sp=o.sp||4.2, rmin=o.rmin||1.5, rmax=o.rmax||2.6, sh=o.sh||0.9;
+  for(let y=Math.min(...ys)+sp/2;y<Math.max(...ys);y+=sp*0.86){
+    for(let x=Math.min(...xs)+sp/2+((Math.round(y/sp)%2)?sp/2:0);x<Math.max(...xs);x+=sp){
+      const px=x+(R()-.5)*sp*.5, py=y+(R()-.5)*sp*.5, r=rmin+R()*(rmax-rmin);
+      const m=Math.min(r*.6,1.2); if(![[px,py],[px+m,py],[px-m,py],[px,py+m],[px,py-m]].every(p=>pip(p,poly))) continue;
+      const q=M(px,py);
+      if(R()<(o.redondos||0.25)){ out.push(`<circle class="b-som" cx="${(q[0]+sh).toFixed(2)}" cy="${(q[1]+sh).toFixed(2)}" r="${(r*.62).toFixed(2)}"/><circle class="b-arb2" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="${(r*.62).toFixed(2)}"/>`); }
+      else { const sR=rng(Math.floor(px*97+py*31)); const d=blobD(q,r,sR); const d2=blobD([q[0]+sh,q[1]+sh],r,rng(Math.floor(px*97+py*31))); out.push(`<path class="b-som" d="${d2}"/><path class="b-arb" d="${d}"/>`); }
+    }
+  }
+  return out.join("");
+}
+function defs(id,esc){ // tramas y filtro de tinta; esc ajusta al tamaño del plano
+  return `<defs>`+
+  `<pattern id="tr-calle-${id}" width="${.9*esc}" height="${.9*esc}" patternUnits="userSpaceOnUse" patternTransform="rotate(62)"><line class="b-tl" x1="0" y1="0" x2="0" y2="${.9*esc}" stroke-width="${.09*esc}"/></pattern>`+
+  `<pattern id="tr-densa-${id}" width="${.4*esc}" height="${.4*esc}" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><line class="b-tl" x1="0" y1="0" x2="0" y2="${.4*esc}" stroke-width="${.08*esc}"/></pattern>`+
+  `<pattern id="tr-panel-${id}" width="${.42*esc}" height="${.42*esc}" patternUnits="userSpaceOnUse"><line class="b-tl" x1="0" y1="0" x2="0" y2="${.42*esc}" stroke-width="${.07*esc}"/></pattern>`+
+  `<pattern id="tr-vend-${id}" width="${2.2*esc}" height="${2.2*esc}" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="b-tl b-tl-suave" x1="0" y1="0" x2="0" y2="${2.2*esc}" stroke-width="${.12*esc}"/></pattern>`+
+  `<filter id="tinta-${id}" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="${(.32/esc).toFixed(3)}" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="${(.55*esc).toFixed(2)}"/></filter>`+
+  `</defs>`;
+}
 function svgCapas(g,M,o){
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
   const path=pts=>"M"+pts.map(P).join("L")+"Z";
-  const line=pts=>"M"+pts.map(P).join("L");
-  const out=[];
+  const id=o.id, sh=o.sombra, R=rng(o.det?11:23), out=[];
   out.push(`<path class="b-base" d="${path(g.etapa)}"/>`);
-  g.agro.forEach(p=>out.push(`<path class="b-agro" d="${path(p)}"/>`));
-  g.restos.forEach(p=>out.push(`<path class="b-resto" d="${path(p)}"/>`));
-  g.corredores.forEach(p=>out.push(`<path class="b-corr" d="${path(p)}"/>`));
-  g.huellas.forEach(p=>out.push(`<path class="b-huella" d="${path(p)}"/>`));
-  if(o.detalle) g.frutales.forEach(p=>{const q=M(p[0],p[1]); out.push(`<circle class="b-fruta" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r=".62"/>`);});
-  g.energia.forEach(p=>out.push(`<path class="b-energia" d="${path(p)}"/>`));
-  g.paneles.forEach(p=>out.push(`<path class="b-panel" d="${path(p)}"/>`));
-  g.calles.forEach(p=>out.push(`<path class="b-calle" d="${path(p)}"/>`));
-  if(o.detalle) g.ejes.forEach(e=>out.push(`<path class="b-eje" d="${line(e)}"/>`));
+  // vegetación: bosque agroforestal en los sobrantes y frutales en los caminos verdes
+  g.restos.concat(g.agro).forEach(pp=>out.push(arboles(pp,M,R,o.det?{sp:4.2,rmin:1.5,rmax:2.6,sh}:{sp:6,rmin:2.2,rmax:3.4,sh})));
+  g.huellas.forEach(pp=>out.push(`<path class="b-huella" fill="url(#tr-densa-${id})" d="${path(pp)}"/>`));
+  if(o.det) g.frutales.forEach(p=>{const q=M(p[0],p[1]); out.push(`<circle class="b-som" cx="${(q[0]+sh*.6).toFixed(2)}" cy="${(q[1]+sh*.6).toFixed(2)}" r=".72"/><circle class="b-fruta" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r=".72"/>`);});
+  g.paneles.forEach(pp=>{ const q=pp.map(p=>M(p[0],p[1])); const d="M"+q.map(v=>(v[0]+sh*.8).toFixed(2)+","+(v[1]+sh*.8).toFixed(2)).join("L")+"Z"; out.push(`<path class="b-som" d="${d}"/><path class="b-panel" fill="url(#tr-panel-${id})" d="${path(pp)}"/>`); });
+  // tinta: calles, lotes y contorno con trazo de mano
+  const tinta=[];
+  g.calles.forEach(pp=>tinta.push(`<path class="b-calle" fill="url(#tr-calle-${id})" d="${path(pp)}"/>`));
+  g.corredores.forEach(pp=>tinta.push(`<path class="b-corr" d="${path(pp)}"/>`));
+  g.energia.forEach(pp=>tinta.push(`<path class="b-energia" d="${path(pp)}"/>`));
   g.clusters.forEach(c=>{
     const lots=c.lots.map(l=>`<path class="b-lote" d="${path(l.pts)}"/>`).join("");
-    if(o.detalle){
-      const q=M(c.label[0],c.label[1]);
-      const aria=`${o.L.cl} ${c.num}, ${c.size} ${o.L.lotes}, ${fmt(c.area)} m²`;
-      out.push(`<g class="cl" data-cl="${c.num}" tabindex="0" role="button" aria-label="${aria}">${lots}<path class="b-clb" d="${path(c.pts)}"/>`+
-        `<circle class="b-cln" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="2.9"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.1).toFixed(2)}">${c.num}</text></g>`);
-    } else out.push(`<g class="cl" data-cl="${c.num}">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
+    if(o.det) tinta.push(`<g class="cl" data-cl="${c.num}" tabindex="0" role="button" aria-label="${o.L.cl} ${c.num}, ${c.size} ${o.L.lotes}, ${fmt(c.area)} m²">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
+    else tinta.push(`<g class="cl" data-cl="${c.num}">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
   });
-  g.serv.forEach(p=>out.push(`<path class="b-serv" d="${path(p)}"/>`));
-  out.push(`<path class="b-contorno" d="${path(g.etapa)}"/>`);
+  g.serv.forEach(pp=>tinta.push(`<path class="b-serv" d="${path(pp)}"/>`));
+  tinta.push(`<path class="b-contorno" d="${path(g.etapa)}"/>`);
+  out.push(`<g filter="url(#tinta-${id})">${tinta.join("")}</g>`);
+  if(o.det) g.clusters.forEach(c=>{ const q=M(c.label[0],c.label[1]);
+    out.push(`<g class="cl cl-et" data-cl="${c.num}" aria-hidden="true"><circle class="b-cln" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="2.7"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.15).toFixed(2)}">${c.num}</text></g>`); });
   return out.join("");
 }
 function infoIcons(g,M,L){
   return g.info.map(i=>{
-    const t=L[i.k]; const w=4.4+t.length*1.55; const q=M(i.x,i.y);
+    const t=L[i.k]; const w=5+t.length*1.62; const q=M(i.x,i.y);
     return `<g class="b-info" data-info="${i.k}" tabindex="0" role="button" aria-label="${t}: ${L.info}" transform="translate(${q[0].toFixed(2)},${q[1].toFixed(2)})">`+
-      `<rect class="b-info-bg" x="${(-w/2).toFixed(2)}" y="-2.2" width="${w.toFixed(2)}" height="4.4" rx="2.2"/>`+
-      `<circle class="b-info-c" cx="${(-w/2+2.2).toFixed(2)}" cy="0" r="1.5"/><text class="b-info-i" x="${(-w/2+2.2).toFixed(2)}" y=".1">i</text>`+
-      `<text class="b-info-t" x="${(-w/2+4.1).toFixed(2)}" y=".1">${t}</text></g>`;
+      `<rect class="b-info-bg" x="${(-w/2).toFixed(2)}" y="-2.3" width="${w.toFixed(2)}" height="4.6"/>`+
+      `<circle class="b-info-c" cx="${(-w/2+2.3).toFixed(2)}" cy="0" r="1.5"/><text class="b-info-i" x="${(-w/2+2.3).toFixed(2)}" y=".15">i</text>`+
+      `<text class="b-info-t" x="${(-w/2+4.3).toFixed(2)}" y=".2">${t}</text></g>`;
   }).join("");
 }
 function svgDetalle(g,lang,titulo){
-  const L=LBL[lang]; const {X1,YN1}=g.G;
+  const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
   // girado 90°: el norte apunta a la derecha y la etapa 2 queda abajo
-  const M=(x,y)=>[y,x];
-  const vb=[-16,-9,YN1+34,X1+27];
+  const M=(x,y)=>[y,x]; const id="d"+lang;
+  const vb=[-16,-9,YN1+34,X1+29];
   const o=[];
   o.push(`<svg class="plano-e3" viewBox="${vb.join(" ")}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${titulo}">`);
-  o.push(`<defs><pattern id="rayado-${lang}" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="b-ray-f" width="2.2" height="2.2"/><line class="b-ray-l" x1="0" y1="0" x2="0" y2="2.2"/></pattern></defs>`);
-  o.push(`<path class="b-vecina" d="M${M(X1,0)[0]},${X1} L${YN1+6},${X1} L${YN1+6},${X1+12} L0,${X1+12} Z"/>`);
-  o.push(`<text class="b-rot" x="${(YN1/2).toFixed(1)}" y="${(X1+7).toFixed(1)}">${L.etapa2}</text>`);
-  o.push(svgCapas(g,M,{detalle:true,L}).replace(/class="b-resto"/g,`class="b-resto" fill="url(#rayado-${lang})"`));
+  o.push(defs(id,1));
+  // monte de la etapa 2, a lo largo del lindero oriente
+  const vec=[[X1,YS1],[X1,YN1],[X1+13,YN1+SN*13],[X1+13,YS1+SS*13]];
+  o.push(arboles(vec,M,rng(5),{sp:4.6,rmin:1.6,rmax:2.8,sh:.9,redondos:.2}));
+  o.push(svgCapas(g,M,{det:true,L,id,sombra:.9}));
+  o.push(`<text class="b-rot" x="${(YN1*0.62).toFixed(1)}" y="${(X1+16).toFixed(1)}">${L.etapa2}</text>`);
   o.push(infoIcons(g,M,L));
-  o.push(`<text class="b-rot" transform="translate(-7,${(X1/2).toFixed(1)}) rotate(-90)">${L.calleSur}</text>`);
-  // norte y escala
+  o.push(`<text class="b-rot" transform="translate(-8,${(X1/2).toFixed(1)}) rotate(-90)">${L.calleSur}</text>`);
   const nx=YN1+12, ny=6;
-  o.push(`<g class="b-norte"><path d="M${nx+4},${ny} L${nx-1},${ny-1.6} L${nx},${ny} L${nx-1},${ny+1.6}Z"/><text x="${nx+7}" y="${ny+0.2}">N</text></g>`);
+  o.push(`<g class="b-norte"><path d="M${nx+4},${ny} L${nx-1.5},${ny-2} L${nx-.3},${ny} L${nx-1.5},${ny+2}Z"/><text x="${nx+7}" y="${ny+0.3}">N</text></g>`);
   const sx=YN1-22, sy=-4.5;
-  o.push(`<g class="b-escala"><line x1="${sx}" y1="${sy}" x2="${sx+20}" y2="${sy}"/><line x1="${sx}" y1="${sy-1}" x2="${sx}" y2="${sy+1}"/><line x1="${sx+10}" y1="${sy-.7}" x2="${sx+10}" y2="${sy+.7}"/><line x1="${sx+20}" y1="${sy-1}" x2="${sx+20}" y2="${sy+1}"/><text x="${sx+24}" y="${sy+.2}">20 m</text></g>`);
+  o.push(`<g class="b-escala"><line x1="${sx}" y1="${sy}" x2="${sx+20}" y2="${sy}"/><line x1="${sx}" y1="${sy-1}" x2="${sx}" y2="${sy+1}"/><line x1="${sx+10}" y1="${sy-.7}" x2="${sx+10}" y2="${sy+.7}"/><line x1="${sx+20}" y1="${sy-1}" x2="${sx+20}" y2="${sy+1}"/><text x="${sx+24}" y="${sy+.3}">20 m</text></g>`);
   o.push(`</svg>`);
   return o.join("");
 }
 function svgGeneral(g,lang,titulo,desc){
-  const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
+  const L=LBL[lang]; const {X1,YS1,YN1}=g.G; const id="g"+lang;
   const M=(x,y)=>[x,-y];
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
   // etapas 1 y 2 (5 ha); el corte entre ellas es ilustrativo, a partes iguales
@@ -310,18 +343,22 @@ function svgGeneral(g,lang,titulo,desc){
   const casas=[[206,172,10,7],[229,190,13,9],[217,211,8,6]];
   const o=[];
   o.push(`<svg class="plano-gral" viewBox="-14 -340 306 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
-  o.push(`<path class="b-vendida" d="M${e2.map(P).join("L")}Z"/><path class="b-vendida b-e1" d="M${e1.map(P).join("L")}Z"/>`);
-  o.push(`<path class="b-corte" d="M${P([C,SS*C])}L${P([C,YN0+SN*C])}"/>`);
-  casas.forEach(([x,y,w,h])=>o.push(`<path class="b-casa" d="M${P([x-w/2,y-h/2])}L${P([x+w/2,y-h/2])}L${P([x+w/2,y+h/2])}L${P([x-w/2,y+h/2])}Z"/>`));
-  o.push(`<text class="b-gs" x="222" y="-152">${L.casas}</text>`);
-  o.push(svgCapas(g,M,{detalle:false,L}).replace(/class="b-resto"/g,'class="b-agro"'));
-  o.push(`<path class="b-tablaje" d="M${TABLAJE.map(P).join("L")}Z"/>`);
+  o.push(defs(id,2.2));
+  o.push(`<path class="b-base" d="M${e2.map(P).join("L")}Z"/><path class="b-base" d="M${e1.map(P).join("L")}Z"/>`);
+  // monte de las etapas vendidas, menos denso alrededor de las casas
+  const R=rng(3);
+  [e2,e1].forEach(pp=>o.push(arboles(pp,M,R,{sp:14,rmin:3.4,rmax:5.6,sh:1.8,redondos:.3})));
+  casas.forEach(([x,y,w,h])=>{ const pp=[[x-w/2,y-h/2],[x+w/2,y-h/2],[x+w/2,y+h/2],[x-w/2,y+h/2]]; const q=pp.map(p=>M(p[0],p[1]));
+    o.push(`<path class="b-som" d="M${q.map(v=>(v[0]+2.2).toFixed(1)+","+(v[1]+2.2).toFixed(1)).join("L")}Z"/><path class="b-casa" fill="url(#tr-panel-${id})" d="M${pp.map(P).join("L")}Z"/>`); });
+  o.push(svgCapas(g,M,{det:false,L,id,sombra:1.6}));
+  o.push(`<g filter="url(#tinta-${id})"><path class="b-corte" d="M${P([C,SS*C])}L${P([C,YN0+SN*C])}"/><path class="b-tablaje" d="M${TABLAJE.map(P).join("L")}Z"/></g>`);
+  o.push(`<text class="b-gs" x="222" y="-150">${L.casas}</text>`);
   o.push(`<text class="b-gt" x="${((X1+C)/2).toFixed(1)}" y="-178">${L.e2}</text><text class="b-gs" x="${((X1+C)/2).toFixed(1)}" y="-166">${L.vendida}</text>`);
   o.push(`<text class="b-gt" x="${((C+275)/2).toFixed(1)}" y="-262">${L.e1}</text><text class="b-gs" x="${((C+275)/2).toFixed(1)}" y="-250">${L.vendida}</text>`);
   o.push(`<text class="b-gt b-gt-on" x="${(X1/2).toFixed(1)}" y="${-(YN1+9)}">${L.etapa3}</text>`);
   o.push(`<text class="b-gs" transform="translate(140,${(-(SS*140)+12).toFixed(1)}) rotate(${(-Math.atan(SS)*180/Math.PI).toFixed(2)})">${L.calleSur}</text>`);
   o.push(`<g class="b-norte"><path d="M2,-334 L-3,-320 L2,-323 L7,-320Z"/></g>`);
-  o.push(`<g class="b-escala"><line x1="225" y1="12" x2="275" y2="12"/><line x1="225" y1="9" x2="225" y2="15"/><line x1="275" y1="9" x2="275" y2="15"/><text x="250" y="22">50 m</text></g>`);
+  o.push(`<g class="b-escala"><line x1="225" y1="12" x2="275" y2="12"/><line x1="225" y1="9" x2="225" y2="15"/><line x1="275" y1="9" x2="275" y2="15"/><text x="250" y="23">50 m</text></g>`);
   o.push(`</svg>`);
   return o.join("");
 }

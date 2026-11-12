@@ -18,7 +18,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000%22/%3E%3Cg fill=%22none%22 stroke=%22%23F2EFE9%22 stroke-width=%225%22 stroke-linecap=%22square%22 transform=%22translate%2850 52%29 scale%28.92%29 translate%28-50 -50%29%22%3E%3Cpath d=%22M44%2C50 L38%2C36 L33%2C24 L31%2C10%22/%3E%3Cpath d=%22M56%2C50 L62%2C36 L67%2C24 L69%2C10%22/%3E%3Cpath d=%22M38%2C36 L26%2C31%22/%3E%3Cpath d=%22M62%2C36 L74%2C31%22/%3E%3Cpath d=%22M35%2C29 L41%2C16%22/%3E%3Cpath d=%22M65%2C29 L59%2C16%22/%3E%3Cpath d=%22M33%2C24 L21%2C17%22/%3E%3Cpath d=%22M67%2C24 L79%2C17%22/%3E%3Cpath d=%22M38%2C52 L24%2C47 L35%2C59%22/%3E%3Cpath d=%22M62%2C52 L76%2C47 L65%2C59%22/%3E%3Cpath d=%22M38%2C50 L62%2C50 L60%2C66 L50%2C90 L40%2C66 Z%22/%3E%3Ccircle cx=%2244.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3Ccircle cx=%2255.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter+Tight:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300&display=swap" rel="stylesheet">
 <style>
 /* Plan: lienzo hueso, tinta negra, líneas de 1 px y cero redondeos. Barra lateral fija, portada a pantalla completa
    con columnas como menú, un tramo de scroll horizontal (agua, energía, comida) y el plano negro de la etapa 3. */
@@ -27,7 +27,10 @@
   --blanco:#FFFFFF; --pasto:#7CB342; --huano:#D8B23E; --monte:#1E3221;
   --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif; --serif:"Fraunces",Georgia,serif;
   --lado:150px; --ancho:1240px;
-  /* plano */
+  /* plano a mano: papel, tinta y plumón */
+  --papel:#F7F4EC; --lote:#FFFDF7; --lote-hover:#EEF2CF; --plumon:#A9AE3C; --plumon-2:#B9D35A; --apartado:#F0DC86; --vendido:#CFCABA;
+  --mano:"Architects Daughter","Comic Neue","Segoe Print",cursive;
+  /* (antes) */
   --m-fondo:#000; --m-base:#0B160A; --m-agro:#10230C; --m-fruta:#356B27; --m-ray:#4F6E41;
   --m-energia:#0E1522; --m-panel:#2D4466; --m-panel-b:#5B7BA6;
   --m-calle:#EFEBDF; --m-eje:#B8AF98; --m-lote:#7CB342; --m-lote-l:#3F6B1E; --m-lote-hover:#B9DE6E;
@@ -198,71 +201,77 @@ section{padding:110px 0 0}
   .horiz .cierre{padding:40px 18px}
 }
 
-/* plano de la etapa 3 */
-.mapa{position:relative;background:var(--m-fondo);padding:16px 16px 10px}
+/* plano de la etapa 3: dibujo a mano, tinta sobre papel, árboles de plumón */
+.mapa{position:relative;background:var(--papel);padding:16px 16px 10px;border:1px solid var(--linea)}
 .mapa-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .mapa-scroll svg{width:100%;min-width:860px;height:auto}
-.desliza{display:none;color:var(--m-tenue);font-size:.85rem;margin:6px 4px 0}
+.desliza{display:none;color:var(--tenue);font-size:.85rem;margin:6px 4px 0}
 @media (max-width:900px){.desliza{display:block}}
-.ley{list-style:none;margin:0;padding:12px 4px 4px;display:flex;flex-wrap:wrap;gap:6px 20px;color:var(--m-tenue);font-size:.78rem;text-transform:uppercase;letter-spacing:.02em}
-.ley span{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:7px;border:1px solid #333}
+.ley{list-style:none;margin:0;padding:12px 4px 4px;display:flex;flex-wrap:wrap;gap:6px 20px;color:var(--tinta);font-family:var(--mano);font-size:.95rem}
+.ley span{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:7px;border:1px solid var(--tinta)}
 .cuenta{font-size:.85rem;text-transform:uppercase;letter-spacing:.02em;color:var(--tenue);margin:14px 0 0}
-.tip{position:absolute;z-index:3;pointer-events:none;background:var(--hueso);color:var(--tinta);padding:10px 13px;font-size:.92rem;line-height:1.4;max-width:300px;border:1px solid var(--tinta)}
-.tip b{display:block;font-weight:500;text-transform:uppercase;font-size:.8rem;letter-spacing:.02em;margin-bottom:3px}
+.tip{position:absolute;z-index:3;pointer-events:none;background:var(--hueso);color:var(--tinta);padding:10px 13px;font-size:.92rem;line-height:1.4;max-width:300px;border:1px solid var(--tinta);box-shadow:4px 4px 0 rgba(14,16,13,.12)}
+.tip b{display:block;font-family:var(--mano);font-weight:400;font-size:1.1rem;margin-bottom:3px}
 
-.b-base{fill:var(--m-base)}
-.b-agro,.b-corr{fill:var(--m-agro)}
-.b-ray-f{fill:var(--m-agro)} .b-ray-l{stroke:var(--m-ray);stroke-width:.35}
-.b-fruta{fill:var(--m-fruta)}
-.b-huella{fill:var(--m-calle);opacity:.85}
-.b-energia{fill:var(--m-energia)}
-.b-panel{fill:var(--m-panel);stroke:var(--m-panel-b);stroke-width:.12}
-.b-calle{fill:var(--m-calle)}
-.b-eje{fill:none;stroke:var(--m-eje);stroke-width:.3;stroke-dasharray:2.5 2}
-.b-lote{fill:var(--m-lote);stroke:var(--m-lote-l);stroke-width:.25}
-.b-clb{fill:none;stroke:#000;stroke-width:.9;pointer-events:none}
-.b-cln{fill:#000;opacity:.78}
-.b-clt{fill:#fff;font-family:var(--sans);font-weight:500;font-size:3.1px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
-.b-serv{fill:var(--m-calle);opacity:.28;stroke:var(--m-calle);stroke-width:.25;stroke-dasharray:1 .8;pointer-events:none}
-.b-contorno{fill:none;stroke:var(--m-texto);stroke-width:.6}
-.b-vecina{fill:var(--m-vecina)}
-.b-rot{fill:var(--m-tenue);font-family:var(--sans);font-size:3.2px;text-anchor:middle;dominant-baseline:central;text-transform:uppercase}
-.b-norte path{fill:var(--m-texto)} .b-norte text{fill:var(--m-texto);font-family:var(--sans);font-size:3.4px;dominant-baseline:central}
-.b-escala line{stroke:var(--m-tenue);stroke-width:.35} .b-escala text{fill:var(--m-tenue);font-family:var(--sans);font-size:2.8px;dominant-baseline:central}
+.b-base{fill:var(--papel)}
+.b-tl{stroke:var(--tinta)} .b-tl-suave{stroke:#8f8b7e}
+.b-arb{fill:var(--plumon);stroke:#3b3d24;stroke-width:.14;stroke-dasharray:2.6 1.1}
+.b-arb2{fill:var(--plumon-2);stroke:var(--tinta);stroke-width:.16}
+.b-fruta{fill:var(--plumon-2);stroke:var(--tinta);stroke-width:.12}
+.b-som{fill:#5b5d48;opacity:.32}
+.b-huella{stroke:var(--tinta);stroke-width:.1}
+.b-panel{stroke:var(--tinta);stroke-width:.16}
+.b-calle{stroke:var(--tinta);stroke-width:.32}
+.b-corr{fill:none;stroke:var(--tinta);stroke-width:.12;stroke-dasharray:.8 .6}
+.b-energia{fill:none;stroke:var(--tinta);stroke-width:.2}
+.b-lote{fill:var(--lote);stroke:var(--tinta);stroke-width:.16}
+.b-clb{fill:none;stroke:var(--tinta);stroke-width:.55;pointer-events:none}
+.b-serv{fill:none;stroke:var(--tinta);stroke-width:.18;stroke-dasharray:1 .7;pointer-events:none}
+.b-contorno{fill:none;stroke:var(--tinta);stroke-width:.6}
+.b-cln{fill:var(--papel);stroke:var(--tinta);stroke-width:.22}
+.b-clt{fill:var(--tinta);font-family:var(--mano);font-size:3.2px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.cl-et{pointer-events:none}
+.b-rot{fill:var(--tinta);font-family:var(--mano);font-size:3.4px;text-anchor:middle;dominant-baseline:central}
+.b-norte path{fill:var(--tinta)} .b-norte text{fill:var(--tinta);font-family:var(--mano);font-size:3.6px;dominant-baseline:central}
+.b-escala line{stroke:var(--tinta);stroke-width:.3} .b-escala text{fill:var(--tinta);font-family:var(--mano);font-size:3px;dominant-baseline:central}
 .plano-e3 .cl{cursor:pointer}
-.plano-e3 .cl:hover .b-lote{fill:var(--m-lote-hover)}
+.plano-e3 .cl:hover .b-lote{fill:var(--lote-hover)}
 .plano-e3 .cl:focus{outline:none}
-.plano-e3 .cl:focus-visible .b-clb{stroke:var(--huano);stroke-width:1.4}
-.cl.apartado .b-lote{fill:var(--m-apartado);stroke:#8a6a12}
-.cl.vendido .b-lote{fill:var(--m-vendido);stroke:#222}
-.cl.vendido .b-cln{fill:#222}
-.plano-e3 .cl.sel .b-lote{fill:var(--m-lote-hover)}
-.plano-e3 .cl.sel .b-clb{stroke:#fff;stroke-width:1.3}
-.plano-e3 .cl.sel .b-cln{fill:var(--huano);opacity:1}
-.plano-e3 .cl.sel .b-clt{fill:#000}
+.plano-e3 .cl:focus-visible .b-clb{stroke:var(--huano);stroke-width:1.1}
+.cl.apartado .b-lote{fill:var(--apartado)}
+.cl.vendido .b-lote{fill:var(--vendido)}
+.cl-et.apartado .b-cln{fill:var(--apartado)}
+.cl-et.vendido .b-cln{fill:var(--vendido)}
+.plano-e3 .cl.sel .b-lote{fill:var(--plumon-2)}
+.plano-e3 .cl.sel .b-clb{stroke-width:1}
+.plano-e3 .cl-et.sel .b-cln{fill:var(--tinta)}
+.plano-e3 .cl-et.sel .b-clt{fill:var(--papel)}
 .b-info{cursor:help}
 .b-info:focus{outline:none}
-.b-info-bg{fill:#000;opacity:.8}
-.b-info-c{fill:var(--huano)}
-.b-info:hover .b-info-c,.b-info:focus-visible .b-info-c{fill:#fff}
-.b-info-i{fill:#000;font-family:var(--serif);font-style:italic;font-size:2.7px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
-.b-info-t{fill:var(--m-texto);font-family:var(--sans);font-weight:400;font-size:2.7px;dominant-baseline:central;pointer-events:none;text-transform:uppercase}
-.plano-gral .b-vendida{fill:#1D241D}
-.plano-gral .b-e1{fill:#232B23}
-.b-corte{stroke:var(--m-tenue);stroke-width:.8;stroke-dasharray:4 3;fill:none}
-.b-casa{fill:#CFC9B8}
-.plano-gral .b-tablaje{fill:none;stroke:var(--m-texto);stroke-width:1.2}
-.plano-gral .b-contorno{stroke-width:1.4}
-.plano-gral .b-clb{stroke-width:1.1}
-.b-gt{fill:var(--m-tenue);font-family:var(--sans);font-size:10px;text-anchor:middle;text-transform:uppercase}
-.b-gt-on{fill:var(--m-texto)}
-.b-gs{fill:var(--m-tenue);font-family:var(--sans);font-size:8px;text-anchor:middle;text-transform:uppercase}
+.b-info-bg{fill:var(--papel);stroke:var(--tinta);stroke-width:.2}
+.b-info-c{fill:none;stroke:var(--tinta);stroke-width:.2}
+.b-info:hover .b-info-bg,.b-info:focus-visible .b-info-bg{fill:var(--plumon-2)}
+.b-info-i{fill:var(--tinta);font-family:var(--mano);font-size:2.6px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.b-info-t{fill:var(--tinta);font-family:var(--mano);font-size:2.9px;dominant-baseline:central;pointer-events:none}
+.b-casa{stroke:var(--tinta);stroke-width:.5}
+.plano-gral .b-arb{stroke-width:.3;stroke-dasharray:5 2}
+.plano-gral .b-arb2,.plano-gral .b-fruta{stroke-width:.3}
+.plano-gral .b-calle{stroke-width:.6}
+.plano-gral .b-lote{stroke-width:.25}
+.plano-gral .b-clb{stroke-width:.8}
+.plano-gral .b-tablaje{fill:none;stroke:var(--tinta);stroke-width:1.2}
+.plano-gral .b-contorno{stroke-width:1.1}
+.b-corte{stroke:var(--tinta);stroke-width:.8;stroke-dasharray:4 3;fill:none}
+.b-gt{fill:var(--tinta);font-family:var(--mano);font-size:11px;text-anchor:middle}
+.b-gs{fill:var(--tinta);font-family:var(--mano);font-size:8.5px;text-anchor:middle}
 .plano-gral .b-escala line{stroke-width:1.2} .plano-gral .b-escala text{font-size:9px;text-anchor:middle}
+.b-gt,.b-gs{paint-order:stroke;stroke:var(--papel);stroke-width:3px;stroke-linejoin:round}
+.b-rot{paint-order:stroke;stroke:var(--papel);stroke-width:1px;stroke-linejoin:round}
 
 /* predio completo junto al tramo de la etapa 3 */
 .predio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:0;border-top:1px solid var(--linea);margin-top:56px}
 .predio > div{padding:26px 32px 0 0}
-.predio .mini{background:#000;padding:20px;border-left:1px solid var(--linea)}
+.predio .mini{background:var(--papel);padding:20px;border-left:1px solid var(--linea)}
 .predio .mini svg{max-height:440px;width:auto;margin:0 auto}
 @media (max-width:880px){.predio{grid-template-columns:1fr}.predio > div{padding:22px 0}.predio .mini{border-left:0}}
 
@@ -503,12 +512,12 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
     <div class="mapa-scroll">{{PLANO_DETALLE}}</div>
     <p class="desliza">{{desliza}}</p>
     <ul class="ley">
-      <li><span style="background:var(--m-lote)"></span>{{st_disp}}</li>
-      <li><span style="background:var(--m-apartado)"></span>{{st_apar}}</li>
-      <li><span style="background:var(--m-vendido)"></span>{{st_vend}}</li>
-      <li><span style="background:var(--m-calle)"></span>{{z_calle}}</li>
-      <li><span style="background:var(--m-agro);border-color:var(--m-fruta)"></span>{{z_agro}}</li>
-      <li><span style="background:var(--m-panel)"></span>{{z_energia}}</li>
+      <li><span style="background:var(--lote)"></span>{{st_disp}}</li>
+      <li><span style="background:var(--apartado)"></span>{{st_apar}}</li>
+      <li><span style="background:var(--vendido)"></span>{{st_vend}}</li>
+      <li><span style="background:repeating-linear-gradient(118deg,var(--tinta) 0 1px,var(--papel) 1px 4px)"></span>{{z_calle}}</li>
+      <li><span style="background:var(--plumon);border-radius:50%"></span>{{z_agro}}</li>
+      <li><span style="background:repeating-linear-gradient(90deg,var(--tinta) 0 1px,var(--papel) 1px 3px)"></span>{{z_energia}}</li>
     </ul>
     <div class="tip" id="tip" hidden></div>
   </div>

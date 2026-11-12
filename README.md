@@ -19,14 +19,13 @@ python3 src/build.py
 
 ## Apartados y vendidos
 
-Edita `estado.json` (no hace falta volver a construir el sitio):
+Edita `estado.json` (no hace falta volver a construir el sitio). Se puede marcar por lote o por cluster completo (por su letra):
 
 ```json
-{"actualizado": "2026-11-11", "clusters": {"3": "apartado", "10": "vendido"}}
+{"actualizado": "2026-11-11", "lotes": {"23": "vendido"}, "clusters": {"C": "apartado"}}
 ```
 
-Los clusters que no aparecen están disponibles. El número es el que se ve en el plano.
-El precio de preventa sube 5% por cada 4 lotes marcados como `vendido`; el cotizador y el PDF lo calculan solos.
+Lo que no aparece está disponible. El precio de preventa sube 5% por cada 4 lotes marcados como `vendido`; el cotizador y el PDF lo calculan solos.
 
 ## Cómo trabajamos
 

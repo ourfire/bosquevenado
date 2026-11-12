@@ -214,13 +214,21 @@ function geometria(){
   R.restos.forEach(r=>{ const sh=R.shape(r.p,r.a,r.b,0.5); if(sh.pts.length>2) g.restos.push(rp(simplifica(sh.pts,0.002))); if(!big||r.area>big.area) big=r; });
   if(big&&big.area>40){ const ym=(big.a+big.b)/2; g.info.push({k:"agro",x:(Math.max(big.p.L(ym),R.lo(ym))+Math.min(big.p.R(ym),R.hi(ym)))/2,y:ym}); }
   const full=R.clusters.filter(c=>!c.suelto);
+  const corr=R.runs.filter(r=>r.corredor), ener=R.runs.filter(r=>r.cat==="energia");
+  const toca=(lista,i,a,b)=>lista.some(q=>q.p.i===i&&(Math.abs(q.b-a)<0.05||Math.abs(q.a-b)<0.05));
   full.forEach((c,ix)=>{
     const ym=(c.a+c.b)/2;
-    const lots=c.lotes.map(li=>{const l=R.lots[li]; return {n:l.n,atras:l.atras,pts:rp(simplifica(l.pts,0.002))};});
+    const mid=Math.floor(c.part.length/2);
+    const lots=c.lotes.map(li=>{const l=R.lots[li];
+      let acceso="calle";
+      if(l.atras){ const k=c.part.findIndex(s=>Math.abs(s.a-l.a)<1e-6);
+        acceso=toca(corr,c.p.i,l.a,l.b)?"camino":(c.size>=8&&(k===mid-1||k===mid))?"serv":l.a<0.05?"sur":toca(ener,c.p.i,l.a,l.b)?"energia":"camino"; }
+      const pts=rp(simplifica(l.pts,0.002));
+      return {n:l.n,atras:l.atras,acceso,frente:r2(l.frente),fondo:r2(l.fondo),centro:[r2(l.cx),r2(l.cy)],pts};});
     // punto de la etiqueta: sobre la línea entre la hilera del frente y la de atrás
     let lx=(c.p.L(ym)+c.p.R(ym))/2;
     if(c.p.h===2){ const fr=R.lots[c.lotes[0]]; const xs=fr.pts.map(p=>p[0]); lx=c.p.frente==="izq"?Math.max(...xs):Math.min(...xs); }
-    g.clusters.push({num:ix+1,size:c.size,area:c.area,frente:r2(c.frente),fondo:r2(c.fondo),banda:c.p.i===0?"poniente":"oriente",
+    g.clusters.push({num:ix+1,letra:String.fromCharCode(65+ix),size:c.size,area:c.area,frente:r2(c.frente),fondo:r2(c.fondo),banda:c.p.i===0?"poniente":"oriente",
       pts:rp(simplifica(c.pts,0.002)),label:[r2(lx),r2(ym)],lots});
     if(c.size>=8&&c.part.length>=2){
       const yb=c.part[Math.floor(c.part.length/2)-1].b;
@@ -237,9 +245,9 @@ function geometria(){
 // ---------- SVG ----------
 const LBL={
   es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",
-      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",e1:"Etapa 1",e2:"Etapa 2",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",info:"más información"},
+      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",e1:"Etapa 1",e2:"Etapa 2",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
   en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",
-      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",info:"more information"}
+      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
 };
 // Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
 function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -290,15 +298,17 @@ function svgCapas(g,M,o){
   g.corredores.forEach(pp=>tinta.push(`<path class="b-corr" d="${path(pp)}"/>`));
   g.energia.forEach(pp=>tinta.push(`<path class="b-energia" d="${path(pp)}"/>`));
   g.clusters.forEach(c=>{
-    const lots=c.lots.map(l=>`<path class="b-lote" d="${path(l.pts)}"/>`).join("");
-    if(o.det) tinta.push(`<g class="cl" data-cl="${c.num}" tabindex="0" role="button" aria-label="${o.L.cl} ${c.num}, ${c.size} ${o.L.lotes}, ${fmt(c.area)} m²">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
-    else tinta.push(`<g class="cl" data-cl="${c.num}">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
+    const lots=c.lots.map(l=>o.det?`<path class="b-lote lt" data-l="${l.n}" tabindex="0" role="button" aria-label="${o.L.lote} ${l.n}" d="${path(l.pts)}"/>`:`<path class="b-lote lt" data-l="${l.n}" d="${path(l.pts)}"/>`).join("");
+    tinta.push(`<g class="cl" data-cl="${c.num}">${lots}<path class="b-clb" d="${path(c.pts)}"/></g>`);
   });
   g.serv.forEach(pp=>tinta.push(`<path class="b-serv" d="${path(pp)}"/>`));
   tinta.push(`<path class="b-contorno" d="${path(g.etapa)}"/>`);
   out.push(`<g filter="url(#tinta-${id})">${tinta.join("")}</g>`);
-  if(o.det) g.clusters.forEach(c=>{ const q=M(c.label[0],c.label[1]);
-    out.push(`<g class="cl cl-et" data-cl="${c.num}" aria-hidden="true"><circle class="b-cln" cx="${q[0].toFixed(2)}" cy="${q[1].toFixed(2)}" r="2.7"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.15).toFixed(2)}">${c.num}</text></g>`); });
+  if(o.det){
+    g.clusters.forEach(c=>c.lots.forEach(l=>{ const q=M(l.centro[0],l.centro[1]); out.push(`<text class="b-ln" x="${q[0].toFixed(2)}" y="${(q[1]+.1).toFixed(2)}">${l.n}</text>`); }));
+    g.clusters.forEach(c=>{ const q=M(c.label[0],c.label[1]);
+      out.push(`<g class="cl-et" data-cl="${c.num}" tabindex="0" role="button" aria-label="${o.L.cl} ${c.letra}, ${c.size} ${o.L.lotes}"><rect class="b-cln" x="${(q[0]-2.4).toFixed(2)}" y="${(q[1]-2.4).toFixed(2)}" width="4.8" height="4.8"/><text class="b-clt" x="${q[0].toFixed(2)}" y="${(q[1]+0.15).toFixed(2)}">${c.letra}</text></g>`); });
+  }
   return out.join("");
 }
 function infoIcons(g,M,L){
@@ -363,12 +373,14 @@ function svgGeneral(g,lang,titulo,desc){
   return o.join("");
 }
 
+if(typeof module!=="undefined") module.exports={calc,CONFIG,geometria};
 if(typeof module!=="undefined"&&require.main===module){
   const g=geometria();
   const T=JSON.parse(process.argv[2]||"{}");
   const out={datos:{G:g.G,acc:g.acc,comun:g.comun,lote:g.LOT,lotes:g.clusters.reduce((s,c)=>s+c.size,0),
     etapa:g.etapa,calles:g.calles.map(p=>p.filter((_,i)=>i%3===0)),energia:g.energia,
-    clusters:g.clusters.map(c=>({num:c.num,size:c.size,area:c.area,frente:c.frente,fondo:c.fondo,banda:c.banda,pts:c.pts.filter((_,i,a)=>i%2===0||i===a.length-1),lotes:c.lots.map(l=>l.n)}))}};
+    clusters:g.clusters.map(c=>({num:c.num,letra:c.letra,size:c.size,area:c.area,frente:c.frente,fondo:c.fondo,banda:c.banda,pts:c.pts.filter((_,i,a)=>i%2===0||i===a.length-1),lotes:c.lots.map(l=>l.n)})),
+    lotes:g.clusters.flatMap(c=>c.lots.map(l=>({n:l.n,cl:c.num,atras:l.atras,acceso:l.acceso,frente:l.frente,fondo:l.fondo,pts:l.pts.filter((_,i,a)=>i%2===0||i===a.length-1)})))}};
   ["es","en"].forEach(l=>{ const t=T[l]||{}; out[l]={detalle:svgDetalle(g,l,t.detalle||""),general:svgGeneral(g,l,t.general||"",t.general_desc||"")}; });
   process.stdout.write(JSON.stringify(out));
 }

@@ -8,7 +8,8 @@ HTML estático en español (`index.html`) e inglés (`en/index.html`). Formulari
 
 - Textos: `src/build.py`. Diseño y scripts del cotizador: `src/template.html`.
 - Plano: `src/engine.js` (misma geometría que el trazador interactivo; `CONFIG` define calle, clusters y bloques comunes).
-- Correo de contacto: constante `CORREO` en `src/build.py`.
+- Correo de contacto: constante `CORREO` en `src/build.py` (info@bosquevenado.com).
+- Fotos: carpeta `img/` (versiones de 1000 y 1800 px).
 
 Después de cambiar algo (necesita Python 3 y Node):
 
@@ -25,6 +26,7 @@ Edita `estado.json` (no hace falta volver a construir el sitio):
 ```
 
 Los clusters que no aparecen están disponibles. El número es el que se ve en el plano.
+El precio de preventa sube 5% por cada 4 lotes marcados como `vendido`; el cotizador y el PDF lo calculan solos.
 
 ## Cómo trabajamos
 
@@ -36,5 +38,5 @@ Los clusters que no aparecen están disponibles. El número es el que se ve en e
 - Quitar `<meta name="robots" content="noindex, nofollow">` de `src/template.html` y de las páginas de gracias.
 - Quitar el aviso de borrador y llenar todos los campos marcados `.tbd`.
 - Vaciar los clusters de ejemplo en `estado.json`.
-- Poner el correo de contacto en `CORREO`.
+- Apuntar el dominio bosquevenado.com a Netlify (ya están las etiquetas canonical y Open Graph con ese dominio).
 - Activar la detección de formularios en Netlify (Forms > Enable form detection) y las notificaciones por correo.

@@ -237,9 +237,9 @@ function geometria(){
 // ---------- SVG ----------
 const LBL={
   es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",
-      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",info:"más información"},
+      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",e1:"Etapa 1",e2:"Etapa 2",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",info:"más información"},
   en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",
-      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",info:"more information"}
+      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",info:"more information"}
 };
 function svgCapas(g,M,o){
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
@@ -303,13 +303,21 @@ function svgGeneral(g,lang,titulo,desc){
   const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
   const M=(x,y)=>[x,-y];
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
-  const resto=[[X1,YS1],[X1,YN1]].concat(TABLAJE.slice(2));
+  // etapas 1 y 2 (5 ha); el corte entre ellas es ilustrativo, a partes iguales
+  const k=(SS-SN)/2, C=(YN0-Math.sqrt(YN0*YN0-4*k*(g.G.area+25000)))/(2*k);
+  const e2=[[X1,YS1],[X1,YN1],[C,YN0+SN*C],[C,SS*C]];
+  const e1=[[C,SS*C],[C,YN0+SN*C]].concat(TABLAJE.slice(2));
+  const casas=[[206,172,10,7],[229,190,13,9],[217,211,8,6]];
   const o=[];
   o.push(`<svg class="plano-gral" viewBox="-14 -340 306 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
-  o.push(`<path class="b-vendida" d="M${resto.map(P).join("L")}Z"/>`);
+  o.push(`<path class="b-vendida" d="M${e2.map(P).join("L")}Z"/><path class="b-vendida b-e1" d="M${e1.map(P).join("L")}Z"/>`);
+  o.push(`<path class="b-corte" d="M${P([C,SS*C])}L${P([C,YN0+SN*C])}"/>`);
+  casas.forEach(([x,y,w,h])=>o.push(`<path class="b-casa" d="M${P([x-w/2,y-h/2])}L${P([x+w/2,y-h/2])}L${P([x+w/2,y+h/2])}L${P([x-w/2,y+h/2])}Z"/>`));
+  o.push(`<text class="b-gs" x="222" y="-152">${L.casas}</text>`);
   o.push(svgCapas(g,M,{detalle:false,L}).replace(/class="b-resto"/g,'class="b-agro"'));
   o.push(`<path class="b-tablaje" d="M${TABLAJE.map(P).join("L")}Z"/>`);
-  o.push(`<text class="b-gt" x="${(X1+(275-X1)/2).toFixed(1)}" y="-175">${L.etapas12}</text>`);
+  o.push(`<text class="b-gt" x="${((X1+C)/2).toFixed(1)}" y="-178">${L.e2}</text><text class="b-gs" x="${((X1+C)/2).toFixed(1)}" y="-166">${L.vendida}</text>`);
+  o.push(`<text class="b-gt" x="${((C+275)/2).toFixed(1)}" y="-262">${L.e1}</text><text class="b-gs" x="${((C+275)/2).toFixed(1)}" y="-250">${L.vendida}</text>`);
   o.push(`<text class="b-gt b-gt-on" x="${(X1/2).toFixed(1)}" y="${-(YN1+9)}">${L.etapa3}</text>`);
   o.push(`<text class="b-gs" transform="translate(140,${(-(SS*140)+12).toFixed(1)}) rotate(${(-Math.atan(SS)*180/Math.PI).toFixed(2)})">${L.calleSur}</text>`);
   o.push(`<g class="b-norte"><path d="M2,-334 L-3,-320 L2,-323 L7,-320Z"/></g>`);

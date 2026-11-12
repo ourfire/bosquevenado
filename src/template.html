@@ -6,7 +6,15 @@
 <title>{{title}}</title>
 <meta name="description" content="{{desc}}">
 <meta name="robots" content="noindex, nofollow">
-<link rel="alternate" hreflang="{{alt_lang}}" href="{{alt_href}}">
+<link rel="canonical" href="{{canon}}">
+<link rel="alternate" hreflang="es-MX" href="https://bosquevenado.com/">
+<link rel="alternate" hreflang="en" href="https://bosquevenado.com/en/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{canon}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{desc}}">
+<meta property="og:image" content="https://bosquevenado.com/img/camino-1800.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M7 26V12M12 26V7M17 26V14M22 26V9M26 26V16' stroke='%23F2EFE9' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +42,7 @@ img,svg{max-width:100%;display:block}
 a{color:inherit;text-underline-offset:.2em}
 :focus-visible{outline:2px solid var(--huano);outline-offset:3px}
 h1,h2,h3{font-weight:300;margin:0;line-height:.98;text-transform:uppercase;letter-spacing:-.01em}
-h2{font-size:clamp(2.2rem,4.6vw,4.2rem);max-width:14ch;text-wrap:balance}
+h2{font-size:clamp(2rem,3.6vw,3.6rem);max-width:15ch;text-wrap:balance}
 h3{font-size:1.35rem;line-height:1.1}
 p{margin:0 0 1em;max-width:58ch}
 strong{font-weight:500}
@@ -107,6 +115,7 @@ body.sobre-foto .lado .btn:hover{background:var(--blanco);color:var(--tinta)}
 .portada .cols{position:relative;z-index:2;display:grid;grid-template-columns:1.6fr repeat(5,1fr);min-height:inherit;padding-left:var(--lado)}
 .portada .titulo{padding:34px 32px 0 36px}
 .portada h1{font-size:clamp(3.2rem,7.4vw,7.2rem);line-height:.88;letter-spacing:-.02em}
+.portada .kicker{display:inline-block;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;border:1px solid rgba(255,255,255,.8);padding:.4em .7em;margin:0 0 22px}
 .portada .tag{font-size:clamp(1.05rem,1.5vw,1.35rem);line-height:1.15;margin-top:1.1em;max-width:22ch}
 .portada .col{border-left:1px solid rgba(255,255,255,.8);display:flex;align-items:flex-end;padding:0 18px 34px;text-decoration:none;color:inherit;transition:opacity .35s}
 .portada .col span{display:block;font-size:clamp(1rem,1.45vw,1.3rem);text-transform:uppercase;line-height:1.12;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -237,6 +246,9 @@ section{padding:110px 0 0}
 .b-info-i{fill:#000;font-family:var(--serif);font-style:italic;font-size:2.7px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .b-info-t{fill:var(--m-texto);font-family:var(--sans);font-weight:400;font-size:2.7px;dominant-baseline:central;pointer-events:none;text-transform:uppercase}
 .plano-gral .b-vendida{fill:#1D241D}
+.plano-gral .b-e1{fill:#232B23}
+.b-corte{stroke:var(--m-tenue);stroke-width:.8;stroke-dasharray:4 3;fill:none}
+.b-casa{fill:#CFC9B8}
 .plano-gral .b-tablaje{fill:none;stroke:var(--m-texto);stroke-width:1.2}
 .plano-gral .b-contorno{stroke-width:1.4}
 .plano-gral .b-clb{stroke-width:1.1}
@@ -321,6 +333,38 @@ tr.activo td{background:var(--hueso-2);font-weight:500}
 .capas p{font-size:1rem;color:var(--tenue)}
 @media (max-width:760px){.capas{grid-template-columns:1fr}.capas div+div{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave)}}
 
+.cuatro{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--linea)}
+.cuatro > div{padding:20px 22px 0 0}
+.cuatro > div + div{padding-left:22px;border-left:1px solid var(--linea)}
+.cuatro h3{font-size:1.1rem;margin-bottom:.7em}
+.cuatro p{font-size:.98rem;color:var(--tenue)}
+@media (max-width:980px){.cuatro{grid-template-columns:1fr 1fr}.cuatro > div:nth-child(3){border-left:0;padding-left:0}.cuatro > div:nth-child(n+3){border-top:1px solid var(--linea-suave);margin-top:18px}}
+@media (max-width:560px){.cuatro{grid-template-columns:1fr}.cuatro > div + div{border-left:0;padding-left:0;border-top:1px solid var(--linea-suave);margin-top:18px}}
+.reglas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--linea)}
+.reglas > div{padding:18px 20px 22px 0;border-bottom:1px solid var(--linea-suave)}
+.reglas > div:not(:nth-child(4n+1)){padding-left:20px;border-left:1px solid var(--linea-suave)}
+.reglas h3{font-size:1rem;margin-bottom:.6em}
+.reglas ul{list-style:none;margin:0;padding:0;font-size:.95rem;color:var(--tenue)}
+.reglas li{padding:.25em 0}
+@media (max-width:980px){.reglas{grid-template-columns:1fr 1fr}.reglas > div:not(:nth-child(4n+1)){padding-left:0;border-left:0}.reglas > div:nth-child(even){padding-left:20px;border-left:1px solid var(--linea-suave)}}
+@media (max-width:560px){.reglas{grid-template-columns:1fr}.reglas > div:nth-child(even){padding-left:0;border-left:0}}
+.gente{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--linea)}
+.gente > div{padding:20px 20px 0 0}
+.gente > div + div{padding-left:20px;border-left:1px solid var(--linea)}
+.gente .foto{aspect-ratio:4/5;margin-bottom:14px}
+.gente .foto .pend{left:10px;right:auto}
+.gente h3{font-size:1.25rem}
+.gente p{font-size:.95rem;color:var(--tenue);margin:.5em 0 0}
+.gente .mas{display:flex;flex-direction:column;justify-content:flex-end}
+@media (max-width:880px){.gente{grid-template-columns:1fr 1fr}.gente > div:nth-child(3){border-left:0;padding-left:0}.gente > div:nth-child(n+3){margin-top:24px}}
+.referentes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--linea)}
+.referentes > article{padding:20px 24px 4px 0}
+.referentes > article + article{padding-left:24px;border-left:1px solid var(--linea)}
+.referentes .lugar{font-size:.75rem;text-transform:uppercase;letter-spacing:.02em;color:var(--tenue);margin:.6em 0 1em}
+.referentes p{font-size:.98rem}
+.referentes .voces{background:var(--hueso-2);padding:20px 24px}
+@media (max-width:880px){.referentes{grid-template-columns:1fr}.referentes > article + article{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave);margin-top:16px}}
+.tramo{font-size:.9rem;border:1px solid var(--tinta);padding:.7em .9em;margin-top:14px;max-width:46ch}
 .faq{border-top:1px solid var(--linea)}
 .faq details{border-bottom:1px solid var(--linea-suave)}
 .faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;font-size:1.15rem;text-transform:uppercase;position:relative}
@@ -393,6 +437,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
   <div class="velo"></div>
   <div class="cols">
     <div class="titulo">
+      <p class="kicker">{{kicker}}</p>
       <h1 id="h1">Bosque Venado</h1>
       <p class="tag">{{hero_tag}}</p>
     </div>
@@ -412,6 +457,14 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
 </dl>
 
 <div class="wrap">
+<section id="comunidad" aria-labelledby="comunidad-t">
+  <div class="sec-head">
+    <div><span class="etq">{{co_etq}}</span><h2 id="comunidad-t">{{com_h}}</h2></div>
+    <p class="lede">{{com_lede}}</p>
+  </div>
+  <div class="cuatro">{{com_items}}</div>
+</section>
+
 <section id="lugar" aria-labelledby="lugar-t">
   <div class="sec-head">
     <div><span class="etq">{{nav_lugar}}</span><h2 id="lugar-t">{{lugar_h}}</h2></div>
@@ -490,6 +543,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
         <a class="btn" id="wa-c" href="https://wa.me/529999910450" target="_blank" rel="noopener"><span>WhatsApp</span><i aria-hidden="true">›</i></a>
       </div>
       <p class="aviso-c" id="pdf-msg" role="status"></p>
+      <p class="tramo" id="tramo"></p>
     </div>
   </div>
   <div class="tabla-wrap">
@@ -535,6 +589,30 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
     <p class="lede">{{es_lede}}</p>
   </div>
   <div class="capas">{{capas}}</div>
+</section>
+
+<section id="reglamento" aria-labelledby="reg-t">
+  <div class="sec-head">
+    <div><span class="etq">{{reg_etq}}</span><h2 id="reg-t">{{reg_h}}</h2></div>
+    <p class="lede">{{reg_lede}}</p>
+  </div>
+  <div class="reglas">{{reglas}}</div>
+</section>
+
+<section id="quienes" aria-labelledby="quienes-t">
+  <div class="sec-head">
+    <div><span class="etq">{{qs_etq}}</span><h2 id="quienes-t">{{qs_h}}</h2></div>
+    <p class="lede">{{qs_lede}}</p>
+  </div>
+  <div class="gente">{{gente}}</div>
+</section>
+
+<section id="inspiran" aria-labelledby="inspiran-t">
+  <div class="sec-head">
+    <div><span class="etq">{{in_etq}}</span><h2 id="inspiran-t">{{in_h}}</h2></div>
+    <p class="lede">{{in_lede}}</p>
+  </div>
+  <div class="referentes">{{referentes}}</div>
 </section>
 
 <section id="preguntas" aria-labelledby="faq-t">
@@ -627,6 +705,14 @@ let ESTADO={{ESTADO}};
 const PLANES=[{id:"60",m:60,mens:1500},{id:"48",m:48,mens:1750},{id:"36",m:36,mens:2200},{id:"24",m:24,mens:3050},{id:"12",m:12,mens:5700},{id:"c",m:0,total:73000}];
 const ENG=10000, BASE=100000, LOTE=D.lote;
 PLANES.forEach(p=>{p.total=p.total||ENG+p.mens*p.m;p.desc=1-p.total/BASE;});
+/* Preventa: el precio sube 5% cada vez que se venden 4 lotes */
+let F=1, TRAMO=0, QUEDAN=4;
+function tramo(){
+  const v=D.clusters.filter(c=>est(c.num)==="vendido").reduce((s,c)=>s+c.size,0);
+  TRAMO=Math.floor(v/4); QUEDAN=4-v%4; F=Math.pow(1.05,TRAMO);
+  const el=document.getElementById("tramo");
+  if(el) el.textContent=T.tramo_txt.replace("{n}",TRAMO+1).replace("{p}",$(500*F)).replace("{q}",QUEDAN).replace("{l}",QUEDAN===1?T.lote1:T.lotes);
+}
 const $=n=>"$"+Math.round(n).toLocaleString("en-US");
 const m2=n=>Math.round(n).toLocaleString("en-US")+" m²";
 const nomPlan=p=>p.m?T.meses.replace("{n}",p.m):T.contado;
@@ -636,6 +722,7 @@ const S={size:4,cl:null,plan:"60"};
 
 // ---------- estados en el plano ----------
 function pintaEstados(){
+  tramo();
   document.querySelectorAll("svg .cl").forEach(g=>{
     const n=+g.dataset.cl, e=est(n);
     g.classList.remove("disponible","apartado","vendido"); g.classList.add(e);
@@ -645,7 +732,7 @@ function pintaEstados(){
   document.getElementById("cuenta").textContent=T.cuenta.replace("{d}",libres.length).replace("{t}",D.clusters.length).replace("{l}",libres.reduce((s,c)=>s+c.size,0));
 }
 pintaEstados();
-fetch(T.estado_url,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.clusters){ ESTADO=j.clusters; pintaEstados(); if(S.cl) ficha(); } }).catch(()=>{});
+fetch(T.estado_url,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.clusters){ ESTADO=j.clusters; pintaEstados(); if(S.cl) ficha(); pinta(); } }).catch(()=>{});
 
 // ---------- tooltips de información ----------
 const mapa=document.getElementById("mapa"), tip=document.getElementById("tip");
@@ -697,7 +784,11 @@ function elige(n){
   marcaSel(); ficha(); pinta();
   document.getElementById("cotiza").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
 }
-function calcula(id,size){ const p=PLANES.find(x=>x.id===id); return {p,mens:p.m?p.mens*size:0,eng:p.m?ENG*size:0,total:p.total*size,base:BASE*size}; }
+function lote(p){ // precio por lote en el tramo actual; el enganche se queda en $10,000
+  if(!p.m) return {mens:0,total:Math.round(p.total*F/10)*10};
+  const mens=Math.round((p.total*F-ENG)/p.m/10)*10; return {mens,total:ENG+mens*p.m};
+}
+function calcula(id,size){ const p=PLANES.find(x=>x.id===id), l=lote(p), b=lote(PLANES[0]); return {p,mens:l.mens*size,eng:p.m?ENG*size:0,total:l.total*size,base:b.total*size}; }
 function pinta(){
   const k=calcula(S.plan,S.size), p=k.p;
   document.getElementById("r-etq").textContent=(S.cl?`${T.cluster} ${S.cl}, `:"")+`${S.size} ${T.lotes}. `+(p.m?T.mens_etq.replace("{n}",p.m):T.unico);
@@ -786,7 +877,8 @@ function generaPDF(jsPDF){
   const notas=doc.splitTextToSize(T.pdf_notas,178); doc.text(notas,16,y); y+=notas.length*4+6;
   doc.setFont("helvetica","bold"); doc.setTextColor(...verde); doc.setFontSize(10.5); doc.text(T.pdf_contacto,16,y); y+=6;
   doc.setFont("helvetica","normal"); doc.setTextColor(30,30,30);
-  const canales=[`WhatsApp: 999 991 0450`]; if(T.correo) canales.push(`${T.vi_correo}: ${T.correo}`); canales.push(location.origin.startsWith("http")?location.origin+location.pathname:"");
+  const canales=[`WhatsApp: 999 991 0450`]; if(T.correo) canales.push(`${T.vi_correo}: ${T.correo}`); canales.push("bosquevenado.com");
+  doc.setFontSize(9); doc.setTextColor(...tenue); doc.text(doc.splitTextToSize(document.getElementById("tramo").textContent,110),16,y+17); doc.setFontSize(10.5); doc.setTextColor(30,30,30);
   canales.filter(Boolean).forEach(t=>{ doc.text(t,16,y); y+=5; });
   doc.setFontSize(7.5); doc.setTextColor(...tenue); doc.text(doc.splitTextToSize(T.pdf_legal,178),16,282);
   doc.save(`${T.pdf_archivo}-${c?"cluster-"+c.num:S.size+"-"+T.lotes}.pdf`);

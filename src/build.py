@@ -10,7 +10,7 @@ import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TBD = '<span class="tbd">{}</span>'
-CORREO = ""  # correo de contacto; mientras esté vacío se muestra "por definir"
+CORREO = "info@bosquevenado.com"
 WA = "999 991 0450"
 
 TITULOS = {
@@ -55,6 +55,27 @@ def pilares(items, pend):
     return "".join(out)
 
 
+def cuatro(items):
+    return "".join(f"<div><h3>{a}</h3><p>{b}</p></div>" for a, b in items)
+
+
+def reglas(items):
+    return "".join(f'<div><h3>{a}</h3><ul>{"".join(f"<li>{x}</li>" for x in xs)}</ul></div>' for a, xs in items)
+
+
+def gente(items, pend):
+    out = []
+    for nombre, rol in items:
+        out.append(f'<div><div class="foto" role="img" aria-label="{nombre}"><span class="pend">{pend}</span></div><h3>{nombre}</h3><p>{rol}</p></div>')
+    return "".join(out)
+
+
+def referentes(items, voces):
+    out = [f'<article><h3>{a}</h3><p class="lugar">{b}</p><p>{c}</p><p><a href="{u}" target="_blank" rel="noopener">{v}</a></p></article>' for a, b, c, u, v in items]
+    out.append(f'<article class="voces"><h3>{voces[0]}</h3><p>{voces[1]}</p></article>')
+    return "".join(out)
+
+
 def faq(items):
     return "".join(f"<details><summary>{a}</summary><p>{b}</p></details>" for a, b in items)
 
@@ -66,6 +87,46 @@ ES = dict(
     draft='Borrador de diseño. Los datos marcados <span class="tbd">así</span> están por definir.',
     home_label="Bosque Venado, inicio", nav_label="Secciones",
     nav_lugar="El lugar", nav_vida="Agua, energía y comida", nav_etapa="La etapa 3", nav_cotiza="Cotiza", nav_faq="Preguntas",
+    canon="https://bosquevenado.com/", kicker="Preventa de la etapa 3",
+    co_etq="La comunidad",
+    com_h="Una comunidad intencional, no un fraccionamiento.",
+    com_lede="Bosque Venado nace para construir comunidad alrededor de la economía solidaria y la resiliencia ante un futuro incierto. Queremos agua, energía, comida y lazos entre vecinos. Estamos en preventa: cada participación financia lo común.",
+    com_items=cuatro([
+        ("Agua, energía y comida", "Lo básico resuelto en común: pozo, sol y siembra. Es lo que nos sostiene si lo de afuera falla."),
+        ("Economía solidaria", "Compartimos herramientas, trabajo y cosechas. Preferimos poner el dinero en la tierra y la comunidad que en trámites."),
+        ("Confianza entre pares", "Todos nos conocemos. La comunidad aprueba quién entra y quién sale; nadie participa de forma anónima."),
+        ("Rigor legal", "Confiar no significa improvisar. Todo está tokenizado y respaldado con acciones de una serie de una SAPI de C.V., con estatutos y reglamento."),
+    ]),
+    reg_etq="Convivencia", reg_h="Reglamento de convivencia, en esquema.",
+    reg_lede="Lo básico para vivir juntos. La versión final se escribe y se vota en comunidad: " + TBD.format("por definir") + ".",
+    reglas=reglas([
+        ("Admisión y salida", ["Visita y conversación antes de entrar", "La comunidad aprueba a cada nuevo miembro", "Quien hereda o compra pasa por la misma admisión"]),
+        ("Decisiones", ["Asamblea periódica de miembros", "Reglas y mejoras se votan", "Forma de voto: " + TBD.format("por definir")]),
+        ("Monte y siembra", ["Ningún desmonte sin acuerdo común", "Especies nativas y frutales", "Los caminos verdes son de todos"]),
+        ("Construcción", ["Materiales y alturas según el reglamento", "Se respeta la servidumbre de paso", "Área máxima construida: " + TBD.format("por definir")]),
+        ("Agua y energía", ["Uso responsable del pozo y el tanque", "Cada casa puede sumar su propio sistema", "Lo común se mantiene con una cuota"]),
+        ("Vida diaria", ["Silencio por la noche", "Mascotas bajo el cuidado de su dueño", "Visitas con aviso a la comunidad"]),
+        ("Trabajo común", ["Jornadas en el huerto y los caminos", "Las cosechas comunes se reparten", "Cada quien aporta su oficio"]),
+        ("Cuotas y conflictos", ["Cuota de mantenimiento: " + TBD.format("por definir"), "Primero se conversa, luego hay mediación", "Regla de impago: " + TBD.format("por definir")]),
+    ]),
+    qs_etq="Quiénes somos", qs_h="Quienes empujan Bosque Venado.",
+    qs_lede="Los fundadores y primeros miembros de la comunidad. Cada quien aporta su oficio a lo común.",
+    gente=gente([
+        ("Juan Carlos", "Fundador. Semblanza: " + TBD.format("por definir")),
+        ("María Cecilia", "Fundadora. Semblanza: " + TBD.format("por definir")),
+        ("Alejandro", "Fundador. Semblanza: " + TBD.format("por definir")),
+        ("Y más miembros", "Las familias de las etapas 1 y 2 forman parte de la comunidad desde el inicio."),
+    ], "Foto pendiente"),
+    in_etq="Referentes", in_h="Comunidades que nos inspiran.",
+    in_lede="No son testimonios: son proyectos reales en México que llevan años mostrando que se puede vivir así.",
+    referentes=referentes([
+        ("Huehuecoyotl", "Sierra del Tepozteco, Morelos. Desde 1982.",
+         "Ecoaldea donde cada familia construyó su casa y entre todos hicieron el camino, la captación de lluvia, un teatro y las tierras de cultivo. La tierra se maneja en común, por acuerdo entre sus miembros.",
+         "https://ecovillage.org/resources-library/article/what-is-our-ecovillage/", "Leer su historia"),
+        ("Las Cañadas", "Cerca de Huatusco, Veracruz.",
+         "Cooperativa agroecológica y centro de permacultura que cuida una de las últimas islas de bosque de niebla del centro de Veracruz, con bosque comestible y formación en agroecología.",
+         "https://source.ecoversities.org/Ecoversity:Cooperativa_Agroecologica_Las_Ca%C3%B1adas", "Conocer la cooperativa"),
+    ], ("Voces de Bosque Venado", "Aquí irán los testimonios de quienes ya están en las etapas 1 y 2: " + TBD.format("por recopilar") + ".")),
     cta_visita="Agenda una visita", cta_clusters="Ver clusters disponibles",
     menu="Menú", cerrar="Cerrar", agenda="Agenda", wa_label="Escríbenos por WhatsApp", nav_visita="Visita",
     hero_tag="Agua, energía y comida propias, en el monte de Acanceh.",
@@ -116,13 +177,13 @@ ES = dict(
     st_disp="Disponible", st_apar="Apartado", st_vend="Vendido",
     z_calle="Calle y huellas", z_agro="Bosque agroforestal", z_energia="Energía y agua",
     co_h="Cotiza tu cluster.",
-    co_lede="Cada lote de 200 m² cuesta $100,000 a 60 meses, o $500 por m². Un cluster suma sus lotes, y mientras más corto el plazo, menor el precio total. Descarga la cotización en PDF o mándanosla por WhatsApp.",
+    co_lede="Precio de preventa: $500 por m², o $100,000 por lote a 60 meses. Un cluster suma sus lotes y mientras más corto el plazo, menor el total. El precio sube 5% cada vez que se venden 4 lotes. Descarga la cotización en PDF o mándanosla por WhatsApp.",
     ficha_vacia="Elige un cluster en el plano, o cotiza por tamaño.",
     co_tam="Tamaño del cluster", co_plazo="Plazo",
     pr_eng="Enganche", pr_total="Precio total", pr_m2="Precio por m²", pr_ahorro="Ahorro contra 60 meses",
     co_pdf="Descargar cotización en PDF", co_pedir="Pedir este cluster",
     pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
-    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. Precios de la etapa 3, vigentes hasta " + TBD.format("fecha por definir") + ". La cuota de mantenimiento se paga aparte: " + TBD.format("monto por definir") + ". Precios en pesos mexicanos, sin intereses.",
+    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 4 lotes. La cuota de mantenimiento se paga aparte: " + TBD.format("monto por definir") + ". Precios en pesos mexicanos, sin intereses.",
     part_h="Qué te da tu participación, y qué no.",
     part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de La Tokenizadora, representadas por un token. Con ellas recibes el uso vitalicio de un cluster de 2, 4 u 8 lotes y voz en cómo se cuida la tierra.",
     si_h="Incluye",
@@ -151,19 +212,21 @@ ES = dict(
         ("Recibe tu token", "La Tokenizadora emite tu token y se asigna tu cluster."),
     ]),
     es_h="La tierra, la sociedad y el token.",
-    es_lede="Tres piezas que se respaldan entre sí, para que tu participación sea clara hoy y siga clara si algo falla.",
+    es_lede="Preferimos poner el dinero en agua, energía y comida que en trámites. Pero confiar entre pares no quita el rigor: cada participación está respaldada por acciones.",
     capas=capas([
         ("La tierra", "El predio pertenece a una serie accionaria de la SAPI de C.V. de La Tokenizadora, creada para Bosque Venado. Nadie lo puede dividir ni vender por partes."),
-        ("Tu participación", "Son acciones de esa serie. El registro de accionistas es el documento que manda, y ahí se liga tu cluster."),
-        ("El token", "La Tokenizadora tokeniza cada participación. Tu token es tu llave, y si un día falla la red, el padrón y el reglamento existen también en papel."),
+        ("Tu participación", "Son acciones de esa serie, inscritas en el registro de accionistas desde que firmas. Eso te da certeza jurídica inmediata, sin escriturar cada lote ni pagar notaría en cada operación."),
+        ("El token", "Representa tus acciones y les da fluidez: puedes heredarlas, darlas en garantía o traspasarlas. No es anónimo: cada cambio de titular lo aprueba la comunidad."),
     ]),
     faq_h="Preguntas frecuentes.",
     faq=faq([
+        ("¿Qué significa preventa?", "Que lo común se está construyendo con las primeras participaciones. Por eso el precio es más bajo ahora y sube 5% cada vez que se venden 4 lotes."),
+        ("¿Por qué no se escritura cada lote?", "Porque la tierra es de la sociedad y tu derecho vive en tus acciones. Así no hay gastos notariales en cada compra, herencia o traspaso, y tienes certeza jurídica desde que quedas inscrito en el registro de accionistas."),
+        ("¿Puedo dar mi participación en garantía?", "Sí, tus acciones pueden darse en garantía en los términos que fijen los estatutos. El token facilita el trámite, pero cualquier cambio de titular pasa por la comunidad."),
         ("¿Por qué clusters y no lotes sueltos?", "Cada cluster tiene una hilera de lotes al frente, sobre la calle, y otra atrás, junto al camino verde. Al comprarse juntos, ningún lote queda sin entrada, y entre clusters queda espacio para los frutales."),
         ("¿Cómo entro en auto a los lotes de atrás?", "Por el camino verde que corre junto a cada cluster: tiene dos huellas de concreto para entrar a vuelta de rueda. En los clusters de 8 hay además una servidumbre de paso de 3 m al centro."),
         ("¿Puedo comprar un cluster con amigos o familia?", "Sí. Un cluster de 4 u 8 se puede compartir; cada quien tiene sus acciones y el reglamento fija el paso y el uso dentro del cluster."),
         ("¿Puedo construir?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño: " + TBD.format("por definir") + "."),
-        ("¿Recibo escritura?", "No. La tierra es de la sociedad. Tu derecho de uso se liga a tus acciones en el registro de accionistas y a tu contrato."),
         ("¿Puedo vender o heredar mi participación?", "Sí. El derecho de uso se transmite con tus acciones, por herencia o por venta. Quien la reciba pasa por el mismo proceso de admisión que tú."),
         ("¿Hay agua y luz?", "Hay un pozo con agua a 27 metros. No hay red eléctrica: una de las casas habitadas funciona con paneles solares y baterías, y el centro de energía y agua da servicio a lo común."),
         ("¿Qué pasa con las etapas 1 y 2?", "Ya están vendidas. La etapa 3 es la única que está a la venta."),
@@ -196,8 +259,9 @@ ES = dict(
         pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento", mens_pdf="Mensualidad ({n} pagos)",
         pdf_sub="Cotización de la etapa 3. Tablaje 3735, Seyé, Yucatán.", pdf_folio="Folio", pdf_sin="Cluster de {n} lotes, por asignar",
         pdf_mapa="Etapa 3", pdf_calle="Calle al sur", pdf_contacto="Contacto", pdf_archivo="Cotizacion-Bosque-Venado",
-        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. La cuota de mantenimiento se paga aparte. El cluster se reserva solo con el apartado firmado; esta cotización no lo aparta. Vigencia y cuota: por definir.",
+        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. La cuota de mantenimiento se paga aparte. El cluster se reserva solo con el apartado firmado; esta cotización no lo aparta. El precio de preventa sube 5% cada vez que se venden 4 lotes. Cuota de mantenimiento: por definir.",
         pdf_legal="Documento informativo. No constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones son acciones de una serie de la SAPI de C.V. de La Tokenizadora y se ofrecen solo de forma privada, previa visita y admisión.",
+        tramo_txt="Preventa, tramo {n}: {p} por m². Quedan {q} {l} a este precio; después sube 5%.", lote1="lote",
         pdf_gen="Generando el PDF…", pdf_ok="Listo. Revisa tus descargas.", pdf_err="No se pudo generar el PDF. Revisa tu conexión e inténtalo de nuevo.",
         vi_correo="Correo",
         info={
@@ -218,6 +282,46 @@ EN = dict(
     draft='Design draft. Items marked <span class="tbd">like this</span> are still to be defined.',
     home_label="Bosque Venado, home", nav_label="Sections",
     nav_lugar="The land", nav_vida="Water, power and food", nav_etapa="Phase 3", nav_cotiza="Get a quote", nav_faq="FAQ",
+    canon="https://bosquevenado.com/en/", kicker="Phase 3 pre-sale",
+    co_etq="The community",
+    com_h="An intentional community, not a subdivision.",
+    com_lede="Bosque Venado exists to build community around a solidarity economy and resilience in an uncertain future. We want water, power, food and real ties between neighbors. We are in pre-sale: every stake funds what we share.",
+    com_items=cuatro([
+        ("Water, power and food", "The basics, solved together: well, sun and planting. It is what keeps us going if things outside fail."),
+        ("Solidarity economy", "We share tools, work and harvests. We would rather put money into the land and the community than into paperwork."),
+        ("Trust among peers", "We all know each other. The community approves who joins and who leaves; no one takes part anonymously."),
+        ("Legal rigor", "Trust does not mean improvising. Everything is tokenized and backed by shares in a series of a SAPI de C.V., with bylaws and rules."),
+    ]),
+    reg_etq="Living together", reg_h="Community rules, in outline.",
+    reg_lede="The basics for living together. The final version is written and voted on as a community: " + TBD.format("to be defined") + ".",
+    reglas=reglas([
+        ("Joining and leaving", ["A visit and a conversation before joining", "The community approves every new member", "Heirs and buyers go through the same admission"]),
+        ("Decisions", ["Regular members' assembly", "Rules and improvements are voted on", "Voting method: " + TBD.format("to be defined")]),
+        ("Forest and planting", ["No clearing without a shared agreement", "Native species and fruit trees", "The green lanes belong to everyone"]),
+        ("Building", ["Materials and heights set by the rules", "The easement is respected", "Maximum built area: " + TBD.format("to be defined")]),
+        ("Water and power", ["Careful use of the well and tank", "Each house can add its own system", "Shared systems are kept up with a fee"]),
+        ("Daily life", ["Quiet at night", "Pets in their owners' care", "Visitors announced to the community"]),
+        ("Shared work", ["Work days in the garden and lanes", "Shared harvests are divided", "Everyone brings their own skills"]),
+        ("Fees and conflicts", ["Maintenance fee: " + TBD.format("to be defined"), "Talk first, then mediation", "Non-payment rule: " + TBD.format("to be defined")]),
+    ]),
+    qs_etq="Who we are", qs_h="The people behind Bosque Venado.",
+    qs_lede="The founders and first members of the community. Each one brings their own skills to what we share.",
+    gente=gente([
+        ("Juan Carlos", "Founder. Bio: " + TBD.format("to be defined")),
+        ("María Cecilia", "Founder. Bio: " + TBD.format("to be defined")),
+        ("Alejandro", "Founder. Bio: " + TBD.format("to be defined")),
+        ("And more members", "The families of phases 1 and 2 have been part of the community from the start."),
+    ], "Photo pending"),
+    in_etq="References", in_h="Communities that inspire us.",
+    in_lede="These are not testimonials: they are real projects in Mexico that have shown for years that this way of living works.",
+    referentes=referentes([
+        ("Huehuecoyotl", "Sierra del Tepozteco, Morelos. Since 1982.",
+         "An ecovillage where each family built its own house and everyone together built the road, rainwater harvesting, a theater and the farmland. The land is managed in common, by agreement among its members.",
+         "https://ecovillage.org/resources-library/article/what-is-our-ecovillage/", "Read their story"),
+        ("Las Cañadas", "Near Huatusco, Veracruz.",
+         "An agroecology cooperative and permaculture center that cares for one of the last islands of cloud forest in central Veracruz, with a food forest and agroecology training.",
+         "https://source.ecoversities.org/Ecoversity:Cooperativa_Agroecologica_Las_Ca%C3%B1adas", "Learn about the cooperative"),
+    ], ("Voices of Bosque Venado", "Testimonials from the people already in phases 1 and 2 will go here: " + TBD.format("to be collected") + ".")),
     cta_visita="Book a visit", cta_clusters="See available clusters",
     menu="Menu", cerrar="Close", agenda="Book", wa_label="Message us on WhatsApp", nav_visita="Visit",
     hero_tag="Your own water, power and food, in the forest near Acanceh.",
@@ -268,13 +372,13 @@ EN = dict(
     st_disp="Available", st_apar="Reserved", st_vend="Sold",
     z_calle="Street and wheel tracks", z_agro="Food forest", z_energia="Power and water",
     co_h="Get a quote for your cluster.",
-    co_lede="Each 200 m² lot costs MXN $100,000 over 60 months, or $500 per m². A cluster adds up its lots, and the shorter the term, the lower the total price. Download the quote as a PDF or send it to us on WhatsApp.",
+    co_lede="Pre-sale price: MXN $500 per m², or $100,000 per lot over 60 months. A cluster adds up its lots, and the shorter the term, the lower the total. The price goes up 5% every time 4 lots are sold. Download the quote as a PDF or send it to us on WhatsApp.",
     ficha_vacia="Choose a cluster on the plan, or get a quote by size.",
     co_tam="Cluster size", co_plazo="Term",
     pr_eng="Down payment", pr_total="Total price", pr_m2="Price per m²", pr_ahorro="Savings vs. 60 months",
     co_pdf="Download quote as PDF", co_pedir="Ask about this cluster",
     pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
-    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. Phase 3 prices, valid until " + TBD.format("date to be defined") + ". The maintenance fee is separate: " + TBD.format("amount to be defined") + ". Prices in Mexican pesos, interest-free.",
+    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 4 lots are sold. The maintenance fee is separate: " + TBD.format("amount to be defined") + ". Prices in Mexican pesos, interest-free.",
     part_h="What your stake gives you, and what it doesn't.",
     part_lede="Your stake is a set of shares in a series of La Tokenizadora's SAPI de C.V., represented by a token. It gives you lifetime use of a cluster of 2, 4 or 8 lots and a say in how the land is cared for.",
     si_h="Included",
@@ -303,19 +407,21 @@ EN = dict(
         ("Receive your token", "La Tokenizadora issues your token and your cluster is assigned."),
     ]),
     es_h="The land, the company and the token.",
-    es_lede="Three pieces that back each other up, so your stake is clear today and stays clear if something fails.",
+    es_lede="We would rather put money into water, power and food than into paperwork. But trust among peers does not mean giving up rigor: every stake is backed by shares.",
     capas=capas([
         ("The land", "The property belongs to a share series of La Tokenizadora's SAPI de C.V., created for Bosque Venado. No one can split it up or sell it in pieces."),
-        ("Your stake", "It is a set of shares in that series. The share register is the controlling record, and your cluster is tied to it."),
-        ("The token", "La Tokenizadora tokenizes each stake. Your token is your key, and if the network ever fails, the register and the rules also exist on paper."),
+        ("Your stake", "It is a set of shares in that series, entered in the share register as soon as you sign. That gives you legal certainty right away, without a deed for each lot or notary fees on every transaction."),
+        ("The token", "It represents your shares and makes them easy to move: you can pass them on, pledge them as collateral or transfer them. It is not anonymous: the community approves every change of holder."),
     ]),
     faq_h="Frequently asked questions.",
     faq=faq([
+        ("What does pre-sale mean?", "That the shared infrastructure is being built with the first stakes. That is why the price is lower now and goes up 5% every time 4 lots are sold."),
+        ("Why is there no deed for each lot?", "Because the land belongs to the company and your right lives in your shares. That means no notary fees on each purchase, inheritance or transfer, and legal certainty from the moment you are entered in the share register."),
+        ("Can I pledge my stake as collateral?", "Yes, your shares can be pledged on the terms set by the bylaws. The token makes it easier, but any change of holder goes through the community."),
         ("Why clusters and not single lots?", "Each cluster has a row of lots at the front, on the street, and another at the back, next to the green lane. Bought together, no lot is left without access, and there is room for fruit trees between clusters."),
         ("How do I drive to the back lots?", "Along the green lane next to each cluster: it has two concrete wheel tracks for driving in at walking pace. Clusters of 8 also have a 3 m easement through the middle."),
         ("Can I buy a cluster with friends or family?", "Yes. A cluster of 4 or 8 can be shared; each person holds their own shares and the rules set access and use inside the cluster."),
         ("Can I build?", "Yes, under the building rules, which set type, materials and size: " + TBD.format("to be defined") + "."),
-        ("Do I get a deed?", "No. The land belongs to the company. Your right of use is tied to your shares in the share register and to your contract."),
         ("Can I sell or pass on my stake?", "Yes. The right of use transfers with your shares, by inheritance or sale. The new holder goes through the same admission process you did."),
         ("Is there water and power?", "There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the power and water hub serves the shared areas."),
         ("What about phases 1 and 2?", "They are already sold. Phase 3 is the only one for sale."),
@@ -348,8 +454,9 @@ EN = dict(
         pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount", mens_pdf="Monthly payment ({n} payments)",
         pdf_sub="Phase 3 quote. Parcel 3735, Seyé, Yucatán, Mexico.", pdf_folio="Ref.", pdf_sin="Cluster of {n} lots, to be assigned",
         pdf_mapa="Phase 3", pdf_calle="South street", pdf_contacto="Contact", pdf_archivo="Bosque-Venado-quote",
-        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The maintenance fee is separate. A cluster is reserved only with a signed reservation; this quote does not reserve it. Validity and fee: to be defined.",
+        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The maintenance fee is separate. A cluster is reserved only with a signed reservation; this quote does not reserve it. The pre-sale price goes up 5% every time 4 lots are sold. Maintenance fee: to be defined.",
         pdf_legal="For information only. Not a public offering of securities or a promise of returns. Stakes are shares in a series of La Tokenizadora's SAPI de C.V. and are offered privately only, after a visit and admission.",
+        tramo_txt="Pre-sale, tier {n}: {p} per m². {q} {l} left at this price; then it goes up 5%.", lote1="lot",
         pdf_gen="Generating the PDF…", pdf_ok="Done. Check your downloads.", pdf_err="The PDF could not be generated. Check your connection and try again.",
         vi_correo="Email",
         info={

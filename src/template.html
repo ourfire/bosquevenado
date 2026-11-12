@@ -15,7 +15,7 @@
 <meta property="og:description" content="{{desc}}">
 <meta property="og:image" content="https://bosquevenado.com/img/camino-1800.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000%22/%3E%3Cg fill=%22none%22 stroke=%22%23F2EFE9%22 stroke-width=%225%22 stroke-linecap=%22square%22 transform=%22translate%2850 52%29 scale%28.92%29 translate%28-50 -50%29%22%3E%3Cpath d=%22M44%2C50 L38%2C36 L33%2C24 L31%2C10%22/%3E%3Cpath d=%22M56%2C50 L62%2C36 L67%2C24 L69%2C10%22/%3E%3Cpath d=%22M38%2C36 L26%2C31%22/%3E%3Cpath d=%22M62%2C36 L74%2C31%22/%3E%3Cpath d=%22M35%2C29 L41%2C16%22/%3E%3Cpath d=%22M65%2C29 L59%2C16%22/%3E%3Cpath d=%22M33%2C24 L21%2C17%22/%3E%3Cpath d=%22M67%2C24 L79%2C17%22/%3E%3Cpath d=%22M38%2C52 L24%2C47 L35%2C59%22/%3E%3Cpath d=%22M62%2C52 L76%2C47 L65%2C59%22/%3E%3Cpath d=%22M38%2C50 L62%2C50 L60%2C66 L50%2C90 L40%2C66 Z%22/%3E%3Ccircle cx=%2244.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3Ccircle cx=%2255.5%22 cy=%2263%22 r=%221.6%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000%22/%3E%3Cg fill=%22none%22 stroke=%22%23F2EFE9%22 stroke-width=%226%22 stroke-linecap=%22square%22%3E%3Crect x=%223%22 y=%223%22 width=%2294%22 height=%2294%22/%3E%3Cpath d=%22M30%2C46 L30%2C22%22/%3E%3Cpath d=%22M70%2C46 L70%2C22%22/%3E%3Cpath d=%22M22%2C46 L22%2C30%22/%3E%3Cpath d=%22M78%2C46 L78%2C30%22/%3E%3Cpath d=%22M38%2C46 L38%2C14%22/%3E%3Cpath d=%22M62%2C46 L62%2C14%22/%3E%3Cpath d=%22M22%2C46 L38%2C46%22/%3E%3Cpath d=%22M78%2C46 L62%2C46%22/%3E%3Cpath d=%22M40%2C50 L28%2C54 L40%2C58%22/%3E%3Cpath d=%22M60%2C50 L72%2C54 L60%2C58%22/%3E%3Cpath d=%22M40%2C46 L60%2C46 L50%2C82 Z%22/%3E%3Ccircle cx=%2245.6%22 cy=%2255%22 r=%221.7%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3Ccircle cx=%2254.4%22 cy=%2255%22 r=%221.7%22 fill=%22%23F2EFE9%22 stroke=%22none%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter+Tight:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300&display=swap" rel="stylesheet">
@@ -418,6 +418,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-bottom:2px solid var
 textarea{min-height:100px;resize:vertical}
 .fila{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .oculto{position:absolute;left:-9999px}
+.consent{font-size:.85rem;color:var(--tenue);margin:0}
+.ilustrativo{font-size:.68rem;color:var(--tenue);margin:2px 4px 0;letter-spacing:.01em}
 .error{color:#9B2C1F;font-size:.92rem;min-height:1.2em;margin:0}
 @media (max-width:880px){.visita{grid-template-columns:1fr}.visita > div{padding-right:0}.visita form{padding:28px 0 0;border-left:0}}
 @media (max-width:520px){.fila{grid-template-columns:1fr}}
@@ -538,6 +540,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
       <li><span style="background:radial-gradient(#5E8FD6,#D3E6F7);border-radius:50%"></span>{{z_agua}}</li>
     </ul>
     <div class="tip" id="tip" hidden></div>
+    <p class="ilustrativo">{{ilustrativo}}</p>
   </div>
   <p class="cuenta" id="cuenta"></p>
   <div class="predio">
@@ -675,6 +678,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
         </div>
       </div>
       <div class="campo"><label for="f-uso">{{f_uso}}</label><span class="ayuda" id="f-uso-ayuda">{{f_uso_ayuda}}</span><textarea id="f-uso" name="uso" aria-describedby="f-uso-ayuda"></textarea></div>
+      <p class="consent">{{f_privacidad}}</p>
       <p class="error" id="f-error" role="alert"></p>
       <div><button class="btn lleno" type="submit"><span>{{f_enviar}}</span><i aria-hidden="true">›</i></button></div>
     </form>

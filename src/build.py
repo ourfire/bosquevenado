@@ -11,6 +11,8 @@ import subprocess
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TBD = '<span class="tbd">{}</span>'
 CORREO = "info@bosquevenado.com"
+RAZON = "Tokenizadora SAPI SB"  # razón social del responsable de los datos; ajustar si hay homonimia
+CUOTA = "$50"  # cuota anual de mantenimiento por lote
 WA = "999 991 0450"
 
 TITULOS = {
@@ -43,7 +45,7 @@ def capas(items):
 
 
 LOGO = ('<svg class="venado" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true">'
-        '<path d="M44,50 L38,36 L33,24 L31,10"/><path d="M56,50 L62,36 L67,24 L69,10"/><path d="M38,36 L26,31"/><path d="M62,36 L74,31"/><path d="M35,29 L41,16"/><path d="M65,29 L59,16"/><path d="M33,24 L21,17"/><path d="M67,24 L79,17"/><path d="M38,52 L24,47 L35,59"/><path d="M62,52 L76,47 L65,59"/><path d="M38,50 L62,50 L60,66 L50,90 L40,66 Z"/><circle cx="44.5" cy="63" r="1.6" fill="currentColor" stroke="none"/><circle cx="55.5" cy="63" r="1.6" fill="currentColor" stroke="none"/></svg>')
+        '<rect x="3" y="3" width="94" height="94"/><path d="M30,46 L30,22"/><path d="M70,46 L70,22"/><path d="M22,46 L22,30"/><path d="M78,46 L78,30"/><path d="M38,46 L38,14"/><path d="M62,46 L62,14"/><path d="M22,46 L38,46"/><path d="M78,46 L62,46"/><path d="M40,50 L28,54 L40,58"/><path d="M60,50 L72,54 L60,58"/><path d="M40,46 L60,46 L50,82 Z"/><circle cx="45.6" cy="55" r="1.7" fill="currentColor" stroke="none"/><circle cx="54.4" cy="55" r="1.7" fill="currentColor" stroke="none"/></svg>')
 
 
 def pilares(items, pend):
@@ -66,7 +68,7 @@ def reglas(items):
 def gente(items, pend):
     out = []
     for nombre, rol in items:
-        out.append(f'<div><div class="foto" role="img" aria-label="{nombre}"><span class="pend">{pend}</span></div><h3>{nombre}</h3><p>{rol}</p></div>')
+        out.append(f'<div><div class="foto" role="img" aria-label="{re.sub("<[^>]+>", "", nombre)}"><span class="pend">{pend}</span></div><h3>{nombre}</h3><p>{rol}</p></div>')
     return "".join(out)
 
 
@@ -107,15 +109,15 @@ ES = dict(
         ("Agua y energía", ["Uso responsable del pozo y el tanque", "Cada casa puede sumar su propio sistema", "Lo común se mantiene con una cuota"]),
         ("Vida diaria", ["Silencio por la noche", "Mascotas bajo el cuidado de su dueño", "Visitas con aviso a la comunidad"]),
         ("Trabajo común", ["Jornadas en el huerto y los caminos", "Las cosechas comunes se reparten y los excedentes se intercambian", "Cada quien aporta su oficio"]),
-        ("Cuotas y conflictos", ["Cuota de mantenimiento: " + TBD.format("por definir"), "Primero se conversa, luego hay mediación", "Regla de impago: " + TBD.format("por definir")]),
+        ("Cuotas y conflictos", ["Cuota de mantenimiento: " + CUOTA + " al año por lote", "Primero se conversa, luego hay mediación", "Regla de impago: " + TBD.format("por definir")]),
     ]),
     qs_etq="Quiénes somos", qs_h="Quienes empujan Bosque Venado.",
     qs_lede="Los fundadores y primeros miembros de la comunidad. Cada quien aporta su oficio a lo común.",
     gente=gente([
-        ("Juan Carlos", "Fundador. Semblanza: " + TBD.format("por definir")),
-        ("María Cecilia", "Fundadora. Semblanza: " + TBD.format("por definir")),
-        ("Alejandro", "Fundador. Semblanza: " + TBD.format("por definir")),
-        ("Y más miembros", "Las familias de las etapas 1 y 2 forman parte de la comunidad desde el inicio."),
+        ("Juan Carlos Soto", "Fundador. Semblanza: " + TBD.format("por definir")),
+        ("María Cecilia Botero", "Fundadora. Semblanza: " + TBD.format("por definir")),
+        ("Alejandro Vélez", "Fundador. Semblanza: " + TBD.format("por definir")),
+        (TBD.format("Cuarto miembro fundador"), "Nombre y semblanza: " + TBD.format("por definir")),
     ], "Foto pendiente"),
     in_etq="Referentes", in_h="Comunidades que nos inspiran.",
     in_lede="Proyectos reales en México que llevan años viviendo así. Los citamos como inspiración; no son testimonios de Bosque Venado.",
@@ -133,7 +135,7 @@ ES = dict(
     foto_pend="Foto pendiente", f_hero="Camino de sascab entre palmeras y monte",
     f_ceiba="Una ceiba de tronco claro y raíces anchas en medio del monte", f_ceiba_cap="La ceiba, el árbol sagrado maya, en el monte de Yucatán",
     predio_t="El predio completo",
-    predio_p="El tablaje mide 7 hectáreas. Las etapas 1 y 2, al oriente, suman 5 hectáreas y ya están vendidas. La etapa 3 ocupa las 2 hectáreas del poniente, con frente a la calle del sur.",
+    predio_p="El tablaje mide 7 hectáreas. Al oriente, las etapas 1 y 2 suman 5 hectáreas: la etapa 1 es La Villa Vikinga, donde están las tres construcciones, y la etapa 2 es un proyecto privado de Alejandro Vélez, residencia y centro de experimentación tecnológica y rural. La etapa 3 ocupa las 2 hectáreas del poniente, con frente a la calle del sur, y es la que está a la venta.",
     part_etq="Tu participación", en_etq="Cómo entrar", es_etq="Estructura",
     h1="Agua, energía y comida propias, en el monte.",
     hero_lede=f"Bosque Venado es una comunidad neorural en Acanceh, Yucatán. En la etapa 3 hay {N_LOTES} lotes de 200 m². Puedes comprar desde uno, o un cluster de 2, 4 u 8 con amigos o familia, con caminos de frutales entre ellos y un centro común de energía solar y agua de pozo.",
@@ -148,7 +150,7 @@ ES = dict(
     hoy_items=li([
         ("Agua de pozo", "A 27 metros de profundidad"),
         ("Energía solar", "Paneles y baterías en una de las casas habitadas"),
-        ("Tres construcciones", "Ubicación en el plano: " + TBD.format("por confirmar")),
+        ("Tres construcciones", "En La Villa Vikinga, la etapa 1"),
         ("Frente a la calle del sur", "Acceso directo a la etapa 3"),
         ("Cerca de Acanceh", "A unos 1.2 km por la calle 19, según el croquis del plano"),
     ]),
@@ -158,13 +160,14 @@ ES = dict(
         ("Centro de energía y agua", "Paneles, baterías, pozo y tanque elevado. Fecha estimada: " + TBD.format("por definir")),
         ("Caminos verdes con frutales", "Entre cada cluster. Fecha estimada: " + TBD.format("por definir")),
         ("Bosque agroforestal y vivero", "Fecha estimada: " + TBD.format("por definir")),
+        ("Aguada y chapoteaderos", "Fecha estimada: " + TBD.format("por definir")),
         ("Palapa y bodega común", "Fecha estimada: " + TBD.format("por definir")),
     ]),
     vida_h="Lo común es lo que te sostiene.",
     vida_lede="Las amenidades de Bosque Venado son el agua, la energía y la comida que la comunidad produce y cuida en conjunto.",
     pilares=pilares([
         ("Agua", "El pozo ya da agua a 27 metros. Se bombea con energía solar a un tanque elevado y baja por gravedad a los clusters.",
-         ["Pozo existente", "Tanque elevado común", "Cada casa puede captar lluvia"], "el pozo y el tanque"),
+         ["Pozo existente", "Tanque elevado común", "Aguada de lluvia y chapoteaderos"], "el pozo y el tanque"),
         ("Energía", "Un centro de paneles y baterías para lo común, y cada casa puede sumar su propio sistema. Sin depender de la red.",
          ["Paneles solares y baterías", "Bombeo de agua solar", "Iluminación de caminos"], "los paneles de la casa habitada"),
         ("Comida", "Entre cluster y cluster corre un camino verde con frutales, y los rincones libres se siembran como bosque agroforestal. La comida queda a pasos de cada casa.",
@@ -183,7 +186,7 @@ ES = dict(
     pr_eng="Enganche", pr_total="Precio total", pr_m2="Precio por m²", pr_ahorro="Ahorro contra 60 meses",
     co_pdf="Descargar cotización en PDF", co_pedir="Pedir informes",
     pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
-    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 4 lotes. La cuota de mantenimiento se paga aparte: " + TBD.format("monto por definir") + ". Precios en pesos mexicanos, sin intereses.",
+    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 4 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote, y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses.",
     part_h="Qué te da tu participación, y qué no.",
     part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de La Tokenizadora, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
     si_h="Incluye",
@@ -227,7 +230,7 @@ ES = dict(
         ("¿Puedo construir?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño: " + TBD.format("por definir") + "."),
         ("¿Puedo vender, heredar o dar en garantía mi participación?", "Sí. Tu derecho de uso se transmite con tus acciones, en los términos que fijen los estatutos. Quien las reciba pasa por el mismo proceso de admisión que tú."),
         ("¿Hay agua y luz?", "Hay un pozo con agua a 27 metros. No hay red eléctrica: una de las casas habitadas funciona con paneles solares y baterías, y el centro de energía y agua da servicio a lo común."),
-        ("¿Cuánto es la cuota de mantenimiento?", "Cubre la calle, el agua, la energía común y el cuidado del bosque. Monto: " + TBD.format("por definir") + "."),
+        ("¿Cuánto es la cuota de mantenimiento?", CUOTA + " al año por lote. Cubre la calle, el agua, la energía común y el cuidado del bosque, y se ajusta según lo que necesite la comunidad."),
         ("¿Qué pasa si dejo de pagar?", "Lo que pasa con tus pagos y tu participación se fija en el contrato: " + TBD.format("regla por definir") + "."),
     ]),
     vi_h="Agenda una visita.",
@@ -241,8 +244,10 @@ ES = dict(
     f_uso="¿Cómo te imaginas usar el lugar?",
     f_uso_ayuda="Fines de semana, temporadas, vivir ahí, con amigos o familia…",
     f_enviar="Enviar solicitud de visita",
+    f_privacidad='Al enviar aceptas el <a href="aviso-de-privacidad.html">aviso de privacidad</a>.',
+    ilustrativo="Ubicación y forma de la aguada y los chapoteaderos, ilustrativas.",
     pie_1="<strong>Bosque Venado</strong><br>Tablaje 3735, Seyé, Yucatán.<br>Tokenizado por La Tokenizadora.",
-    pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. Autorizaciones y documentos legales: " + TBD.format("por definir") + ". <a href=\"#\">Aviso de privacidad</a> (" + TBD.format("por definir") + ").",
+    pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. La tierra se posee de forma colectiva bajo los estatutos de la sociedad. Documentos legales: " + TBD.format("por definir") + ". <a href=\"aviso-de-privacidad.html\">Aviso de privacidad</a>.",
     JS=dict(
         locale="es-MX", estado_url="estado.json", jspdf="vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
         meses="{n} meses", contado="Contado", na="N/A", mens_etq="{n} mensualidades", unico="Pago único", al_mes="al mes", incluido="Incluido",
@@ -259,7 +264,7 @@ ES = dict(
         pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento", mens_pdf="Mensualidad ({n} pagos)",
         pdf_sub="Cotización de la etapa 3. Tablaje 3735, Seyé, Yucatán.", pdf_folio="Folio", pdf_sin="{u}, por asignar",
         pdf_mapa="Etapa 3", pdf_calle="Calle al sur", pdf_contacto="Contacto", pdf_archivo="Cotizacion-Bosque-Venado",
-        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 4 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento se paga aparte y está por definir.",
+        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 4 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento es anual, de $50 por lote.",
         pdf_legal="Documento informativo. No constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones son acciones de una serie de la SAPI de C.V. de La Tokenizadora y se ofrecen solo de forma privada, previa visita y admisión.",
         tramo_txt="Preventa, tramo {n}: {p} por m². Quedan {q} {l} a este precio; después sube 5%.", lote1="lote",
         pdf_gen="Generando el PDF…", pdf_ok="Listo. Revisa tus descargas.", pdf_err="No se pudo generar el PDF. Revisa tu conexión e inténtalo de nuevo.",
@@ -268,7 +273,7 @@ ES = dict(
             "calle": {"t": "Calle central", "d": "6 m de sascab compactado, doble sentido a vuelta de rueda. La curva baja la velocidad y el ruido. Sale a la calle del sur."},
             "corredor": {"t": "Camino verde", "d": "Corredor de 4 m entre clusters. Dos huellas de concreto para entrar en auto a los lotes de atrás, y frutales de porte bajo a los lados. Es el sendero de recolección."},
             "energia": {"t": "Centro de energía y agua", "d": "Paneles solares, baterías y el pozo con su tanque elevado. Puede alojar un estacionamiento compartido."},
-            "aguada": {"t": "Aguada", "d": "Un estanque que guarda el agua de lluvia, riega los frutales y da refugio a aves y fauna. Ubicación y tamaño ilustrativos."},
+            "aguada": {"t": "Aguada", "d": "Un estanque que guarda el agua de lluvia, riega los frutales y da refugio a aves y fauna. "},
             "agro": {"t": "Bosque agroforestal", "d": "Los rincones que no completan un cluster se siembran como huerto común: frutales, milpa y árboles nativos como el maculís, el flamboyán y la lluvia de oro."},
             "cluster": {"t": "Cluster", "d": "Grupo de 2, 4 u 8 lotes de 200 m² para comprar con amigos o familia. En el cruce de sus lotes hay un chapoteadero con la letra del cluster; tócalo para cotizarlo completo."},
             "serv": {"t": "Servidumbre de paso", "d": "Franja de 3 m dentro de los clusters de 8 para que cada lote de atrás tenga entrada, aunque el cluster lo compartan varias familias. No cambia la superficie de los lotes."},
@@ -303,15 +308,15 @@ EN = dict(
         ("Water and power", ["Careful use of the well and tank", "Each house can add its own system", "Shared systems are kept up with a fee"]),
         ("Daily life", ["Quiet at night", "Pets in their owners' care", "Visitors announced to the community"]),
         ("Shared work", ["Work days in the garden and lanes", "Shared harvests are divided and surplus is traded", "Everyone brings their own skills"]),
-        ("Fees and conflicts", ["Maintenance fee: " + TBD.format("to be defined"), "Talk first, then mediation", "Non-payment rule: " + TBD.format("to be defined")]),
+        ("Fees and conflicts", ["Maintenance fee: MXN " + CUOTA + " a year per lot", "Talk first, then mediation", "Non-payment rule: " + TBD.format("to be defined")]),
     ]),
     qs_etq="Who we are", qs_h="The people behind Bosque Venado.",
     qs_lede="The founders and first members of the community. Each one brings their own skills to what we share.",
     gente=gente([
-        ("Juan Carlos", "Founder. Bio: " + TBD.format("to be defined")),
-        ("María Cecilia", "Founder. Bio: " + TBD.format("to be defined")),
-        ("Alejandro", "Founder. Bio: " + TBD.format("to be defined")),
-        ("And more members", "The families of phases 1 and 2 have been part of the community from the start."),
+        ("Juan Carlos Soto", "Founder. Bio: " + TBD.format("to be defined")),
+        ("María Cecilia Botero", "Founder. Bio: " + TBD.format("to be defined")),
+        ("Alejandro Vélez", "Founder. Bio: " + TBD.format("to be defined")),
+        (TBD.format("Fourth founding member"), "Name and bio: " + TBD.format("to be defined")),
     ], "Photo pending"),
     in_etq="References", in_h="Communities that inspire us.",
     in_lede="Real projects in Mexico that have lived this way for years. We cite them as inspiration; they are not testimonials from Bosque Venado.",
@@ -329,7 +334,7 @@ EN = dict(
     foto_pend="Photo pending", f_hero="A sascab road between palms and forest",
     f_ceiba="A pale-trunked ceiba with wide roots in the forest", f_ceiba_cap="The ceiba, the sacred Maya tree, in the Yucatán forest",
     predio_t="The whole parcel",
-    predio_p="The parcel covers 7 hectares. Phases 1 and 2, on the east side, add up to 5 hectares and are already sold. Phase 3 takes the 2 western hectares, facing the south street.",
+    predio_p="The parcel covers 7 hectares. On the east side, phases 1 and 2 add up to 5 hectares: phase 1 is La Villa Vikinga, where the three buildings stand, and phase 2 is a private project by Alejandro Vélez, a home and a center for technology and rural experimentation. Phase 3 takes the 2 western hectares, facing the south street, and is the one for sale.",
     part_etq="Your stake", en_etq="How to join", es_etq="Structure",
     h1="Your own water, power and food, in the forest.",
     hero_lede=f"Bosque Venado is a neo-rural community in Acanceh, Yucatán. Phase 3 has {N_LOTES} lots of 200 m². You can buy a single lot, or a cluster of 2, 4 or 8 with friends or family, with fruit-tree lanes between them and a shared solar power and well water hub.",
@@ -344,7 +349,7 @@ EN = dict(
     hoy_items=li([
         ("Well water", "Reached at 27 meters"),
         ("Solar power", "Panels and batteries in one of the lived-in houses"),
-        ("Three buildings", "Location on the plan: " + TBD.format("to be confirmed")),
+        ("Three buildings", "In La Villa Vikinga, phase 1"),
         ("Frontage on the south street", "Direct access to phase 3"),
         ("Close to Acanceh", "About 1.2 km along Calle 19, per the survey sketch"),
     ]),
@@ -354,13 +359,14 @@ EN = dict(
         ("Power and water hub", "Panels, batteries, well and elevated tank. Estimated date: " + TBD.format("to be defined")),
         ("Green lanes with fruit trees", "Between every cluster. Estimated date: " + TBD.format("to be defined")),
         ("Food forest and nursery", "Estimated date: " + TBD.format("to be defined")),
+        ("Rain pond and wading pools", "Estimated date: " + TBD.format("to be defined")),
         ("Shared palapa and storage", "Estimated date: " + TBD.format("to be defined")),
     ]),
     vida_h="What we share is what sustains you.",
     vida_lede="The amenities at Bosque Venado are the water, power and food the community produces and looks after together.",
     pilares=pilares([
         ("Water", "The well already gives water at 27 meters. It is pumped with solar power to an elevated tank and flows by gravity to the clusters.",
-         ["Existing well", "Shared elevated tank", "Every house can harvest rain"], "the well and the tank"),
+         ["Existing well", "Shared elevated tank", "Rain pond and wading pools"], "the well and the tank"),
         ("Power", "A hub of panels and batteries for shared needs, and every house can add its own system. No grid needed.",
          ["Solar panels and batteries", "Solar water pumping", "Lane lighting"], "the panels on the lived-in house"),
         ("Food", "A green lane with fruit trees runs between clusters, and the spare corners are planted as a food forest. Food is a few steps from every house.",
@@ -379,7 +385,7 @@ EN = dict(
     pr_eng="Down payment", pr_total="Total price", pr_m2="Price per m²", pr_ahorro="Savings vs. 60 months",
     co_pdf="Download quote as PDF", co_pedir="Ask about it",
     pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
-    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 4 lots are sold. The maintenance fee is separate: " + TBD.format("amount to be defined") + ". Prices in Mexican pesos, interest-free.",
+    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 4 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot, adjusted to what the community needs. Prices in Mexican pesos, interest-free.",
     part_h="What your stake gives you, and what it doesn't.",
     part_lede="Your stake is a set of shares in a series of La Tokenizadora's SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
     si_h="Included",
@@ -423,7 +429,7 @@ EN = dict(
         ("Can I build?", "Yes, under the building rules, which set type, materials and size: " + TBD.format("to be defined") + "."),
         ("Can I sell, pass on or pledge my stake?", "Yes. Your right of use transfers with your shares, on the terms set by the bylaws. The new holder goes through the same admission process you did."),
         ("Is there water and power?", "There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the power and water hub serves the shared areas."),
-        ("How much is the maintenance fee?", "It covers the street, water, shared power and forest care. Amount: " + TBD.format("to be defined") + "."),
+        ("How much is the maintenance fee?", "MXN " + CUOTA + " a year per lot. It covers the street, water, shared power and forest care, and is adjusted to what the community needs."),
         ("What happens if I stop paying?", "What happens to your payments and your stake is set in the contract: " + TBD.format("rule to be defined") + "."),
     ]),
     vi_h="Book a visit.",
@@ -437,8 +443,10 @@ EN = dict(
     f_uso="How do you picture using the place?",
     f_uso_ayuda="Weekends, seasons, living there, with friends or family…",
     f_enviar="Send visit request",
+    f_privacidad='By sending you accept the <a href="privacy.html">privacy notice</a>.',
+    ilustrativo="Location and shape of the rain pond and wading pools are illustrative.",
     pie_1="<strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by La Tokenizadora.",
-    pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. Permits and legal documents: " + TBD.format("to be defined") + ". <a href=\"#\">Privacy notice</a> (" + TBD.format("to be defined") + ").",
+    pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. The land is held collectively under the company's bylaws. Legal documents: " + TBD.format("to be defined") + ". <a href=\"privacy.html\">Privacy notice</a>.",
     JS=dict(
         locale="en-US", estado_url="../estado.json", jspdf="../vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
         meses="{n} months", contado="Cash", na="N/A", mens_etq="{n} monthly payments", unico="Single payment", al_mes="per month", incluido="Included",
@@ -455,7 +463,7 @@ EN = dict(
         pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount", mens_pdf="Monthly payment ({n} payments)",
         pdf_sub="Phase 3 quote. Parcel 3735, Seyé, Yucatán, Mexico.", pdf_folio="Ref.", pdf_sin="{u}, to be assigned",
         pdf_mapa="Phase 3", pdf_calle="South street", pdf_contacto="Contact", pdf_archivo="Bosque-Venado-quote",
-        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 4 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is separate and still to be defined.",
+        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 4 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is annual, MXN $50 per lot.",
         pdf_legal="For information only. Not a public offering of securities or a promise of returns. Stakes are shares in a series of La Tokenizadora's SAPI de C.V. and are offered privately only, after a visit and admission.",
         tramo_txt="Pre-sale, tier {n}: {p} per m². {q} {l} left at this price; then it goes up 5%.", lote1="lot",
         pdf_gen="Generating the PDF…", pdf_ok="Done. Check your downloads.", pdf_err="The PDF could not be generated. Check your connection and try again.",
@@ -464,7 +472,7 @@ EN = dict(
             "calle": {"t": "Central street", "d": "6 m of compacted sascab, two-way at walking pace. The curve slows cars and keeps noise down. It connects to the south street."},
             "corredor": {"t": "Green lane", "d": "A 4 m lane between clusters. Two concrete wheel tracks for driving to the back lots, with low fruit trees on both sides. It is the harvest path."},
             "energia": {"t": "Power and water hub", "d": "Solar panels, batteries and the well with its elevated tank. It can also hold shared parking."},
-            "aguada": {"t": "Rain pond", "d": "A pond that stores rainwater, waters the fruit trees and gives shelter to birds and wildlife. Location and size are illustrative."},
+            "aguada": {"t": "Rain pond", "d": "A pond that stores rainwater, waters the fruit trees and gives shelter to birds and wildlife. "},
             "agro": {"t": "Food forest", "d": "Corners too small for a cluster are planted as a shared garden: fruit trees, milpa and trees such as maculís, flame tree and golden shower."},
             "cluster": {"t": "Cluster", "d": "A group of 2, 4 or 8 lots of 200 m² to buy with friends or family. Where its lots meet there is a wading pool with the cluster's letter; tap it to quote the whole cluster."},
             "serv": {"t": "Easement", "d": "A 3 m strip inside clusters of 8 so every back lot has access, even when several families share the cluster. It does not change lot areas."},
@@ -491,6 +499,43 @@ a:focus-visible{{outline:3px solid #0F5E66;outline-offset:3px}}</style></head>
 """
 
 
+PRIV = {
+    "es": dict(lang="es-MX", archivo="aviso-de-privacidad.html", title="Aviso de privacidad, Bosque Venado", volver="Volver a Bosque Venado", href="./",
+        h1="Aviso de privacidad", act="Última actualización: 11 de noviembre de 2026.",
+        cuerpo=[
+            ("Quién es responsable de tus datos", f"{RAZON}, con domicilio en {TBD.format('domicilio por definir')}, es responsable del tratamiento de los datos personales que nos compartes en bosquevenado.com. Puedes escribirnos a <a href=\"mailto:{CORREO}\">{CORREO}</a>."),
+            ("Qué datos recabamos", "Solo los que escribes en el formulario de visita: nombre, correo, WhatsApp, el lote o cluster que te interesa, el plazo que te interesa y lo que nos cuentes sobre cómo usarías el lugar. No pedimos datos sensibles ni datos de pago."),
+            ("Para qué los usamos", "Para contestarte, coordinar tu visita al predio, enviarte cotizaciones y darte seguimiento en el proceso de admisión a la comunidad. No los usamos para publicidad ni los vendemos."),
+            ("Con quién los compartimos", "Con nadie fuera del equipo de Bosque Venado y La Tokenizadora. El formulario se guarda en Netlify, el servicio que aloja este sitio, que actúa solo como proveedor."),
+            ("Tus derechos", f"Puedes pedir en cualquier momento acceder a tus datos, corregirlos, cancelarlos u oponerte a su uso (derechos ARCO), o retirar tu consentimiento. Escríbenos a <a href=\"mailto:{CORREO}\">{CORREO}</a> con tu nombre y lo que necesitas, y te respondemos en un máximo de 20 días hábiles."),
+            ("Cambios a este aviso", "Si cambiamos este aviso, publicaremos la nueva versión en esta misma página."),
+        ]),
+    "en": dict(lang="en", archivo="en/privacy.html", title="Privacy notice, Bosque Venado", volver="Back to Bosque Venado", href="./",
+        h1="Privacy notice", act="Last updated: November 11, 2026.",
+        cuerpo=[
+            ("Who is responsible for your data", f"{RAZON}, located at {TBD.format('address to be defined')}, is responsible for the personal data you share with us at bosquevenado.com. You can write to us at <a href=\"mailto:{CORREO}\">{CORREO}</a>."),
+            ("What data we collect", "Only what you enter in the visit form: name, email, WhatsApp, the lot or cluster you are interested in, the payment term and what you tell us about how you would use the place. We do not ask for sensitive data or payment details."),
+            ("What we use it for", "To reply to you, arrange your visit, send you quotes and follow up during the admission process. We do not use it for advertising and we do not sell it."),
+            ("Who we share it with", "No one outside the Bosque Venado and La Tokenizadora team. The form is stored by Netlify, the service that hosts this site, acting only as a provider."),
+            ("Your rights", f"You can ask at any time to access, correct or delete your data, object to its use, or withdraw your consent. Write to <a href=\"mailto:{CORREO}\">{CORREO}</a> with your name and what you need, and we will reply within 20 business days."),
+            ("Changes to this notice", "If we change this notice, we will publish the new version on this page."),
+        ]),
+}
+
+PRIV_TPL = """<!doctype html>
+<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title><meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<style>body{{margin:0;background:#F2EFE9;color:#0E100D;font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:1.05rem;line-height:1.6}}
+main{{max-width:720px;margin:0 auto;padding:56px 20px 80px}}a{{color:inherit}}
+h1{{font-weight:300;text-transform:uppercase;font-size:clamp(2rem,5vw,3rem);line-height:1;margin:.6em 0 .3em}}
+h2{{font-weight:400;text-transform:uppercase;font-size:.85rem;letter-spacing:.03em;margin:2.2em 0 .5em;border-top:1px solid #0E100D;padding-top:14px}}
+.act{{color:#5F625B;font-size:.9rem}}.volver{{font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}}
+.tbd{{background:rgba(216,178,62,.3);border-bottom:1px dashed #8a6a12;padding:0 .2em}}</style></head>
+<body><main><a class="volver" href="{href}">{volver}</a><h1>{h1}</h1><p class="act">{act}</p>{secciones}</main></body></html>
+"""
+
+
 def render(t, key):
     tpl = (ROOT / "src" / "template.html").read_text()
     data = dict(t)
@@ -513,6 +558,9 @@ def main():
     (ROOT / "en").mkdir(exist_ok=True)
     (ROOT / "index.html").write_text(render(ES, "es"))
     (ROOT / "en" / "index.html").write_text(render(EN, "en"))
+    for key, d in PRIV.items():
+        secc = "".join(f"<h2>{a}</h2><p>{b}</p>" for a, b in d["cuerpo"])
+        (ROOT / d["archivo"]).write_text(PRIV_TPL.format(secciones=secc, **{k: v for k, v in d.items() if k != "cuerpo"}))
     for key, path in (("es", ROOT / "gracias.html"), ("en", ROOT / "en" / "gracias.html")):
         lang, title, h1, p, href, back = GRACIAS[key]
         path.write_text(GR_TPL.format(lang=lang, title=title, h1=h1, p=p, href=href, back=back))

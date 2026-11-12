@@ -253,9 +253,9 @@ function geometria(){
 // ---------- SVG ----------
 const LBL={
   es:{calle:"Calle central",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",aguada:"Aguada",
-      calleSur:"Calle al sur",etapa2:"Etapa 2 (vendida)",etapas12:"Etapas 1 y 2 (vendidas)",e1:"Etapa 1",e2:"Etapa 2",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
+      calleSur:"Calle al sur",etapa2:"Etapa 2 (proyecto privado)",etapas12:"Etapas 1 y 2",e1:"Etapa 1",e2:"Etapa 2",e1s:"La Villa Vikinga",e2s:"Proyecto privado",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
   en:{calle:"Central street",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",aguada:"Rain pond",
-      calleSur:"South street",etapa2:"Phase 2 (sold)",etapas12:"Phases 1 and 2 (sold)",e1:"Phase 1",e2:"Phase 2",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
+      calleSur:"South street",etapa2:"Phase 2 (private project)",etapas12:"Phases 1 and 2",e1:"Phase 1",e2:"Phase 2",e1s:"La Villa Vikinga",e2s:"Private project",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
 };
 // Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
 function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -408,8 +408,8 @@ function svgGeneral(g,lang,titulo,desc){
   o.push(svgCapas(g,M,{det:false,L,id,sombra:1.6}));
   o.push(`<g filter="url(#tinta-${id})"><path class="b-corte" d="M${P([C,SS*C])}L${P([C,YN0+SN*C])}"/><path class="b-tablaje" d="M${TABLAJE.map(P).join("L")}Z"/></g>`);
   o.push(`<text class="b-gs" x="222" y="-150">${L.casas}</text>`);
-  o.push(`<text class="b-gt" x="${((X1+C)/2).toFixed(1)}" y="-178">${L.e2}</text><text class="b-gs" x="${((X1+C)/2).toFixed(1)}" y="-166">${L.vendida}</text>`);
-  o.push(`<text class="b-gt" x="${((C+275)/2).toFixed(1)}" y="-262">${L.e1}</text><text class="b-gs" x="${((C+275)/2).toFixed(1)}" y="-250">${L.vendida}</text>`);
+  o.push(`<text class="b-gt" x="${((X1+C)/2).toFixed(1)}" y="-178">${L.e2}</text><text class="b-gs" x="${((X1+C)/2).toFixed(1)}" y="-166">${L.e2s}</text>`);
+  o.push(`<text class="b-gt" x="${((C+275)/2).toFixed(1)}" y="-262">${L.e1}</text><text class="b-gs" x="${((C+275)/2).toFixed(1)}" y="-250">${L.e1s}</text>`);
   o.push(`<text class="b-gt b-gt-on" x="${(X1/2).toFixed(1)}" y="${-(YN1+9)}">${L.etapa3}</text>`);
   o.push(`<text class="b-gs" transform="translate(140,${(-(SS*140)+12).toFixed(1)}) rotate(${(-Math.atan(SS)*180/Math.PI).toFixed(2)})">${L.calleSur}</text>`);
   o.push(`<g class="b-norte"><path d="M2,-334 L-3,-320 L2,-323 L7,-320Z"/></g>`);

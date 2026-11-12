@@ -42,8 +42,17 @@ def capas(items):
     return "".join(f"<div><h3>{a}</h3><p>{b}</p></div>" for a, b in items)
 
 
-def pilares(items):
-    return "".join(f'<div><h3>{a}</h3><p>{b}</p><ul class="lista">{"".join(f"<li>{x}</li>" for x in xs)}</ul></div>' for a, b, xs in items)
+LOGO = ('<svg viewBox="0 0 92 70" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">'
+        '<rect x=".8" y=".8" width="90.4" height="68.4"/><path d="M16 69V32M31 69V12M46 69V38M61 69V20M76 69V44"/></svg>')
+
+
+def pilares(items, pend):
+    out = []
+    for a, b, xs, foto in items:
+        lis = "".join(f"<li>{x}</li>" for x in xs)
+        out.append(f'<article class="panel"><div class="foto" role="img" aria-label="{foto}"><span class="pend">{pend}: {foto}</span></div>'
+                   f'<div class="txt"><h3>{a}</h3><p>{b}</p><ul class="lista">{lis}</ul></div></article>')
+    return "".join(out)
 
 
 def faq(items):
@@ -58,6 +67,13 @@ ES = dict(
     home_label="Bosque Venado, inicio", nav_label="Secciones",
     nav_lugar="El lugar", nav_vida="Agua, energía y comida", nav_etapa="La etapa 3", nav_cotiza="Cotiza", nav_faq="Preguntas",
     cta_visita="Agenda una visita", cta_clusters="Ver clusters disponibles",
+    menu="Menú", cerrar="Cerrar", agenda="Agenda", wa_label="Escríbenos por WhatsApp", nav_visita="Visita",
+    hero_tag="Agua, energía y comida propias, en el monte de Acanceh.",
+    foto_pend="Foto pendiente", f_hero="Camino de sascab entre palmeras y monte",
+    f_ceiba="Una ceiba de tronco claro y raíces anchas en medio del monte", f_ceiba_cap="La ceiba, el árbol sagrado maya, en el monte de Yucatán",
+    predio_t="El predio completo",
+    predio_p="El tablaje mide 7 hectáreas. Las etapas 1 y 2, al oriente, suman 5 hectáreas y ya están vendidas. La etapa 3 ocupa las 2 hectáreas del poniente, con frente a la calle del sur.",
+    part_etq="Tu participación", en_etq="Cómo entrar", es_etq="Estructura",
     h1="Agua, energía y comida propias, en el monte.",
     hero_lede=f"Bosque Venado es una comunidad neorural en Acanceh, Yucatán. En la etapa 3 hay {N_LOTES} lotes de 200 m² agrupados en clusters de 2, 4 y 8, con caminos de frutales entre ellos y un centro común de energía solar y agua de pozo.",
     plan_cap="Basado en el levantamiento topográfico del tablaje 3735. La distribución es esquemática y puede ajustarse en el proyecto definitivo.",
@@ -87,12 +103,12 @@ ES = dict(
     vida_lede="Las amenidades de Bosque Venado no son un club ni una alberca. Son el agua, la energía y la comida que la comunidad produce y cuida en conjunto.",
     pilares=pilares([
         ("Agua", "El pozo ya da agua a 27 metros. Se bombea con energía solar a un tanque elevado y baja por gravedad a los clusters.",
-         ["Pozo existente", "Tanque elevado común", "Cada casa puede captar lluvia"]),
+         ["Pozo existente", "Tanque elevado común", "Cada casa puede captar lluvia"], "el pozo y el tanque"),
         ("Energía", "Un centro de paneles y baterías para lo común, y cada casa puede sumar su propio sistema. Sin depender de la red.",
-         ["Paneles solares y baterías", "Bombeo de agua solar", "Iluminación de caminos"]),
+         ["Paneles solares y baterías", "Bombeo de agua solar", "Iluminación de caminos"], "los paneles de la casa habitada"),
         ("Comida", "Entre cluster y cluster corre un camino verde con frutales, y los rincones libres se siembran como bosque agroforestal. La comida queda a pasos de cada casa.",
-         ["Chaya, plátano, papaya, pitahaya, limón", "Milpa y huerto común", "Vivero de árboles nativos"]),
-    ]),
+         ["Chaya, plátano, papaya, pitahaya, limón", "Milpa y huerto común", "Vivero de árboles nativos"], "frutales y milpa"),
+    ], "Foto pendiente"),
     sin_show="Autosuficiencia sin show: sin búnker y sin alambre de púas. Agua, energía, comida y vecinos que se conocen.",
     e3_h="La etapa 3, cluster por cluster.",
     e3_lede=f"Dos hectáreas al poniente del predio. Una calle central ondulada de 6 m reparte {N_CL} clusters a los dos lados: {POR_TAM[8]} de 8 lotes, {POR_TAM[4]} de 4 y {POR_TAM[2]} de 2. Toca un cluster para cotizarlo, o un ícono i para saber qué es cada zona.",
@@ -203,6 +219,13 @@ EN = dict(
     home_label="Bosque Venado, home", nav_label="Sections",
     nav_lugar="The land", nav_vida="Water, power and food", nav_etapa="Phase 3", nav_cotiza="Get a quote", nav_faq="FAQ",
     cta_visita="Book a visit", cta_clusters="See available clusters",
+    menu="Menu", cerrar="Close", agenda="Book", wa_label="Message us on WhatsApp", nav_visita="Visit",
+    hero_tag="Your own water, power and food, in the forest near Acanceh.",
+    foto_pend="Photo pending", f_hero="A sascab road between palms and forest",
+    f_ceiba="A pale-trunked ceiba with wide roots in the forest", f_ceiba_cap="The ceiba, the sacred Maya tree, in the Yucatán forest",
+    predio_t="The whole parcel",
+    predio_p="The parcel covers 7 hectares. Phases 1 and 2, on the east side, add up to 5 hectares and are already sold. Phase 3 takes the 2 western hectares, facing the south street.",
+    part_etq="Your stake", en_etq="How to join", es_etq="Structure",
     h1="Your own water, power and food, in the forest.",
     hero_lede=f"Bosque Venado is a neo-rural community in Acanceh, Yucatán. Phase 3 has {N_LOTES} lots of 200 m² grouped in clusters of 2, 4 and 8, with fruit-tree lanes between them and a shared solar power and well water hub.",
     plan_cap="Based on the topographic survey of parcel 3735. The layout is schematic and may be adjusted in the final project.",
@@ -232,12 +255,12 @@ EN = dict(
     vida_lede="The amenities at Bosque Venado are not a clubhouse or a pool. They are the water, power and food the community produces and looks after together.",
     pilares=pilares([
         ("Water", "The well already gives water at 27 meters. It is pumped with solar power to an elevated tank and flows by gravity to the clusters.",
-         ["Existing well", "Shared elevated tank", "Every house can harvest rain"]),
+         ["Existing well", "Shared elevated tank", "Every house can harvest rain"], "the well and the tank"),
         ("Power", "A hub of panels and batteries for shared needs, and every house can add its own system. No grid needed.",
-         ["Solar panels and batteries", "Solar water pumping", "Lane lighting"]),
+         ["Solar panels and batteries", "Solar water pumping", "Lane lighting"], "the panels on the lived-in house"),
         ("Food", "A green lane with fruit trees runs between clusters, and the spare corners are planted as a food forest. Food is a few steps from every house.",
-         ["Chaya, banana, papaya, dragon fruit, lime", "Milpa and shared garden", "Native tree nursery"]),
-    ]),
+         ["Chaya, banana, papaya, dragon fruit, lime", "Milpa and shared garden", "Native tree nursery"], "fruit trees and milpa"),
+    ], "Photo pending"),
     sin_show="Self-reliance without the show: no bunker, no barbed wire. Water, power, food and neighbors who know each other.",
     e3_h="Phase 3, cluster by cluster.",
     e3_lede=f"Two hectares on the west side of the parcel. A winding 6 m central street serves {N_CL} clusters on both sides: {POR_TAM[8]} of 8 lots, {POR_TAM[4]} of 4 and {POR_TAM[2]} of 2. Tap a cluster to get a quote, or an i icon to learn what each area is.",
@@ -363,6 +386,8 @@ def render(t, key):
     tpl = (ROOT / "src" / "template.html").read_text()
     data = dict(t)
     data["PLANO_GENERAL"] = GEO[key]["general"]
+    data["LOGO"] = LOGO
+    data["IMG"] = "img/" if key == "es" else "../img/"
     data["PLANO_DETALLE"] = GEO[key]["detalle"]
     data["JS"] = json.dumps(t["JS"], ensure_ascii=False)
     data["DATOS"] = json.dumps(DAT, separators=(",", ":"))

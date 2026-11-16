@@ -28,7 +28,7 @@
   --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif; --serif:"Fraunces",Georgia,serif;
   --lado:150px; --ancho:1240px;
   /* plano a mano: papel, tinta y plumón */
-  --papel:#F7F4EC; --lote:#FFFDF7; --lote-hover:#EEF2CF; --plumon:#A9AE3C; --plumon-2:#B9D35A; --apartado:#F0DC86; --vendido:#CFCABA;
+  --papel:#F7F4EC; --asfalto:#DCDCD5; --lote:#FFFDF7; --lote-hover:#EEF2CF; --plumon:#A9AE3C; --plumon-2:#B9D35A; --apartado:#F0DC86; --vendido:#CFCABA;
   --mano:"Architects Daughter","Comic Neue","Segoe Print",cursive;
   /* (antes) */
   --m-fondo:#000; --m-base:#0B160A; --m-agro:#10230C; --m-fruta:#356B27; --m-ray:#4F6E41;
@@ -205,6 +205,15 @@ section{padding:110px 0 0}
 /* plano de la etapa 3: dibujo a mano, tinta sobre papel, árboles de plumón */
 .mapa{position:relative;background:var(--papel);padding:16px 16px 10px;border:1px solid var(--linea)}
 .mapa-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mapa-scroll.zoom-on{overflow:auto;cursor:grab}
+.mapa-scroll.arrastra{cursor:grabbing;user-select:none}
+.mapa-vista{position:relative}
+.zoom{position:absolute;z-index:2;bottom:10px;right:10px;display:flex;flex-direction:column;border:1px solid var(--tinta);background:var(--papel)}
+.zoom button{width:38px;height:38px;border:0;background:none;color:var(--tinta);font-family:var(--mano);font-size:1.5rem;line-height:1;cursor:pointer}
+.zoom button + button{border-top:1px solid var(--tinta)}
+.zoom button:hover{background:var(--lote-hover)}
+.zoom button:focus-visible{outline:2px solid var(--tinta);outline-offset:-4px}
+.zoom button:disabled{color:var(--vendido);cursor:default;background:none}
 .mapa-scroll svg{width:100%;min-width:860px;height:auto}
 .desliza{display:none;color:var(--tenue);font-size:.85rem;margin:6px 4px 0}
 @media (max-width:900px){.desliza{display:block}}
@@ -238,6 +247,13 @@ section{padding:110px 0 0}
 .b-huella{stroke:var(--tinta);stroke-width:.1}
 .b-panel{stroke:var(--tinta);stroke-width:.16}
 .b-calle{stroke:var(--tinta);stroke-width:.32}
+.b-pub{fill:var(--asfalto)}
+.b-pub-borde{fill:none;stroke:var(--tinta);stroke-width:.32}
+.b-pub-eje{fill:none;stroke:var(--tinta);stroke-width:.18;stroke-dasharray:2.4 2}
+.b-pub-t{fill:var(--tinta);font-family:var(--mano);font-size:3.2px;text-anchor:middle;dominant-baseline:central}
+.plano-gral .b-pub-borde{stroke-width:.7}
+.plano-gral .b-pub-eje{stroke-width:.45;stroke-dasharray:5 4}
+.plano-gral .b-pub-t{font-size:5px}
 .b-corr{fill:none;stroke:var(--tinta);stroke-width:.12;stroke-dasharray:.8 .6}
 .b-energia{fill:none;stroke:var(--tinta);stroke-width:.2}
 .b-lote{fill:var(--lote);stroke:var(--tinta);stroke-width:.16}
@@ -535,12 +551,16 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
     <p class="lede">{{e3_lede}}</p>
   </div>
   <div class="mapa" id="mapa">
-    <div class="mapa-scroll">{{PLANO_DETALLE}}</div>
+    <div class="mapa-vista">
+      <div class="mapa-scroll">{{PLANO_DETALLE}}</div>
+      <div class="zoom" role="group" aria-label="{{zoom_t}}"><button type="button" id="zoom-mas" aria-label="{{zoom_mas}}">+</button><button type="button" id="zoom-menos" aria-label="{{zoom_menos}}" disabled>−</button></div>
+    </div>
     <p class="desliza">{{desliza}}</p>
     <ul class="ley">
       <li><span style="background:var(--lote)"></span>{{st_disp}}</li>
       <li><span style="background:var(--apartado)"></span>{{st_apar}}</li>
       <li><span style="background:var(--vendido)"></span>{{st_vend}}</li>
+      <li><span style="background:linear-gradient(var(--tinta),var(--tinta)) center/100% 1px no-repeat,var(--asfalto)"></span>{{z_pub}}</li>
       <li><span style="background:repeating-linear-gradient(118deg,var(--tinta) 0 1px,var(--papel) 1px 4px)"></span>{{z_calle}}</li>
       <li><span style="background:conic-gradient(#86BF78 0 40%,#E7B8DF 0 60%,#D7CF4E 0 78%,#E8805A 0);border-radius:50%"></span>{{z_agro}}</li>
       <li><span style="background:repeating-linear-gradient(90deg,var(--tinta) 0 1px,var(--papel) 1px 3px)"></span>{{z_energia}}</li>
@@ -811,6 +831,29 @@ function activa(t){
   return false;
 }
 mapa.addEventListener("click",e=>activa(e.target));
+// zoom del plano: botones + y −, y arrastre con el mouse cuando está ampliado
+(()=>{
+  const box=mapa.querySelector(".mapa-scroll"), svg=box.querySelector("svg"), mas=document.getElementById("zoom-mas"), menos=document.getElementById("zoom-menos");
+  const NIV=[1,1.6,2.4,3.4]; let i=0, alto=0;
+  function aplica(ni){
+    if(i===0) alto=box.clientHeight;
+    const cx=(box.scrollLeft+box.clientWidth/2)/box.scrollWidth, cy=(box.scrollTop+box.clientHeight/2)/box.scrollHeight;
+    i=ni; const z=NIV[i];
+    svg.style.width=(100*z)+"%"; svg.style.minWidth=(860*z)+"px";
+    box.classList.toggle("zoom-on",i>0); box.style.height=i>0?alto+"px":"";
+    box.scrollLeft=cx*box.scrollWidth-box.clientWidth/2; box.scrollTop=cy*box.scrollHeight-box.clientHeight/2;
+    mas.disabled=i===NIV.length-1; menos.disabled=i===0; tip.hidden=true;
+  }
+  mas.addEventListener("click",()=>{ if(i<NIV.length-1) aplica(i+1); });
+  menos.addEventListener("click",()=>{ if(i>0) aplica(i-1); });
+  let ini=null, movio=false;
+  box.addEventListener("pointerdown",e=>{ if(i===0||e.pointerType!=="mouse"||e.button!==0) return; ini={x:e.clientX,y:e.clientY,l:box.scrollLeft,t:box.scrollTop}; movio=false; });
+  window.addEventListener("pointermove",e=>{ if(!ini) return; const dx=e.clientX-ini.x, dy=e.clientY-ini.y;
+    if(!movio&&Math.hypot(dx,dy)>5){ movio=true; box.classList.add("arrastra"); }
+    if(movio){ box.scrollLeft=ini.l-dx; box.scrollTop=ini.t-dy; tip.hidden=true; } });
+  window.addEventListener("pointerup",()=>{ ini=null; box.classList.remove("arrastra"); });
+  box.addEventListener("click",e=>{ if(movio){ e.stopPropagation(); e.preventDefault(); movio=false; } },true);
+})();
 mapa.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&activa(e.target)) e.preventDefault(); });
 mapa.addEventListener("focusin",e=>{ const i=e.target.closest(".b-info"); if(i){ const b=i.getBoundingClientRect(); muestraTip(htmlInfo(i.dataset.info),b.left,b.bottom); } });
 mapa.addEventListener("focusout",()=>{tip.hidden=true;});

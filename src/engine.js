@@ -259,9 +259,9 @@ function geometria(){
 // ---------- SVG ----------
 const LBL={
   es:{calle:"Calles",corredor:"Camino verde",energia:"Energía y agua",agro:"Bosque agroforestal",serv:"Servidumbre",cluster:"Cluster",aguada:"Aguada",
-      calleSur:"Calle al sur",etapa2:"Etapa 2 (proyecto privado)",etapas12:"Etapas 1 y 2",e1:"Etapa 1",e2:"Etapa 2",e1s:"La Villa Vikinga",e2s:"Proyecto privado",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
+      calleSur:"Calle pública",etapa2:"Etapa 2 (proyecto privado)",etapas12:"Etapas 1 y 2",e1:"Etapa 1",e2:"Etapa 2",e1s:"La Villa Vikinga",e2s:"Proyecto privado",vendida:"vendida",casas:"Construcciones existentes",etapa3:"Etapa 3",m:"m",cl:"Cluster",lotes:"lotes",lote:"Lote",info:"más información"},
   en:{calle:"Streets",corredor:"Green lane",energia:"Power and water",agro:"Food forest",serv:"Easement",cluster:"Cluster",aguada:"Rain pond",
-      calleSur:"South street",etapa2:"Phase 2 (private project)",etapas12:"Phases 1 and 2",e1:"Phase 1",e2:"Phase 2",e1s:"La Villa Vikinga",e2s:"Private project",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
+      calleSur:"Public road",etapa2:"Phase 2 (private project)",etapas12:"Phases 1 and 2",e1:"Phase 1",e2:"Phase 2",e1s:"La Villa Vikinga",e2s:"Private project",vendida:"sold",casas:"Existing buildings",etapa3:"Phase 3",m:"m",cl:"Cluster",lotes:"lots",lote:"Lot",info:"more information"}
 };
 // Estilo de dibujo a mano: papel, tinta negra, tramas a línea y árboles de plumón olivo con sombra.
 function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -371,24 +371,46 @@ function infoIcons(g,M,L){
       `<text class="b-info-t" x="${(-w/2+4.3).toFixed(2)}" y=".2">${t}</text></g>`;
   }).join("");
 }
+// calle pública: corre por fuera del lindero sur y sube por el lindero poniente
+function callePublica(M,id,ytop,xend,o2){
+  const w=7, g0=1, n=Math.hypot(1,SS);
+  const off=d=>[[-d,ytop],[-d,-SS*d-d*n],[xend,SS*xend-d*n]];
+  const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
+  const lin=pp=>"M"+pp.map(P).join("L");
+  const a=off(g0), b=off(g0+w), c=off(g0+w/2);
+  const o=[];
+  o.push(`<path class="b-pub" d="${lin(a.concat(b.slice().reverse()))}Z"/>`);
+  o.push(`<g filter="url(#tinta-${id})"><path class="b-pub-borde" d="${lin(a)}"/><path class="b-pub-borde" d="${lin(b)}"/><path class="b-pub-eje" d="${lin(c)}"/></g>`);
+  // rótulos dentro de la calle
+  const ang=(p,q)=>{const A=M(p[0],p[1]),B=M(q[0],q[1]); let t=Math.atan2(B[1]-A[1],B[0]-A[0])*180/Math.PI; if(t>90) t-=180; if(t<-90) t+=180; return t;};
+  const d=o2.fuera?g0+w+o2.fuera:g0+w/2, cls=o2.cls||"b-pub-t";
+  o2.lbl.forEach(([lado,t,txt])=>{
+    let p,q;
+    if(lado==="o"){ p=[-d,t]; q=[-d,t+10]; }
+    else { p=[t,SS*t-d*n]; q=[t+10,SS*(t+10)-d*n]; }
+    const A=M(p[0],p[1]);
+    o.push(`<text class="${cls}" transform="translate(${A[0].toFixed(1)},${A[1].toFixed(1)}) rotate(${ang(p,q).toFixed(2)})">${txt}</text>`);
+  });
+  return o.join("");
+}
 function svgDetalle(g,lang,titulo){
   const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
   // girado 90°: el norte apunta a la derecha y la etapa 2 queda abajo
   const M=(x,y)=>[y,x]; const id="d"+lang;
-  const vb=[-16,-9,YN1+34,X1+29];
+  const vb=[-16,-17,YN1+34,X1+37];
   const o=[];
   o.push(`<svg class="plano-e3" viewBox="${vb.join(" ")}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${titulo}">`);
   o.push(defs(id,1));
+  o.push(callePublica(M,id,YN1+60,X1+60,{lbl:[["o",YN1*0.45,L.calleSur],["s",X1*0.78,L.calleSur]]}));
   // monte de la etapa 2, a lo largo del lindero oriente
   const vec=[[X1,YS1],[X1,YN1],[X1+13,YN1+SN*13],[X1+13,YS1+SS*13]];
   o.push(arboles(vec,M,rng(5),{sp:4.6,rmin:1.6,rmax:2.8,sh:.9,redondos:.2}));
   o.push(svgCapas(g,M,{det:true,L,id,sombra:.9}));
   o.push(`<text class="b-rot" x="${(YN1*0.62).toFixed(1)}" y="${(X1+16).toFixed(1)}">${L.etapa2}</text>`);
   o.push(infoIcons(g,M,L));
-  o.push(`<text class="b-rot" transform="translate(-8,${(X1/2).toFixed(1)}) rotate(-90)">${L.calleSur}</text>`);
   const nx=YN1+12, ny=6;
   o.push(`<g class="b-norte"><path d="M${nx+4},${ny} L${nx-1.5},${ny-2} L${nx-.3},${ny} L${nx-1.5},${ny+2}Z"/><text x="${nx+7}" y="${ny+0.3}">N</text></g>`);
-  const sx=YN1-22, sy=-4.5;
+  const sx=YN1-22, sy=-13.5;
   o.push(`<g class="b-escala"><line x1="${sx}" y1="${sy}" x2="${sx+20}" y2="${sy}"/><line x1="${sx}" y1="${sy-1}" x2="${sx}" y2="${sy+1}"/><line x1="${sx+10}" y1="${sy-.7}" x2="${sx+10}" y2="${sy+.7}"/><line x1="${sx+20}" y1="${sy-1}" x2="${sx+20}" y2="${sy+1}"/><text x="${sx+24}" y="${sy+.3}">20 m</text></g>`);
   o.push(`</svg>`);
   return o.join("");
@@ -403,8 +425,9 @@ function svgGeneral(g,lang,titulo,desc){
   const e1=[[C,SS*C],[C,YN0+SN*C]].concat(TABLAJE.slice(2));
   const casas=[[206,172,10,7],[229,190,13,9],[217,211,8,6]];
   const o=[];
-  o.push(`<svg class="plano-gral" viewBox="-14 -340 306 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
+  o.push(`<svg class="plano-gral" viewBox="-28 -340 320 376" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
   o.push(defs(id,2.2));
+  o.push(callePublica(M,id,345,300,{lbl:[["o",150,L.calleSur],["s",140,L.calleSur]],fuera:7,cls:"b-gs"}));
   o.push(`<path class="b-base" d="M${e2.map(P).join("L")}Z"/><path class="b-base" d="M${e1.map(P).join("L")}Z"/>`);
   // monte de las etapas vendidas, menos denso alrededor de las casas
   const R=rng(3);
@@ -417,8 +440,7 @@ function svgGeneral(g,lang,titulo,desc){
   o.push(`<text class="b-gt" x="${((X1+C)/2).toFixed(1)}" y="-178">${L.e2}</text><text class="b-gs" x="${((X1+C)/2).toFixed(1)}" y="-166">${L.e2s}</text>`);
   o.push(`<text class="b-gt" x="${((C+275)/2).toFixed(1)}" y="-262">${L.e1}</text><text class="b-gs" x="${((C+275)/2).toFixed(1)}" y="-250">${L.e1s}</text>`);
   o.push(`<text class="b-gt b-gt-on" x="${(X1/2).toFixed(1)}" y="${-(YN1+9)}">${L.etapa3}</text>`);
-  o.push(`<text class="b-gs" transform="translate(140,${(-(SS*140)+12).toFixed(1)}) rotate(${(-Math.atan(SS)*180/Math.PI).toFixed(2)})">${L.calleSur}</text>`);
-  o.push(`<g class="b-norte"><path d="M2,-334 L-3,-320 L2,-323 L7,-320Z"/></g>`);
+  o.push(`<g class="b-norte"><path d="M16,-334 L11,-320 L16,-323 L21,-320Z"/></g>`);
   o.push(`<g class="b-escala"><line x1="225" y1="12" x2="275" y2="12"/><line x1="225" y1="9" x2="225" y2="15"/><line x1="275" y1="9" x2="275" y2="15"/><text x="250" y="23">50 m</text></g>`);
   o.push(`</svg>`);
   return o.join("");

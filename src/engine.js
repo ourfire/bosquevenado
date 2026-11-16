@@ -333,7 +333,7 @@ function arboles(poly,M,R,o){ // árboles dentro de un polígono (coordenadas lo
     for(let x=Math.min(...xs)+sp/2+((Math.round(y/sp)%2)?sp/2:0);x<Math.max(...xs);x+=sp){
       const px=x+(R()-.5)*sp*.5, py=y+(R()-.5)*sp*.5, r=rmin+R()*(rmax-rmin);
       const m=Math.min(r*.6,1.2); if(![[px,py],[px+m,py],[px-m,py],[px,py+m],[px,py-m]].every(p=>pip(p,poly))) continue;
-      out.push(arbol(M(px,py),r,R,sh,especie(R)));
+      out.push(arbol(M(px,py),r,R,sh,o.sps?o.sps[Math.floor(R()*o.sps.length)]:especie(R)));
     }
   }
   return out.join("");
@@ -415,24 +415,22 @@ function bocacalles(g,M,id){
     const a=Math.min(...xs), b=Math.max(...xs), q=[[a,SS*a],[b,SS*b],[b,SS*b-d],[a,SS*a-d]];
     return `<path class="b-calle-boca" fill="url(#tr-calle-${id})" d="M${q.map(P).join("L")}Z"/><path class="b-calle" fill="none" d="M${P(q[0])}L${P(q[3])}M${P(q[1])}L${P(q[2])}"/>`; }).join("");
 }
-// calle pública: corre por fuera del lindero sur y sube por el lindero poniente
-function callePublica(M,id,ytop,xend,o2){
-  const w=7, g0=PER+1, n=Math.hypot(1,SS);
-  const off=d=>[[-d,ytop],[-d,-SS*d-d*n],[xend,SS*xend-d*n]];
+// calle pública: corre por fuera del lindero sur y, en el plano general, sube por el lindero oriente
+function callePublica(M,id,o2){
+  const w=7, n=Math.hypot(1,SS), XE=TABLAJE[4][0];
+  // dd: distancia desde el lindero real (la franja perimetral queda por dentro)
+  const sur=(x,dd)=>[x,SS*x-(PER+dd)*n];
+  const off=dd=>o2.ytop!=null?[sur(o2.xini,dd),[XE+dd,SS*(XE+dd)-(PER+dd)*n],[XE+dd,o2.ytop]]:[sur(o2.xini,dd),sur(o2.xfin,dd)];
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
   const lin=pp=>"M"+pp.map(P).join("L");
-  const a=off(g0), b=off(g0+w), c=off(g0+w/2);
+  const a=off(1), b=off(1+w), c=off(1+w/2);
   const o=[];
   o.push(`<path class="b-pub" d="${lin(a.concat(b.slice().reverse()))}Z"/>`);
   o.push(`<g filter="url(#tinta-${id})"><path class="b-pub-borde" d="${lin(a)}"/><path class="b-pub-borde" d="${lin(b)}"/><path class="b-pub-eje" d="${lin(c)}"/></g>`);
-  // rótulos dentro de la calle
   const ang=(p,q)=>{const A=M(p[0],p[1]),B=M(q[0],q[1]); let t=Math.atan2(B[1]-A[1],B[0]-A[0])*180/Math.PI; if(t>90) t-=180; if(t<-90) t+=180; return t;};
-  const d=o2.fuera?g0+w+o2.fuera:g0+w/2, cls=o2.cls||"b-pub-t";
+  const d=o2.fuera?1+w+o2.fuera:1+w/2, cls=o2.cls||"b-pub-t";
   o2.lbl.forEach(([lado,t,txt])=>{
-    let p,q;
-    if(lado==="o"){ p=[-d,t]; q=[-d,t+10]; }
-    else { p=[t,SS*t-d*n]; q=[t+10,SS*(t+10)-d*n]; }
-    const A=M(p[0],p[1]);
+    const p=lado==="e"?[XE+d,t]:sur(t,d), q=lado==="e"?[XE+d,t+10]:sur(t+10,d), A=M(p[0],p[1]);
     o.push(`<text class="${cls}" transform="translate(${A[0].toFixed(1)},${A[1].toFixed(1)}) rotate(${ang(p,q).toFixed(2)})">${txt}</text>`);
   });
   return o.join("");
@@ -441,22 +439,22 @@ function svgDetalle(g,lang,titulo){
   const L=LBL[lang]; const {X1,YS1,YN1}=g.G;
   // girado 90°: el norte apunta a la derecha y la etapa 2 queda abajo
   const M=(x,y)=>[y,x]; const id="d"+lang;
-  const vb=[-20,-22,YN1+38,X1+42];
+  const vb=[-20,-14,YN1+38,X1+29];
   const o=[];
   o.push(`<svg class="plano-e3" viewBox="${vb.join(" ")}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${titulo}">`);
   o.push(defs(id,1));
-  o.push(callePublica(M,id,YN1+60,X1+60,{lbl:[["o",YN1*0.45,L.calleSur],["s",X1*0.78,L.calleSur]]}));
+  o.push(callePublica(M,id,{xini:-40,xfin:X1+60,lbl:[["s",X1*0.78,L.calleSur]]}));
   o.push(perimetro(M,id,{clip:(x,y)=>x<X1+14}));
   o.push(bocacalles(g,M,id));
-  // monte de la etapa 2, a lo largo del lindero oriente
-  const vec=[[X1,YS1],[X1,YN1],[X1+13,YN1+SN*13],[X1+13,YS1+SS*13]];
-  o.push(arboles(vec,M,rng(5),{sp:4.6,rmin:1.6,rmax:2.8,sh:.9,redondos:.2}));
+  // lindero con la etapa 2: una línea sencilla de monte natural
+  const vec=[[X1,YS1],[X1,YN1],[X1+7,YN1+SN*7],[X1+7,YS1+SS*7]];
+  o.push(arboles(vec,M,rng(5),{sp:5.2,rmin:1.7,rmax:2.6,sh:.9,sps:["claro","medio","oscuro"]}));
   o.push(svgCapas(g,M,{det:true,L,id,sombra:.9}));
-  o.push(`<text class="b-rot" x="${(YN1*0.62).toFixed(1)}" y="${(X1+16).toFixed(1)}">${L.etapa2}</text>`);
+  o.push(`<text class="b-rot" x="${(YN1*0.62).toFixed(1)}" y="${(X1+12).toFixed(1)}">${L.etapa2}</text>`);
   o.push(infoIcons(g,M,L));
   const nx=YN1+12, ny=6;
   o.push(`<g class="b-norte"><path d="M${nx+4},${ny} L${nx-1.5},${ny-2} L${nx-.3},${ny} L${nx-1.5},${ny+2}Z"/><text x="${nx+7}" y="${ny+0.3}">N</text></g>`);
-  const sx=YN1-22, sy=-18.5;
+  const sx=YN1-22, sy=-9;
   o.push(`<g class="b-escala"><line x1="${sx}" y1="${sy}" x2="${sx+20}" y2="${sy}"/><line x1="${sx}" y1="${sy-1}" x2="${sx}" y2="${sy+1}"/><line x1="${sx+10}" y1="${sy-.7}" x2="${sx+10}" y2="${sy+.7}"/><line x1="${sx+20}" y1="${sy-1}" x2="${sx+20}" y2="${sy+1}"/><text x="${sx+24}" y="${sy+.3}">20 m</text></g>`);
   o.push(`</svg>`);
   return o.join("");
@@ -471,9 +469,9 @@ function svgGeneral(g,lang,titulo,desc){
   const e1=[[C,SS*C],[C,YN0+SN*C]].concat(INTERIOR.slice(2));
   const casas=[[206,172,10,7],[229,190,13,9],[217,211,8,6]].map(([x,y,w,h])=>[x-OFF[0],y-OFF[1],w,h]);
   const o=[];
-  o.push(`<svg class="plano-gral" viewBox="-28 -340 320 376" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
+  o.push(`<svg class="plano-gral" viewBox="-14 -340 320 376" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pg-t-${lang} pg-d-${lang}"><title id="pg-t-${lang}">${titulo}</title><desc id="pg-d-${lang}">${desc}</desc>`);
   o.push(defs(id,2.2));
-  o.push(callePublica(M,id,345,300,{lbl:[["o",150,L.calleSur],["s",140,L.calleSur]],fuera:7,cls:"b-gs"}));
+  o.push(callePublica(M,id,{xini:-40,ytop:345,lbl:[["s",140,L.calleSur],["e",150,L.calleSur]],fuera:7,cls:"b-gs"}));
   o.push(perimetro(M,id,{esc:1.7}));
   o.push(`<path class="b-base" d="M${e2.map(P).join("L")}Z"/><path class="b-base" d="M${e1.map(P).join("L")}Z"/>`);
   // monte de las etapas vendidas, menos denso alrededor de las casas

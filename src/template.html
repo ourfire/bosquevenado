@@ -28,7 +28,7 @@
   --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif; --serif:"Fraunces",Georgia,serif;
   --lado:150px; --ancho:1240px;
   /* plano a mano: papel, tinta y plumón */
-  --papel:#F7F4EC; --asfalto:#DCDCD5; --lote:#FFFDF7; --lote-hover:#EEF2CF; --plumon:#A9AE3C; --plumon-2:#B9D35A; --apartado:#F0DC86; --vendido:#CFCABA;
+  --papel:#F7F4EC; --asfalto:#DCDCD5; --sendero:#EFE3C2; --lote:#FFFDF7; --lote-hover:#EEF2CF; --plumon:#A9AE3C; --plumon-2:#B9D35A; --apartado:#F0DC86; --vendido:#CFCABA;
   --mano:"Architects Daughter","Comic Neue","Segoe Print",cursive;
   /* (antes) */
   --m-fondo:#000; --m-base:#0B160A; --m-agro:#10230C; --m-fruta:#356B27; --m-ray:#4F6E41;
@@ -248,6 +248,14 @@ section{padding:110px 0 0}
 .b-panel{stroke:var(--tinta);stroke-width:.16}
 .b-calle{stroke:var(--tinta);stroke-width:.32}
 .b-pub{fill:var(--asfalto)}
+.b-per{fill:#E6EAD0}
+.b-sendero{fill:var(--sendero)}
+.b-sendero-borde{fill:none;stroke:var(--tinta);stroke-width:.14}
+.b-sendero-eje{fill:none;stroke:#A88A4E;stroke-width:.13;stroke-dasharray:.8 1.1}
+.t-bambu{fill:#9DBB4E;stroke:#56722A;stroke-width:.1}
+.b-calle-boca{stroke:none}
+.plano-gral .b-sendero-borde{stroke-width:.3}
+.plano-gral .b-sendero-eje{stroke-width:.3;stroke-dasharray:2 2}
 .b-pub-borde{fill:none;stroke:var(--tinta);stroke-width:.32}
 .b-pub-eje{fill:none;stroke:var(--tinta);stroke-width:.18;stroke-dasharray:2.4 2}
 .b-pub-t{fill:var(--tinta);font-family:var(--mano);font-size:3.2px;text-anchor:middle;dominant-baseline:central}
@@ -561,6 +569,7 @@ footer{margin-top:120px;border-top:1px solid var(--linea);padding:30px 0 50px;fo
       <li><span style="background:var(--apartado)"></span>{{st_apar}}</li>
       <li><span style="background:var(--vendido)"></span>{{st_vend}}</li>
       <li><span style="background:linear-gradient(var(--tinta),var(--tinta)) center/100% 1px no-repeat,var(--asfalto)"></span>{{z_pub}}</li>
+      <li><span style="background:linear-gradient(90deg,#9DBB4E 0 4px,var(--sendero) 4px)"></span>{{z_sendero}}</li>
       <li><span style="background:repeating-linear-gradient(118deg,var(--tinta) 0 1px,var(--papel) 1px 4px)"></span>{{z_calle}}</li>
       <li><span style="background:conic-gradient(#86BF78 0 40%,#E7B8DF 0 60%,#D7CF4E 0 78%,#E8805A 0);border-radius:50%"></span>{{z_agro}}</li>
       <li><span style="background:repeating-linear-gradient(90deg,var(--tinta) 0 1px,var(--papel) 1px 3px)"></span>{{z_energia}}</li>

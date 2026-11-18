@@ -12,6 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TBD = '<span class="tbd">{}</span>'
 CORREO = "info@bosquevenado.com"
 RAZON = "Tokenizadora, S.A. de C.V."  # razón social del responsable de los datos; ajustar si hay homonimia
+MOSTRAR_VOCES = False  # cambiar a True cuando haya testimonios reales con permiso
 CUOTA = "$1,000"
 DOMICILIO = "Calle 14 esquina #78, oficina 303, colonia México, Mérida, Yucatán"  # cuota anual de mantenimiento por lote
 WA = "999 991 0450"
@@ -108,11 +109,11 @@ ES = dict(
         ("Admisión y salida", ["Visita y conversación antes de entrar", "La comunidad aprueba a cada nuevo miembro", "Quien hereda o compra pasa por la misma admisión"]),
         ("Decisiones", ["Asamblea periódica de miembros", "Se vota lo que concierne a todos", "Cuando seamos más, la comunidad diseña su propio modelo"]),
         ("Monte y siembra", ["Ningún desmonte sin acuerdo común", "Especies nativas y frutales", "Los caminos verdes son de todos"]),
-        ("Construcción", ["Materiales y alturas según el reglamento", "Se respeta la servidumbre de paso"]),
+        ("Construcción", ["Hasta 50 m² construidos por lote, el 25% del terreno", "Para construir más, se suma otro lote", "Materiales y alturas según el reglamento", "Se respeta la servidumbre de paso"]),
         ("Agua y energía", ["Uso responsable del pozo y el tanque", "Cada casa puede sumar su propio sistema", "Lo común se mantiene con una cuota"]),
         ("Vida diaria", ["Silencio por la noche", "Mascotas bajo el cuidado de su dueño", "Visitas con aviso a la comunidad"]),
         ("Trabajo común", ["Jornadas en el huerto y los caminos", "Las cosechas comunes se reparten y los excedentes se intercambian", "Cada quien aporta su oficio"]),
-        ("Cuotas y conflictos", ["Cuota de " + CUOTA + " al año por lote, desde que inician obras en su cluster", "Lo que sobra va a la reserva común de la sociedad", "Primero se conversa, luego hay mediación", "Si alguien deja de pagar, su participación se subasta entre los vecinos"]),
+        ("Cuotas y conflictos", ["Cuota de " + CUOTA + " al año por lote, desde que se entrega con vialidad", "Lo que sobra va a la reserva común de la sociedad", "Primero se conversa, luego hay mediación", "Si alguien deja de pagar, su participación se subasta entre los vecinos"]),
     ]),
     qs_etq="Quiénes somos", qs_h="Quienes empujan Bosque Venado.",
     qs_lede="Los fundadores y primeros miembros de la comunidad. Cada quien aporta su oficio a lo común.",
@@ -163,7 +164,7 @@ ES = dict(
         ("Frente a la calle del sur", "Acceso directo a la etapa 3"),
         ("Cerca de Acanceh", "A unos 1.2 km por la calle 19, según el croquis del plano"),
     ]),
-    juntos_h="Lo que construimos juntos",
+    juntos_h="Lo que construimos juntos", juntos_fecha="Fecha estimada de entrega: febrero de 2027.",
     juntos_items=li([
         ("Dos calles de sascab", "Reparten a todos los clusters desde la calle del sur"),
         ("Centro de energía y agua", "Paneles, baterías, pozo y tanque elevado"),
@@ -191,13 +192,13 @@ ES = dict(
     z_pub="Calle pública", zoom_t="Acercar o alejar el plano", zoom_mas="Acercar", zoom_menos="Alejar",
     z_sendero="Sendero y cerco de bambú", z_calle="Calle y huellas", z_agro="Bosque agroforestal", z_energia="Energía", z_agua="Aguada",
     co_h="Cotiza tu lote o tu cluster.",
-    co_lede="Precio de preventa: $500 por m², o $100,000 por lote a 60 meses. Un cluster suma sus lotes y mientras más corto el plazo, menor el total. El precio sube 5% cada vez que se venden 4 lotes. Descarga la cotización en PDF o mándanosla por WhatsApp.",
+    co_lede="Precio de preventa: $500 por m², o $100,000 por lote a 60 meses. Un cluster suma sus lotes y mientras más corto el plazo, menor el total. El precio sube 5% cada vez que se venden 10 lotes. Descarga la cotización en PDF o mándanosla por WhatsApp.",
     ficha_vacia="Elige un lote o un cluster en el plano, o cotiza por número de lotes.",
     co_tam="Número de lotes", co_plazo="Plazo",
     pr_eng="Enganche", pr_total="Precio total", pr_m2="Precio por m²", pr_ahorro="Ahorro contra 60 meses",
     co_pdf="Descargar cotización en PDF", co_pedir="Pedir informes",
     pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
-    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 4 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote; se cobra a cada cluster desde que inician obras que lo benefician y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses.",
+    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 10 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote; se cobra desde la entrega del lote, cuando ya tiene vialidad, y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses.",
     part_h="Qué te da tu participación, y qué no.",
     part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de La Tokenizadora, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
     si_h="Incluye",
@@ -233,15 +234,15 @@ ES = dict(
     ]),
     faq_h="Preguntas frecuentes.",
     faq=faq([
-        ("¿Qué significa preventa?", "Que lo común se está construyendo con las primeras participaciones. Por eso el precio es más bajo ahora y sube 5% cada vez que se venden 4 lotes."),
+        ("¿Qué significa preventa?", "Que lo común se está construyendo con las primeras participaciones. Por eso el precio es más bajo ahora y sube 5% cada vez que se venden 10 lotes."),
         ("¿Por qué no se escritura cada lote?", "Porque la tierra es de la sociedad y tu derecho vive en tus acciones. Así no hay gastos notariales en cada compra, herencia o traspaso, y tienes certeza jurídica desde que quedas inscrito en el registro de accionistas."),
         ("¿Puedo comprar un solo lote?", "Sí, desde un lote de 200 m². Los clusters de 2, 4 u 8 son para quien quiere más espacio o comprar con amigos o familia; cada quien tiene sus acciones y el reglamento fija el uso dentro del cluster."),
         ("Si compro un lote de atrás, ¿cómo entro en auto?", "En la franja central, entre las dos calles, todos los lotes dan a una calle. En las franjas de los lados, cada lote de atrás tiene paso propio: por el camino verde junto a su cluster, que lleva dos huellas de concreto para entrar a vuelta de rueda, por la servidumbre de 3 m de los clusters de 8, por la calle del sur o por el centro de energía y agua. En el plano, cada lote dice cuál es su acceso."),
-        ("¿Puedo construir?", "Sí, según el reglamento de construcción, que fija tipo, materiales y tamaño. Lo recibes al apartar tu lote."),
+        ("¿Puedo construir?", "Sí, hasta 50 m² por lote, que es el 25% del terreno. Si quieres algo más grande, compras otro lote y sumas su superficie. El reglamento de construcción fija materiales y alturas; lo recibes al apartar."),
         ("¿Puedo vender, heredar o dar en garantía mi participación?", "Sí. Tu derecho de uso se transmite con tus acciones, en los términos que fijen los estatutos. Quien las reciba pasa por el mismo proceso de admisión que tú."),
         ("¿Hay agua y luz?", "Hay un pozo con agua a 27 metros. No hay red eléctrica: una de las casas habitadas funciona con paneles solares y baterías, y el centro de energía y agua da servicio a lo común."),
-        ("¿Cuánto es la cuota de mantenimiento?", CUOTA + " al año por lote. Se empieza a cobrar a cada cluster cuando inician obras que lo benefician. Cubre la calle, el agua, la energía común y el cuidado del bosque, y lo que sobra forma una reserva económica de la sociedad para imprevistos y mejoras. El monto se ajusta según lo que necesite la comunidad."),
-        ("¿Qué pasa si dejo de pagar?", "Tienes un plazo de gracia para ponerte al corriente. Si no se resuelve, tu participación se subasta primero entre los vecinos de la comunidad, que ya pasaron por la admisión; si nadie la toma, pasa a La Tokenizadora. Lo que hayas aportado hasta entonces puede perderse a favor de la sociedad, según tu contrato."),
+        ("¿Cuánto es la cuota de mantenimiento?", CUOTA + " al año por lote. Se empieza a cobrar desde la entrega del lote, cuando ya tiene vialidad. Cubre la calle, el agua, la energía común y el cuidado del bosque, y lo que sobra forma una reserva económica de la sociedad para imprevistos y mejoras. El monto se ajusta según lo que necesite la comunidad."),
+        ("¿Qué pasa si dejo de pagar?", "Si dejas de pagar y no te pones al corriente, tu participación se subasta primero entre los vecinos de la comunidad, que ya pasaron por la admisión; si nadie la toma, pasa a La Tokenizadora. Lo que hayas aportado hasta entonces puede perderse a favor de la sociedad, según tu contrato."),
     ]),
     vi_h="Agenda una visita.",
     vi_lede="Cuéntanos quién eres y qué buscas. Te escribimos para coordinar el día y la hora.",
@@ -274,7 +275,7 @@ ES = dict(
         pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento", mens_pdf="Mensualidad ({n} pagos)",
         pdf_sub="Cotización de la etapa 3. Tablaje 3735, Seyé, Yucatán.", pdf_folio="Folio", pdf_sin="{u}, por asignar",
         pdf_mapa="Etapa 3", pdf_calle="Calle al sur", pdf_contacto="Contacto", pdf_archivo="Cotizacion-Bosque-Venado",
-        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 4 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento es de $1,000 al año por lote y se cobra desde que inician obras en el cluster.",
+        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 10 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento es de $1,000 al año por lote y se cobra desde que inician obras en el cluster.",
         pdf_legal="Documento informativo. No constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones son acciones de una serie de la SAPI de C.V. de La Tokenizadora y se ofrecen solo de forma privada, previa visita y admisión.",
         tramo_txt="Preventa, tramo {n}: {p} por m². Quedan {q} {l} a este precio; después sube 5%.", lote1="lote",
         pdf_gen="Generando el PDF…", pdf_ok="Listo. Revisa tus descargas.", pdf_err="No se pudo generar el PDF. Revisa tu conexión e inténtalo de nuevo.",
@@ -315,11 +316,11 @@ EN = dict(
         ("Joining and leaving", ["A visit and a conversation before joining", "The community approves every new member", "Heirs and buyers go through the same admission"]),
         ("Decisions", ["Regular members' assembly", "We vote on what concerns everyone", "As we grow, the community designs its own model"]),
         ("Forest and planting", ["No clearing without a shared agreement", "Native species and fruit trees", "The green lanes belong to everyone"]),
-        ("Building", ["Materials and heights set by the rules", "The easement is respected"]),
+        ("Building", ["Up to 50 m² built per lot, 25% of the land", "To build more, add another lot", "Materials and heights set by the rules", "The easement is respected"]),
         ("Water and power", ["Careful use of the well and tank", "Each house can add its own system", "Shared systems are kept up with a fee"]),
         ("Daily life", ["Quiet at night", "Pets in their owners' care", "Visitors announced to the community"]),
         ("Shared work", ["Work days in the garden and lanes", "Shared harvests are divided and surplus is traded", "Everyone brings their own skills"]),
-        ("Fees and conflicts", ["MXN " + CUOTA + " a year per lot, once works start on its cluster", "What is left goes to the company's shared reserve", "Talk first, then mediation", "If someone stops paying, their stake is auctioned among the neighbors"]),
+        ("Fees and conflicts", ["MXN " + CUOTA + " a year per lot, from when it is handed over with road access", "What is left goes to the company's shared reserve", "Talk first, then mediation", "If someone stops paying, their stake is auctioned among the neighbors"]),
     ]),
     qs_etq="Who we are", qs_h="The people behind Bosque Venado.",
     qs_lede="The founders and first members of the community. Each one brings their own skills to what we share.",
@@ -370,7 +371,7 @@ EN = dict(
         ("Frontage on the south street", "Direct access to phase 3"),
         ("Close to Acanceh", "About 1.2 km along Calle 19, per the survey sketch"),
     ]),
-    juntos_h="What we build together",
+    juntos_h="What we build together", juntos_fecha="Estimated completion: February 2027.",
     juntos_items=li([
         ("Two sascab streets", "They serve every cluster from the south street"),
         ("Power and water hub", "Panels, batteries, well and elevated tank"),
@@ -398,13 +399,13 @@ EN = dict(
     z_pub="Public road", zoom_t="Zoom the plan", zoom_mas="Zoom in", zoom_menos="Zoom out",
     z_sendero="Trail and bamboo fence", z_calle="Street and wheel tracks", z_agro="Food forest", z_energia="Power", z_agua="Rain pond",
     co_h="Get a quote for your lot or cluster.",
-    co_lede="Pre-sale price: MXN $500 per m², or $100,000 per lot over 60 months. A cluster adds up its lots, and the shorter the term, the lower the total. The price goes up 5% every time 4 lots are sold. Download the quote as a PDF or send it to us on WhatsApp.",
+    co_lede="Pre-sale price: MXN $500 per m², or $100,000 per lot over 60 months. A cluster adds up its lots, and the shorter the term, the lower the total. The price goes up 5% every time 10 lots are sold. Download the quote as a PDF or send it to us on WhatsApp.",
     ficha_vacia="Choose a lot or a cluster on the plan, or get a quote by number of lots.",
     co_tam="Number of lots", co_plazo="Term",
     pr_eng="Down payment", pr_total="Total price", pr_m2="Price per m²", pr_ahorro="Savings vs. 60 months",
     co_pdf="Download quote as PDF", co_pedir="Ask about it",
     pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
-    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 4 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot; it is charged to each cluster once works that benefit it begin, and adjusted to what the community needs. Prices in Mexican pesos, interest-free.",
+    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 10 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot; it is charged from when the lot is handed over with road access, and adjusted to what the community needs. Prices in Mexican pesos, interest-free.",
     part_h="What your stake gives you, and what it doesn't.",
     part_lede="Your stake is a set of shares in a series of La Tokenizadora's SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
     si_h="Included",
@@ -440,15 +441,15 @@ EN = dict(
     ]),
     faq_h="Frequently asked questions.",
     faq=faq([
-        ("What does pre-sale mean?", "That the shared infrastructure is being built with the first stakes. That is why the price is lower now and goes up 5% every time 4 lots are sold."),
+        ("What does pre-sale mean?", "That the shared infrastructure is being built with the first stakes. That is why the price is lower now and goes up 5% every time 10 lots are sold."),
         ("Why is there no deed for each lot?", "Because the land belongs to the company and your right lives in your shares. That means no notary fees on each purchase, inheritance or transfer, and legal certainty from the moment you are entered in the share register."),
         ("Can I buy a single lot?", "Yes, from one 200 m² lot. Clusters of 2, 4 or 8 are for people who want more space or to buy with friends or family; each person holds their own shares and the rules set use inside the cluster."),
         ("If I buy a back lot, how do I drive in?", "In the middle strip, between the two streets, every lot faces a street. In the side strips, every back lot has its own access: the green lane next to its cluster, with two concrete wheel tracks for driving in at walking pace, the 3 m easement in clusters of 8, the south street or the power and water hub. On the plan, each lot shows its access."),
-        ("Can I build?", "Yes, under the building rules, which set type, materials and size. You receive them when you reserve your lot."),
+        ("Can I build?", "Yes, up to 50 m² per lot, which is 25% of the land. If you want something bigger, you buy another lot and add its area. The building rules set materials and heights; you receive them when you reserve."),
         ("Can I sell, pass on or pledge my stake?", "Yes. Your right of use transfers with your shares, on the terms set by the bylaws. The new holder goes through the same admission process you did."),
         ("Is there water and power?", "There is a well with water at 27 meters. There is no grid connection: one of the lived-in houses runs on solar panels and batteries, and the power and water hub serves the shared areas."),
-        ("How much is the maintenance fee?", "MXN " + CUOTA + " a year per lot. It is charged to each cluster once works that benefit it begin. It covers the street, water, shared power and forest care, and whatever is left builds the company's financial reserve for contingencies and improvements. The amount is adjusted to what the community needs."),
-        ("What happens if I stop paying?", "You get a grace period to catch up. If it is not resolved, your stake is auctioned first among the neighbors in the community, who have already been through admission; if no one takes it, it passes to La Tokenizadora. What you have paid in up to then may be lost in favor of the company, as set in your contract."),
+        ("How much is the maintenance fee?", "MXN " + CUOTA + " a year per lot. It is charged from when your lot is handed over with road access. It covers the street, water, shared power and forest care, and whatever is left builds the company's financial reserve for contingencies and improvements. The amount is adjusted to what the community needs."),
+        ("What happens if I stop paying?", "If you stop paying and do not catch up, your stake is auctioned first among the neighbors in the community, who have already been through admission; if no one takes it, it passes to La Tokenizadora. What you have paid in up to then may be lost in favor of the company, as set in your contract."),
     ]),
     vi_h="Book a visit.",
     vi_lede="Tell us who you are and what you are looking for. We will write to set a day and time.",
@@ -481,7 +482,7 @@ EN = dict(
         pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount", mens_pdf="Monthly payment ({n} payments)",
         pdf_sub="Phase 3 quote. Parcel 3735, Seyé, Yucatán, Mexico.", pdf_folio="Ref.", pdf_sin="{u}, to be assigned",
         pdf_mapa="Phase 3", pdf_calle="South street", pdf_contacto="Contact", pdf_archivo="Bosque-Venado-quote",
-        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 4 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is MXN $1,000 a year per lot, charged once works start on the cluster.",
+        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 10 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is MXN $1,000 a year per lot, charged once works start on the cluster.",
         pdf_legal="For information only. Not a public offering of securities or a promise of returns. Stakes are shares in a series of La Tokenizadora's SAPI de C.V. and are offered privately only, after a visit and admission.",
         tramo_txt="Pre-sale, tier {n}: {p} per m². {q} {l} left at this price; then it goes up 5%.", lote1="lot",
         pdf_gen="Generating the PDF…", pdf_ok="Done. Check your downloads.", pdf_err="The PDF could not be generated. Check your connection and try again.",
@@ -557,6 +558,8 @@ h2{{font-weight:400;text-transform:uppercase;font-size:.85rem;letter-spacing:.03
 
 def render(t, key):
     tpl = (ROOT / "src" / "template.html").read_text()
+    if not MOSTRAR_VOCES:  # la sección de testimonios se muestra solo con testimonios reales
+        tpl = re.sub(r"<!--voces-->.*?<!--/voces-->\n?", "", tpl, flags=re.S)
     data = dict(t)
     data["PLANO_GENERAL"] = GEO[key]["general"]
     data["LOGO"] = LOGO

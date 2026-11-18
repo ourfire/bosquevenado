@@ -4,20 +4,19 @@
    La misma función calc() vive en el trazador interactivo. */
 "use strict";
 const SN=(285.709928-268.306107)/88.431197, SS=26.299639/88.431197;
-// Franja perimetral de todo el tablaje: cerco de bambú con mangos y sendero de bici y trote.
-// Sale de la mensura, no de las etapas: la etapa 3 conserva sus 30,000 m² netos dentro de ella.
-// El sistema local arranca en la esquina suroeste de la franja interior.
+// Franja perimetral: sendero de bici y trote y cerco de bambú con mangos. Va por fuera de las
+// 7 ha, en la franja de la mensura que se comparte con la calle y los vecinos; no resta área a las etapas.
 const PER=4, BAMBU=1.5, SENDERO=2;
-const OFF=[PER, SS*PER+PER*Math.hypot(1,SS)];
-const YN0=268.306107+(SN-SS)*PER-PER*(Math.hypot(1,SN)+Math.hypot(1,SS));
+const OFF=[0,0];
+const YN0=268.306107;
 const COSN=Math.cos(Math.atan(SN)), COSS=Math.cos(Math.atan(SS));
 const fmt=(n,d=0)=>Number(n).toLocaleString("es-MX",{minimumFractionDigits:d,maximumFractionDigits:d});
 function parseSeq(s){ const v=String(s||"").split(/[^0-9]+/).map(Number).filter(n=>n>=1&&n<=64); return v.length?v:[1]; }
 
 // Diseño elegido: dos calles onduladas, clusters de 8, 4 y 2 con caminos verdes de 4 m, centro de energía y agua.
-const CONFIG={area:30000,lote:200,onda:110,norte:{on:false,w:6},sur:0,seq:"8,8,2,4",gap:4,sobraAgro:true,
+const CONFIG={area:30000,lote:200,onda:140,norte:{on:false,w:6},sur:0,seq:"8,8,2,4",gap:4,sobraAgro:true,
   franjas:[{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:3,m:false},{t:"lotes",w:34,flex:true,h:2},{t:"calle",w:6,a:3,m:true},{t:"lotes",w:34,flex:true,h:2}],
-  cruces:[{t:"energia",y:160,w:10,alc:"todo"}]};
+  cruces:[{t:"energia",y:140,w:10,alc:"todo"}]};
 
 // Tablaje completo en el mismo sistema (para el plano general)
 const TABLAJE=[[0,0],[0,268.306107],[184.852186,304.686824],[275.080424,322.443762],[275.080831,81.809663]].map(p=>[p[0]-OFF[0],p[1]-OFF[1]]);
@@ -30,7 +29,7 @@ function adentro(poly,d){
     if(Math.abs(cr)<1e-6) return [v[0]+b.nx*d,v[1]+b.ny*d];
     const t=((b.p[0]-a.p[0])*b.u[1]-(b.p[1]-a.p[1])*b.u[0])/cr; return [a.p[0]+a.u[0]*t,a.p[1]+a.u[1]*t]; });
 }
-const INTERIOR=adentro(TABLAJE,PER);
+const INTERIOR=TABLAJE, EXTERIOR=adentro(TABLAJE,-PER);
 const areaPol=pp=>Math.abs(pp.reduce((a,p,i)=>{const q=pp[(i+1)%pp.length]; return a+p[0]*q[1]-q[0]*p[1];},0))/2;
 
 function calc(S){
@@ -270,7 +269,7 @@ function geometria(){
   // ícono de cluster junto a un cluster de 4 del poniente
   const c4=g.clusters.find(c=>c.banda==="poniente"&&c.size===4);
   if(c4) g.info.push({k:"cluster",x:c4.label[0]-14,y:c4.label[1]});
-  g.info.push({k:"sendero",x:-(PER-BAMBU)/2,y:YN0*0.7});
+  g.info.push({k:"sendero",x:-1.2,y:YN0*0.7});
   return g;
 }
 
@@ -393,12 +392,12 @@ function infoIcons(g,M,L){
 function perimetro(M,id,o2){
   const f=v=>v.toFixed(2), P=p=>{const q=M(p[0],p[1]); return f(q[0])+","+f(q[1]);};
   const ring=pp=>"M"+pp.map(P).join("L")+"Z";
-  const a=adentro(TABLAJE,BAMBU+.2), b=adentro(TABLAJE,BAMBU+.2+SENDERO), eje=adentro(TABLAJE,BAMBU+.2+SENDERO/2);
-  const o=[`<path class="b-per" fill-rule="evenodd" d="${ring(TABLAJE)}${ring(INTERIOR)}"/>`,
+  const a=adentro(TABLAJE,-.2), b=adentro(TABLAJE,-.2-SENDERO), eje=adentro(TABLAJE,-.2-SENDERO/2);
+  const o=[`<path class="b-per" fill-rule="evenodd" d="${ring(EXTERIOR)}${ring(TABLAJE)}"/>`,
     `<path class="b-sendero" fill-rule="evenodd" d="${ring(a)}${ring(b)}"/>`,
     `<g filter="url(#tinta-${id})"><path class="b-sendero-borde" d="${ring(a)}${ring(b)}"/><path class="b-sendero-eje" d="${ring(eje)}"/></g>`];
   // bambú cada ~1.3 m sobre la línea del cerco; un mango cada ~22 m
-  const lin=adentro(TABLAJE,BAMBU/2), R=rng(11), e=o2.esc||1; let cuenta=0;
+  const lin=adentro(TABLAJE,-(PER-BAMBU/2)), R=rng(11), e=o2.esc||1; let cuenta=0;
   const mangos=[];
   lin.forEach((p,i)=>{ const q=lin[(i+1)%lin.length], L=Math.hypot(q[0]-p[0],q[1]-p[1]);
     for(let t=0;t<L;t+=1.3*e){ const x=p[0]+(q[0]-p[0])*t/L, y=p[1]+(q[1]-p[1])*t/L; cuenta+=1.3*e;
@@ -420,7 +419,7 @@ function callePublica(M,id,o2){
   const w=7, n=Math.hypot(1,SS), XE=TABLAJE[4][0];
   // dd: distancia desde el lindero real (la franja perimetral queda por dentro)
   const sur=(x,dd)=>[x,SS*x-(PER+dd)*n];
-  const off=dd=>o2.ytop!=null?[sur(o2.xini,dd),[XE+dd,SS*(XE+dd)-(PER+dd)*n],[XE+dd,o2.ytop]]:[sur(o2.xini,dd),sur(o2.xfin,dd)];
+  const off=dd=>o2.ytop!=null?[sur(o2.xini,dd),[XE+PER+dd,SS*(XE+PER+dd)-(PER+dd)*n],[XE+PER+dd,o2.ytop]]:[sur(o2.xini,dd),sur(o2.xfin,dd)];
   const P=p=>{const q=M(p[0],p[1]); return q[0].toFixed(2)+","+q[1].toFixed(2);};
   const lin=pp=>"M"+pp.map(P).join("L");
   const a=off(1), b=off(1+w), c=off(1+w/2);
@@ -430,7 +429,7 @@ function callePublica(M,id,o2){
   const ang=(p,q)=>{const A=M(p[0],p[1]),B=M(q[0],q[1]); let t=Math.atan2(B[1]-A[1],B[0]-A[0])*180/Math.PI; if(t>90) t-=180; if(t<-90) t+=180; return t;};
   const d=o2.fuera?1+w+o2.fuera:1+w/2, cls=o2.cls||"b-pub-t";
   o2.lbl.forEach(([lado,t,txt])=>{
-    const p=lado==="e"?[XE+d,t]:sur(t,d), q=lado==="e"?[XE+d,t+10]:sur(t+10,d), A=M(p[0],p[1]);
+    const p=lado==="e"?[XE+PER+d,t]:sur(t,d), q=lado==="e"?[XE+PER+d,t+10]:sur(t+10,d), A=M(p[0],p[1]);
     o.push(`<text class="${cls}" transform="translate(${A[0].toFixed(1)},${A[1].toFixed(1)}) rotate(${ang(p,q).toFixed(2)})">${txt}</text>`);
   });
   return o.join("");

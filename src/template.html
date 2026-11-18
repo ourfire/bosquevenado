@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter+Tight:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300&display=swap" rel="stylesheet">
 <style>
 /* Plan: lienzo hueso, tinta negra, líneas de 1 px y cero redondeos. Barra lateral fija, portada a pantalla completa
-   con columnas como menú, un tramo de scroll horizontal (agua, energía, comida) y el plano negro de la etapa 3. */
+   con columnas como menú, un tramo de scroll horizontal (agua, energía, sustento) y el plano negro de la etapa 3. */
 :root{
   --hueso:#F2EFE9; --hueso-2:#E7E3DB; --tinta:#0E100D; --tenue:#5F625B; --linea:#0E100D; --linea-suave:#CFCAC0;
   --blanco:#FFFFFF; --pasto:#7CB342; --huano:#D8B23E; --monte:#1E3221;
@@ -176,7 +176,7 @@ section{padding:110px 0 0}
 .lista small{display:block;color:var(--tenue);font-size:.92rem}
 @media (max-width:760px){.dos{grid-template-columns:1fr}.dos > div + div{padding-left:0;border-left:0;margin-top:28px}}
 
-/* tramo horizontal: agua, energía, comida */
+/* tramo horizontal: agua, energía, sustento */
 .horiz{position:relative;margin-top:110px;padding:0;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
 .horiz .pista{display:flex}
 .horiz .panel{flex:0 0 auto;width:min(36vw,520px);border-left:1px solid var(--linea);display:flex;flex-direction:column}
@@ -410,9 +410,10 @@ tr.activo td{background:var(--hueso-2);font-weight:500}
 .gente p{font-size:.95rem;color:var(--tenue);margin:.5em 0 0}
 .gente .mas{display:flex;flex-direction:column;justify-content:flex-end}
 @media (max-width:880px){.gente{grid-template-columns:1fr 1fr}.gente > div:nth-child(3)::before{display:none}.gente > div:nth-child(n+3){margin-top:24px}}
-.referentes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--linea)}
-.referentes > article{padding:20px 24px 4px 0}
-.referentes > article + article{padding-left:24px;border-left:1px solid var(--linea)}
+.referentes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;border-top:1px solid var(--linea)}
+.referentes > article{padding:20px 0 12px;position:relative}
+.referentes > article:nth-child(even)::before{content:"";position:absolute;left:-24px;top:0;bottom:0;border-left:1px solid var(--linea)}
+.referentes > article:nth-child(n+3){border-top:1px solid var(--linea-suave)}
 .referentes .lugar{font-size:.75rem;text-transform:uppercase;letter-spacing:.02em;color:var(--tenue);margin:.6em 0 1em}
 .referentes p{font-size:.98rem}
 .voces{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--linea)}
@@ -424,7 +425,7 @@ tr.activo td{background:var(--hueso-2);font-weight:500}
 .voces figcaption span{color:var(--tenue)}
 .voces .ej{font-size:.72rem;border:1px solid var(--linea-suave);padding:1px 6px}
 @media (max-width:880px){.voces{grid-template-columns:1fr}.voces figure + figure{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave);margin-top:16px}}
-@media (max-width:880px){.referentes{grid-template-columns:1fr}.referentes > article + article{padding-left:0;border-left:0;border-top:1px solid var(--linea-suave);margin-top:16px}}
+@media (max-width:880px){.referentes{grid-template-columns:1fr}.referentes > article:nth-child(even)::before{display:none}.referentes > article + article{border-top:1px solid var(--linea-suave);margin-top:16px}}
 .tramo{font-size:.9rem;border:1px solid var(--tinta);padding:.7em .9em;margin-top:14px;max-width:46ch}
 .faq{border-top:1px solid var(--linea)}
 .faq details{border-bottom:1px solid var(--linea-suave)}

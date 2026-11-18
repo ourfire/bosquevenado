@@ -69,8 +69,10 @@ def reglas(items):
 
 def gente(items, pend):
     out = []
-    for nombre, rol in items:
-        out.append(f'<div><div class="foto" role="img" aria-label="{re.sub("<[^>]+>", "", nombre)}"><span class="pend">{pend}</span></div><h3>{nombre}</h3><p>{rol}</p></div>')
+    for nombre, rol, *foto in items:
+        alt = re.sub("<[^>]+>", "", nombre)
+        img = f'<img src="%IMG%fundadores/{foto[0]}" alt="{alt}" loading="lazy">' if foto else f'<span class="pend">{pend}</span>'
+        out.append(f'<div><div class="foto">{img}</div><h3>{nombre}</h3><p>{rol}</p></div>')
     return "".join(out)
 
 
@@ -118,9 +120,9 @@ ES = dict(
     qs_etq="Quiénes somos", qs_h="Quienes empujan Bosque Venado.",
     qs_lede="Los fundadores y primeros miembros de la comunidad. Cada quien aporta su oficio a lo común.",
     gente=gente([
-        ("Juan Carlos S.", "Fundador. Artista y emprendedor."),
-        ("María Cecilia B.", "Fundadora. Artista y emprendedora."),
-        ("Alejandro V.", "Fundador. Artista y emprendedor."),
+        ("Juan Carlos S.", "Fundador. Artista y emprendedor.", "juan-carlos.jpg"),
+        ("María Cecilia B.", "Fundadora. Artista y emprendedora.", "maria-cecilia.jpg"),
+        ("Alejandro V.", "Fundador. Artista y emprendedor.", "alejandro.jpg"),
     ], "Foto pendiente"),
     in_etq="Referentes", in_h="Comunidades que nos inspiran.",
     in_lede="Proyectos reales, en México y fuera, que llevan años viviendo así sin ser una religión ni un culto. Los citamos como inspiración; no son testimonios de Bosque Venado.",
@@ -204,9 +206,9 @@ ES = dict(
     pr_eng="Enganche", pr_total="Precio total", pr_m2="Precio por m²", pr_ahorro="Ahorro contra 60 meses",
     co_pdf="Descargar cotización en PDF", co_pedir="Pedir informes",
     pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
-    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 10 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote; se cobra desde la entrega del lote, cuando ya tiene vialidad, y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses.",
+    pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 10 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote; se cobra desde la entrega del lote, cuando ya tiene vialidad, y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses. La venta la atiende <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     part_h="Qué te da tu participación, y qué no.",
-    part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de La Tokenizadora, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
+    part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora</a>, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
     si_h="Incluye",
     si_items=li([
         ("Uso vitalicio de tus lotes", "Desde un lote de 200 m², o un cluster de 2, 4 u 8, en la etapa 3"),
@@ -263,7 +265,7 @@ ES = dict(
     f_enviar="Enviar solicitud de visita",
     f_privacidad='Al enviar aceptas el <a href="aviso-de-privacidad.html">aviso de privacidad</a>.',
     ilustrativo="Ubicación y forma de la aguada y los chapoteaderos, ilustrativas.",
-    pie_1="<strong>Bosque Venado</strong><br>Tablaje 3735, Seyé, Yucatán.<br>Tokenizado por La Tokenizadora.",
+    pie_1="<strong>Bosque Venado</strong><br>Tablaje 3735, Seyé, Yucatán.<br>Tokenizado por <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora</a>.<br>Ventas: <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     pie_2="Esta página es informativa y no constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones se ofrecen solo de forma privada, previa visita y admisión. La tierra se posee de forma colectiva bajo los estatutos de la sociedad. <a href=\"aviso-de-privacidad.html\">Aviso de privacidad</a>.",
     JS=dict(
         locale="es-MX", estado_url="estado.json", jspdf="vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
@@ -281,7 +283,7 @@ ES = dict(
         pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento", mens_pdf="Mensualidad ({n} pagos)",
         pdf_sub="Cotización de la etapa 3. Tablaje 3735, Seyé, Yucatán.", pdf_folio="Folio", pdf_sin="{u}, por asignar",
         pdf_mapa="Etapa 3", pdf_calle="Calle al sur", pdf_contacto="Contacto", pdf_archivo="Cotizacion-Bosque-Venado",
-        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 10 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento es de $1,000 al año por lote y se cobra desde que inician obras en el cluster.",
+        pdf_notas="Enganche de $10,000 por lote. Si liquidas antes, pagas el precio del plazo en que terminas. Precios en pesos mexicanos, sin intereses. El precio de preventa sube 5% cada vez que se venden 10 lotes. Esta cotización no aparta el lote: se reserva solo con el apartado firmado. La cuota de mantenimiento es de $1,000 al año por lote y se cobra desde la entrega del lote con vialidad. Ventas: Casa Sibarita, sibarita.casa.",
         pdf_legal="Documento informativo. No constituye una oferta pública de valores ni promesa de rendimiento. Las participaciones son acciones de una serie de la SAPI de C.V. de La Tokenizadora y se ofrecen solo de forma privada, previa visita y admisión.",
         tramo_txt="Preventa, tramo {n}: {p} por m². Quedan {q} {l} a este precio; después sube 5%.", lote1="lote",
         pdf_gen="Generando el PDF…", pdf_ok="Listo. Revisa tus descargas.", pdf_err="No se pudo generar el PDF. Revisa tu conexión e inténtalo de nuevo.",
@@ -331,9 +333,9 @@ EN = dict(
     qs_etq="Who we are", qs_h="The people behind Bosque Venado.",
     qs_lede="The founders and first members of the community. Each one brings their own skills to what we share.",
     gente=gente([
-        ("Juan Carlos S.", "Founder. Artist and entrepreneur."),
-        ("María Cecilia B.", "Founder. Artist and entrepreneur."),
-        ("Alejandro V.", "Founder. Artist and entrepreneur."),
+        ("Juan Carlos S.", "Founder. Artist and entrepreneur.", "juan-carlos.jpg"),
+        ("María Cecilia B.", "Founder. Artist and entrepreneur.", "maria-cecilia.jpg"),
+        ("Alejandro V.", "Founder. Artist and entrepreneur.", "alejandro.jpg"),
     ], "Photo pending"),
     in_etq="References", in_h="Communities that inspire us.",
     in_lede="Real projects, in Mexico and abroad, that have lived this way for years without being a religion or a cult. We cite them as inspiration; they are not testimonials from Bosque Venado.",
@@ -417,9 +419,9 @@ EN = dict(
     pr_eng="Down payment", pr_total="Total price", pr_m2="Price per m²", pr_ahorro="Savings vs. 60 months",
     co_pdf="Download quote as PDF", co_pedir="Ask about it",
     pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
-    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 10 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot; it is charged from when the lot is handed over with road access, and adjusted to what the community needs. Prices in Mexican pesos, interest-free.",
+    pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 10 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot; it is charged from when the lot is handed over with road access, and adjusted to what the community needs. Prices in Mexican pesos, interest-free. Sales are handled by <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     part_h="What your stake gives you, and what it doesn't.",
-    part_lede="Your stake is a set of shares in a series of La Tokenizadora's SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
+    part_lede="Your stake is a set of shares in a series of <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora's</a> SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
     si_h="Included",
     si_items=li([
         ("Lifetime use of your lots", "From a single 200 m² lot, or a cluster of 2, 4 or 8, in phase 3"),
@@ -476,7 +478,7 @@ EN = dict(
     f_enviar="Send visit request",
     f_privacidad='By sending you accept the <a href="privacy.html">privacy notice</a>.',
     ilustrativo="Location and shape of the rain pond and wading pools are illustrative.",
-    pie_1="<strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by La Tokenizadora.",
+    pie_1="<strong>Bosque Venado</strong><br>Parcel 3735, Seyé, Yucatán, Mexico.<br>Tokenized by <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora</a>.<br>Sales: <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     pie_2="This page is for information only and is not a public offering of securities or a promise of returns. Stakes are offered privately only, after a visit and admission. The land is held collectively under the company's bylaws. <a href=\"privacy.html\">Privacy notice</a>.",
     JS=dict(
         locale="en-US", estado_url="../estado.json", jspdf="../vendor/jspdf-2.5.1.umd.min.js", correo=CORREO,
@@ -494,7 +496,7 @@ EN = dict(
         pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount", mens_pdf="Monthly payment ({n} payments)",
         pdf_sub="Phase 3 quote. Parcel 3735, Seyé, Yucatán, Mexico.", pdf_folio="Ref.", pdf_sin="{u}, to be assigned",
         pdf_mapa="Phase 3", pdf_calle="South street", pdf_contacto="Contact", pdf_archivo="Bosque-Venado-quote",
-        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 10 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is MXN $1,000 a year per lot, charged once works start on the cluster.",
+        pdf_notas="MXN $10,000 down payment per lot. If you pay off early, you pay the price of the term in which you finish. Prices in Mexican pesos, interest-free. The pre-sale price goes up 5% every time 10 lots are sold. This quote does not reserve the lot: it is reserved only with a signed reservation. The maintenance fee is MXN $1,000 a year per lot, charged from when the lot is handed over with road access. Sales: Casa Sibarita, sibarita.casa.",
         pdf_legal="For information only. Not a public offering of securities or a promise of returns. Stakes are shares in a series of La Tokenizadora's SAPI de C.V. and are offered privately only, after a visit and admission.",
         tramo_txt="Pre-sale, tier {n}: {p} per m². {q} {l} left at this price; then it goes up 5%.", lote1="lot",
         pdf_gen="Generating the PDF…", pdf_ok="Done. Check your downloads.", pdf_err="The PDF could not be generated. Check your connection and try again.",
@@ -533,22 +535,22 @@ a:focus-visible{{outline:3px solid #0F5E66;outline-offset:3px}}</style></head>
 
 PRIV = {
     "es": dict(lang="es-MX", archivo="aviso-de-privacidad.html", title="Aviso de privacidad, Bosque Venado", volver="Volver a Bosque Venado", href="./",
-        h1="Aviso de privacidad", act="Última actualización: 11 de noviembre de 2026.",
+        h1="Aviso de privacidad", act="Última actualización: 18 de noviembre de 2026.",
         cuerpo=[
             ("Quién es responsable de tus datos", f"{RAZON}, con domicilio en {DOMICILIO}, es responsable del tratamiento de los datos personales que nos compartes en bosquevenado.com. Puedes escribirnos a <a href=\"mailto:{CORREO}\">{CORREO}</a>."),
             ("Qué datos recabamos", "Solo los que escribes en el formulario de visita: nombre, correo, WhatsApp, el lote o cluster que te interesa, el plazo que te interesa y lo que nos cuentes sobre cómo usarías el lugar. No pedimos datos sensibles ni datos de pago."),
             ("Para qué los usamos", "Para contestarte, coordinar tu visita al predio, enviarte cotizaciones y darte seguimiento en el proceso de admisión a la comunidad. No los usamos para publicidad ni los vendemos."),
-            ("Con quién los compartimos", "Con nadie fuera del equipo de Bosque Venado y La Tokenizadora. El formulario se guarda en Netlify, el servicio que aloja este sitio, que actúa solo como proveedor."),
+            ("Con quién los compartimos", "Solo con el equipo de Bosque Venado, La Tokenizadora y Casa Sibarita, que atiende las ventas. El formulario se guarda en Netlify, el servicio que aloja este sitio, que actúa solo como proveedor."),
             ("Tus derechos", f"Puedes pedir en cualquier momento acceder a tus datos, corregirlos, cancelarlos u oponerte a su uso (derechos ARCO), o retirar tu consentimiento. Escríbenos a <a href=\"mailto:{CORREO}\">{CORREO}</a> con tu nombre y lo que necesitas, y te respondemos en un máximo de 20 días hábiles."),
             ("Cambios a este aviso", "Si cambiamos este aviso, publicaremos la nueva versión en esta misma página."),
         ]),
     "en": dict(lang="en", archivo="en/privacy.html", title="Privacy notice, Bosque Venado", volver="Back to Bosque Venado", href="./",
-        h1="Privacy notice", act="Last updated: November 11, 2026.",
+        h1="Privacy notice", act="Last updated: November 18, 2026.",
         cuerpo=[
             ("Who is responsible for your data", f"{RAZON}, located at {DOMICILIO}, Mexico, is responsible for the personal data you share with us at bosquevenado.com. You can write to us at <a href=\"mailto:{CORREO}\">{CORREO}</a>."),
             ("What data we collect", "Only what you enter in the visit form: name, email, WhatsApp, the lot or cluster you are interested in, the payment term and what you tell us about how you would use the place. We do not ask for sensitive data or payment details."),
             ("What we use it for", "To reply to you, arrange your visit, send you quotes and follow up during the admission process. We do not use it for advertising and we do not sell it."),
-            ("Who we share it with", "No one outside the Bosque Venado and La Tokenizadora team. The form is stored by Netlify, the service that hosts this site, acting only as a provider."),
+            ("Who we share it with", "Only with the Bosque Venado, La Tokenizadora and Casa Sibarita team, which handles sales. The form is stored by Netlify, the service that hosts this site, acting only as a provider."),
             ("Your rights", f"You can ask at any time to access, correct or delete your data, object to its use, or withdraw your consent. Write to <a href=\"mailto:{CORREO}\">{CORREO}</a> with your name and what you need, and we will reply within 20 business days."),
             ("Changes to this notice", "If we change this notice, we will publish the new version on this page."),
         ]),
@@ -582,7 +584,7 @@ def render(t, key):
     estado = json.loads((ROOT / "estado.json").read_text())
     data["ESTADO"] = json.dumps({"lotes": estado.get("lotes", {}), "clusters": estado.get("clusters", {})})
     data["CORREO_HTML"] = f'<a href="mailto:{CORREO}">{CORREO}</a>' if CORREO else TBD.format("por definir" if key == "es" else "to be defined")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(data[m.group(1)]), tpl)
+    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(data[m.group(1)]), tpl).replace("%IMG%", data["IMG"])
     left = re.findall(r"\{\{\w+\}\}", out)
     assert not left, left
     return out

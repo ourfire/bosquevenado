@@ -122,7 +122,7 @@ ES = dict(
     gente=gente([
         ("Juan Carlos S.", "Fundador. Artista y emprendedor.", "juan-carlos.jpg"),
         ("María Cecilia B.", "Fundadora. Artista y emprendedora.", "maria-cecilia.jpg"),
-        ("Alejandro V.", "Fundador. Artista y emprendedor.", "alejandro.jpg"),
+        ("Alejandro V.", "Fundador. Artista y emprendedor.", "alejandro.svg"),
     ], "Foto pendiente"),
     in_etq="Referentes", in_h="Comunidades que nos inspiran.",
     in_lede="Proyectos reales, en México y fuera, que llevan años viviendo así sin ser una religión ni un culto. Los citamos como inspiración; no son testimonios de Bosque Venado.",
@@ -335,7 +335,7 @@ EN = dict(
     gente=gente([
         ("Juan Carlos S.", "Founder. Artist and entrepreneur.", "juan-carlos.jpg"),
         ("María Cecilia B.", "Founder. Artist and entrepreneur.", "maria-cecilia.jpg"),
-        ("Alejandro V.", "Founder. Artist and entrepreneur.", "alejandro.jpg"),
+        ("Alejandro V.", "Founder. Artist and entrepreneur.", "alejandro.svg"),
     ], "Photo pending"),
     in_etq="References", in_h="Communities that inspire us.",
     in_lede="Real projects, in Mexico and abroad, that have lived this way for years without being a religion or a cult. We cite them as inspiration; they are not testimonials from Bosque Venado.",

@@ -20,9 +20,13 @@ WA = "999 991 0450"
 TITULOS = {
     "es": {"detalle": "Plano de la etapa 3. Elige un cluster para cotizarlo.",
            "general": "Plano del predio",
+           "zona": "Mapa conceptual de la zona",
+           "zona_desc": "Bosque Venado, en Seyé, a 2 km de Acanceh y 26 km del centro de Mérida. Al oriente, los cenotes de Cuzamá y Homún; al sur, la zona arqueológica de Mayapán.",
            "general_desc": "Tablaje de 7 hectáreas. Las etapas 1 y 2, al oriente, están vendidas. La etapa 3, al poniente, tiene 3 hectáreas con clusters de lotes a los lados de dos calles onduladas."},
     "en": {"detalle": "Phase 3 plan. Choose a cluster to get a quote.",
            "general": "Site plan",
+           "zona": "Conceptual map of the area",
+           "zona_desc": "Bosque Venado, in Seyé, 2 km from Acanceh and 26 km from downtown Mérida. To the east, the cenotes of Cuzamá and Homún; to the south, the Mayapán archaeological site.",
            "general_desc": "A 7-hectare parcel. Phases 1 and 2, on the east side, are sold. Phase 3, on the west side, covers 3 hectares with clusters of lots along two winding streets."},
 }
 GEO = json.loads(subprocess.run(["node", str(ROOT / "src" / "engine.js"), json.dumps(TITULOS)],
@@ -94,7 +98,7 @@ ES = dict(
     desc=f"Comunidad neorural en el monte de Acanceh, Yucatán, con agua de pozo, energía solar y sustento propio. {N_LOTES} lotes de 200 m² que se compran desde uno, o en clusters de 2, 4 y 8, con uso vitalicio a través de una serie accionaria tokenizada por La Tokenizadora.",
     draft='Borrador de diseño. Los datos marcados <span class="tbd">así</span> están por definir.',
     home_label="Bosque Venado, inicio", nav_label="Secciones",
-    nav_lugar="El lugar", nav_vida="Agua, energía y sustento", nav_etapa="La etapa 3", nav_cotiza="Cotiza", nav_faq="Preguntas",
+    nav_lugar="El lugar", nav_zona="La zona", nav_vida="Agua, energía y sustento", nav_etapa="La etapa 3", nav_cotiza="Cotiza", nav_faq="Preguntas",
     canon="https://bosquevenado.com/", kicker="Preventa de la etapa 3",
     co_etq="La comunidad",
     com_h="Una comunidad intencional, no un fraccionamiento.",
@@ -164,6 +168,18 @@ ES = dict(
     d4_t="Áreas comunes", d4=f"{COMUN} de la etapa",
     lugar_h="Primero el monte, después todo lo demás.",
     lugar_lede="Ya hay vida en el predio: agua de pozo, energía solar y tres construcciones. Lo común se construye entre todos, con poco impacto y fuera de la red.",
+    zona_h="Entre cenotes, pirámides y Mérida.",
+    zona_lede="Bosque Venado está en Seyé, a 2 km de Acanceh, cuyo nombre en maya significa «lamento del venado». Es monte bajo sobre piedra caliza, sin ríos: el agua corre bajo tierra y aflora en cenotes.",
+    zona_items=li([
+        ("Agua bajo la piedra", "En Yucatán no hay ríos; el acuífero corre bajo tierra. En el predio, el pozo lo alcanza a 27 metros."),
+        ("Anillo de Cenotes", "A unos 16 km, los cenotes de Cuzamá y Homún forman parte de este sitio Ramsar, trazado por el impacto de Chicxulub."),
+        ("Monte y fauna", "Selva baja que pierde la hoja en secas, sobre laja caliza: ramón, chaká y ceiba, con venado cola blanca."),
+        ("Sol y lluvia", "Sol casi todo el año y lluvias de junio a octubre: buen clima para paneles solares y para captar agua."),
+        ("Pirámides", "En el centro de Acanceh, la Pirámide de las Máscaras y el Palacio de los Estucos. Mayapán, la última gran capital maya, está a 21 km."),
+        ("Gente y cultura", "Pueblos mayas con mercado, milpa, apicultura y haciendas henequeneras, como Yabucú, a 2 km."),
+        ("Cerca de Mérida", "A 26 km en línea recta del centro de Mérida y a 27 km del aeropuerto."),
+    ]),
+    zona_maps="Ver en Google Maps", maps_url="https://www.google.com/maps/search/?api=1&query=Bosque%20Venado%20Sey%C3%A9&query_place_id=ChIJsz1sYwBjVo8Rcw8jvS5bEcg",
     hoy_h="Lo que hay hoy",
     hoy_items=li([
         ("Agua de pozo", "A 27 metros de profundidad"),
@@ -307,7 +323,7 @@ EN = dict(
     desc=f"A neo-rural community in the forest near Acanceh, Yucatán, with well water, solar power and its own livelihood. {N_LOTES} lots of 200 m², sold one at a time or in clusters of 2, 4 and 8, with lifetime use through a share series tokenized by La Tokenizadora.",
     draft='Design draft. Items marked <span class="tbd">like this</span> are still to be defined.',
     home_label="Bosque Venado, home", nav_label="Sections",
-    nav_lugar="The land", nav_vida="Water, power and livelihood", nav_etapa="Phase 3", nav_cotiza="Get a quote", nav_faq="FAQ",
+    nav_lugar="The land", nav_zona="The area", nav_vida="Water, power and livelihood", nav_etapa="Phase 3", nav_cotiza="Get a quote", nav_faq="FAQ",
     canon="https://bosquevenado.com/en/", kicker="Phase 3 pre-sale",
     co_etq="The community",
     com_h="An intentional community, not a subdivision.",
@@ -377,6 +393,18 @@ EN = dict(
     d4_t="Common areas", d4=f"{COMUN} of the phase",
     lugar_h="The forest first, everything else after.",
     lugar_lede="There is already life on the land: well water, solar power and three buildings. Shared infrastructure is built together, with a light footprint and off the grid.",
+    zona_h="Between cenotes, pyramids and Mérida.",
+    zona_lede="Bosque Venado is in Seyé, 2 km from Acanceh, whose Maya name means “lament of the deer.” It is low forest on limestone with no rivers: water runs underground and surfaces in cenotes.",
+    zona_items=li([
+        ("Water under the rock", "Yucatán has no rivers; the aquifer runs underground. On the land, the well reaches it at 27 meters."),
+        ("Ring of Cenotes", "About 16 km away, the cenotes of Cuzamá and Homún are part of this Ramsar site, traced by the Chicxulub impact."),
+        ("Forest and wildlife", "Low forest that drops its leaves in the dry season, on limestone: ramón, chaká and ceiba, with white-tailed deer."),
+        ("Sun and rain", "Sun most of the year and rain from June to October: good conditions for solar panels and for catching water."),
+        ("Pyramids", "In the center of Acanceh, the Pyramid of the Masks and the Stucco Palace. Mayapán, the last great Maya capital, is 21 km away."),
+        ("People and culture", "Maya towns with markets, milpa, beekeeping and henequen haciendas, like Yabucú, 2 km away."),
+        ("Close to Mérida", "26 km in a straight line from downtown Mérida and 27 km from the airport."),
+    ]),
+    zona_maps="View on Google Maps", maps_url="https://www.google.com/maps/search/?api=1&query=Bosque%20Venado%20Sey%C3%A9&query_place_id=ChIJsz1sYwBjVo8Rcw8jvS5bEcg",
     hoy_h="What is there today",
     hoy_items=li([
         ("Well water", "Reached at 27 meters"),
@@ -579,6 +607,7 @@ def render(t, key):
     data["LOGO"] = LOGO
     data["IMG"] = "img/" if key == "es" else "../img/"
     data["PLANO_DETALLE"] = GEO[key]["detalle"]
+    data["PLANO_ZONA"] = GEO[key]["zona"]
     data["JS"] = json.dumps(t["JS"], ensure_ascii=False)
     data["DATOS"] = json.dumps(DAT, separators=(",", ":"))
     estado = json.loads((ROOT / "estado.json").read_text())

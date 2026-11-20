@@ -491,6 +491,89 @@ function svgGeneral(g,lang,titulo,desc){
   return o.join("");
 }
 
+
+// Mapa conceptual de la zona: posiciones reales (lat/lng) en unidades de 100 m, dibujo simplificado
+const ZL={
+  es:{merida:"Mérida",aero:"Aeropuerto",kanasin:"Kanasín",acanceh:"Acanceh",seye:"Seyé",tecoh:"Tecoh",cuzama:"Cuzamá",homun:"Homún",mayapan:"Mayapán",bv:"Bosque Venado",yabucu:"Hacienda Yabucú",cuxtal:"Reserva Cuxtal",cenotes:"Cenotes",anillo:"Anillo de Cenotes (trazo aproximado)",nota:"Dibujo conceptual",km:"km"},
+  en:{merida:"Mérida",aero:"Airport",kanasin:"Kanasín",acanceh:"Acanceh",seye:"Seyé",tecoh:"Tecoh",cuzama:"Cuzamá",homun:"Homún",mayapan:"Mayapán",bv:"Bosque Venado",yabucu:"Hacienda Yabucú",cuxtal:"Cuxtal Reserve",cenotes:"Cenotes",anillo:"Ring of Cenotes (approximate)",nota:"Conceptual drawing",km:"km"}
+};
+function svgZona(lang,titulo,desc){
+  const Z=ZL[lang], id="z"+lang, f=v=>v.toFixed(1);
+  const G=(lat,lng)=>[(lng+89.68)*1042,(20.99-lat)*1112];
+  const pos={merida:G(20.9674,-89.6237),aero:G(20.937,-89.658),kanasin:G(20.9322,-89.5545),acanceh:G(20.8133,-89.4524),
+    seye:G(20.8370,-89.3731),tecoh:G(20.7420,-89.4748),cuzama:G(20.7410,-89.3170),homun:G(20.7416,-89.2884),
+    mayapan:G(20.6296,-89.4605),bv:G(20.8187,-89.4320),yabucu:G(20.8107,-89.4133),cuxtal:G(20.856,-89.61)};
+  const W=470,H=440, M=(x,y)=>[x,y], R=rng(19), o=[];
+  o.push(`<svg class="plano-zona" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pz-t-${lang} pz-d-${lang}"><title id="pz-t-${lang}">${titulo}</title><desc id="pz-d-${lang}">${desc}</desc>`);
+  o.push(defs(id,2.6));
+  o.push(`<rect width="${W}" height="${H}" class="z-fondo"/>`);
+  // Mérida y Kanasín: mancha urbana
+  const blob=(cx,cy,rx,ry,n,sd)=>{const r=rng(sd);let d="";for(let i=0;i<n;i++){const a=i/n*Math.PI*2, k=.86+r()*.28; d+=(i?"L":"M")+f(cx+Math.cos(a)*rx*k)+","+f(cy+Math.sin(a)*ry*k);} return d+"Z";};
+  const ciudad=blob(pos.merida[0]-14,pos.merida[1]-26,92,62,22,5), kan=blob(pos.kanasin[0]+4,pos.kanasin[1]+2,16,12,12,8);
+  const enCiudad=(x,y)=>Math.hypot((x-(pos.merida[0]-14))/100,(y-(pos.merida[1]-26))/70)<1||Math.hypot((x-pos.kanasin[0])/22,(y-pos.kanasin[1])/18)<1;
+  // reserva Cuxtal
+  const cux=blob(pos.cuxtal[0],pos.cuxtal[1],34,26,14,11);
+  // monte: árboles dispersos, lejos de pueblos y etiquetas
+  const libres=Object.values(pos);
+  for(let y=8;y<H-6;y+=17){ for(let x=6+((y/17)%2?8:0);x<W-4;x+=17){
+    const px=x+(R()-.5)*9, py=y+(R()-.5)*9;
+    if(enCiudad(px,py)) continue;
+    if(libres.some(p=>Math.hypot(p[0]-px,p[1]-py)<15)) continue;
+    if(R()<.38) continue;
+    o.push(arbol([px,py],2.2+R()*2.2,R,.9,["claro","medio","oscuro","claro"][Math.floor(R()*4)]));
+  }}
+  o.push(`<path class="z-reserva" d="${cux}"/>`);
+  o.push(`<path class="z-ciudad" fill="url(#tr-calle-${id})" d="${ciudad}"/><path class="z-ciudad" fill="url(#tr-calle-${id})" d="${kan}"/>`);
+  // anillo de cenotes (centro aproximado del cráter de Chicxulub)
+  const ac=G(21.40,-89.52), ar=760; let ad="";
+  for(let x=0;x<=W;x+=6){ const dy=Math.sqrt(ar*ar-(x-ac[0])**2); ad+=(x?"L":"M")+f(x)+","+f(ac[1]+dy); }
+  o.push(`<path class="z-anillo" d="${ad}"/>`);
+  // carreteras
+  const via=pts=>{let d="M"+f(pts[0][0])+","+f(pts[0][1]); for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],mx=(a[0]+b[0])/2+(R()-.5)*8,my=(a[1]+b[1])/2+(R()-.5)*8; d+=`Q${f(mx)},${f(my)} ${f(b[0])},${f(b[1])}`;} return d;};
+  o.push(`<g filter="url(#tinta-${id})"><path class="z-ruta-b" d="${via([pos.merida,pos.kanasin,pos.acanceh,pos.tecoh,pos.mayapan])}"/><path class="z-ruta-b" d="${via([pos.acanceh,pos.cuzama,pos.homun])}"/></g>`);
+  o.push(`<path class="z-ruta" d="${via([pos.merida,pos.kanasin,pos.acanceh,pos.tecoh,pos.mayapan])}"/><path class="z-ruta" d="${via([pos.acanceh,pos.cuzama,pos.homun])}"/>`);
+  // cenotes
+  const cen=[[pos.cuzama[0]-6,pos.cuzama[1]+14],[pos.cuzama[0]+8,pos.cuzama[1]+20],[pos.cuzama[0]-2,pos.cuzama[1]+28],[pos.homun[0]-4,pos.homun[1]+10],[pos.homun[0]+10,pos.homun[1]+4],[pos.homun[0]+6,pos.homun[1]+18],[pos.mayapan[0]+14,pos.mayapan[1]-6]];
+  cen.forEach((c,i)=>o.push(`<ellipse class="z-cenote" fill="url(#agua-${id})" cx="${f(c[0])}" cy="${f(c[1])}" rx="${f(3.4+(i%3))}" ry="${f(2.6+(i%2))}"/>`));
+  // pirámides y hacienda
+  const pira=(c,s)=>{const [x,y]=c; let d=""; for(let k=0;k<3;k++){const w=s*(1-k*.3), h=s*.28; d+=`M${f(x-w)},${f(y-k*h)}L${f(x+w)},${f(y-k*h)}L${f(x+w*.85)},${f(y-(k+1)*h)}L${f(x-w*.85)},${f(y-(k+1)*h)}Z`;} return `<path class="z-pira" d="${d}"/>`;};
+  o.push(pira([pos.acanceh[0],pos.acanceh[1]+1],6), pira([pos.mayapan[0],pos.mayapan[1]+1],7));
+  const [hx,hy]=pos.yabucu; o.push(`<path class="z-casa" d="M${f(hx-4)},${f(hy+3)}L${f(hx-4)},${f(hy-2)}L${f(hx)},${f(hy-5.5)}L${f(hx+4)},${f(hy-2)}L${f(hx+4)},${f(hy+3)}Z"/>`);
+  // avión
+  const [px,py]=pos.aero; o.push(`<path class="z-avion" d="M${f(px-7)},${f(py)}L${f(px+7)},${f(py)}M${f(px+2)},${f(py)}L${f(px-3)},${f(py-6)}M${f(px+2)},${f(py)}L${f(px-3)},${f(py+6)}M${f(px-6)},${f(py)}L${f(px-8)},${f(py-3)}M${f(px-6)},${f(py)}L${f(px-8)},${f(py+3)}"/>`);
+  // pueblos
+  ["kanasin","acanceh","seye","tecoh","cuzama","homun"].forEach(k=>{const [x,y]=pos[k]; o.push(`<circle class="z-pueblo" cx="${f(x)}" cy="${f(y)}" r="3"/>`);});
+  // distancias desde Bosque Venado
+  const bv=pos.bv, dist=(lat,lng)=>{const dl=(lat-20.8187)*111.2, dg=(lng+89.4320)*104.2; return Math.round(Math.hypot(dl,dg));};
+  [[pos.merida,dist(20.9674,-89.6237)],[[pos.cuzama[0]-2,pos.cuzama[1]+18],dist(20.7232,-89.3195)],[pos.mayapan,dist(20.6296,-89.4605)]].forEach(([q,km])=>{
+    o.push(`<path class="z-dist" d="M${f(bv[0])},${f(bv[1])}L${f(q[0])},${f(q[1])}"/>`);
+    const mx=bv[0]+(q[0]-bv[0])*.55, my=bv[1]+(q[1]-bv[1])*.55; o.push(`<text class="z-km" x="${f(mx)}" y="${f(my)}">${km} ${Z.km}</text>`);
+  });
+  // Bosque Venado
+  o.push(`<circle class="z-bv-halo" cx="${f(bv[0])}" cy="${f(bv[1])}" r="13"/><circle class="z-bv" cx="${f(bv[0])}" cy="${f(bv[1])}" r="5.5"/>`);
+  // rótulos
+  const t=(cls,x,y,txt,anc)=>o.push(`<text class="${cls}"${anc?` style="text-anchor:${anc}"`:""} x="${f(x)}" y="${f(y)}">${txt}</text>`);
+  t("z-bvt",bv[0]+4,bv[1]-20,Z.bv);
+  t("z-t",pos.merida[0]+10,pos.merida[1]+4,Z.merida,"start");
+  t("z-s",pos.aero[0]-6,pos.aero[1]+16,Z.aero,"start");
+  t("z-s",pos.kanasin[0]+12,pos.kanasin[1]+4,Z.kanasin,"start");
+  t("z-t",pos.acanceh[0]-10,pos.acanceh[1]+4,Z.acanceh,"end");
+  t("z-s",pos.seye[0]+7,pos.seye[1]+4,Z.seye,"start");
+  t("z-s",pos.tecoh[0]-8,pos.tecoh[1]+3,Z.tecoh,"end");
+  t("z-s",pos.cuzama[0]-6,pos.cuzama[1]-7,Z.cuzama,"end");
+  t("z-s",pos.homun[0]+4,pos.homun[1]-8,Z.homun,"start");
+  t("z-t",pos.mayapan[0]+12,pos.mayapan[1]+4,Z.mayapan,"start");
+  t("z-s",hx+7,hy+12,Z.yabucu,"start");
+  t("z-s z-verde",pos.cuxtal[0],pos.cuxtal[1]+3,Z.cuxtal);
+  t("z-s z-azul",pos.homun[0]-8,pos.homun[1]+40,Z.cenotes);
+  t("z-s z-azul",14,ac[1]+Math.sqrt(ar*ar-(14-ac[0])**2)-7,Z.anillo,"start");
+  // norte, escala y nota
+  o.push(`<g class="z-norte"><path d="M${W-22},14 L${W-27},28 L${W-22},25 L${W-17},28Z"/></g>`);
+  o.push(`<g class="z-escala"><line x1="${W-80}" y1="${H-18}" x2="${W-30}" y2="${H-18}"/><line x1="${W-80}" y1="${H-21}" x2="${W-80}" y2="${H-15}"/><line x1="${W-30}" y1="${H-21}" x2="${W-30}" y2="${H-15}"/><text x="${W-55}" y="${H-7}">5 ${Z.km}</text></g>`);
+  t("z-s z-nota",8,H-8,Z.nota,"start");
+  o.push(`</svg>`);
+  return o.join("");
+}
 if(typeof module!=="undefined") module.exports={calc,CONFIG,geometria,INTERIOR,TABLAJE,areaPol,OFF};
 if(typeof module!=="undefined"&&require.main===module){
   const g=geometria();
@@ -499,6 +582,6 @@ if(typeof module!=="undefined"&&require.main===module){
     etapa:g.etapa,calles:g.calles.map(p=>p.filter((_,i)=>i%3===0)),energia:g.energia,
     clusters:g.clusters.map(c=>({num:c.num,letra:c.letra,size:c.size,area:c.area,frente:c.frente,fondo:c.fondo,banda:c.banda,pts:c.pts.filter((_,i,a)=>i%2===0||i===a.length-1),lotes:c.lots.map(l=>l.n)})),
     lotes:g.clusters.flatMap(c=>c.lots.map(l=>({n:l.n,cl:c.num,atras:l.atras,acceso:l.acceso,frente:l.frente,fondo:l.fondo,pts:l.pts.filter((_,i,a)=>i%2===0||i===a.length-1)})))}};
-  ["es","en"].forEach(l=>{ const t=T[l]||{}; out[l]={detalle:svgDetalle(g,l,t.detalle||""),general:svgGeneral(g,l,t.general||"",t.general_desc||"")}; });
+  ["es","en"].forEach(l=>{ const t=T[l]||{}; out[l]={detalle:svgDetalle(g,l,t.detalle||""),general:svgGeneral(g,l,t.general||"",t.general_desc||""),zona:svgZona(l,t.zona||"",t.zona_desc||"")}; });
   process.stdout.write(JSON.stringify(out));
 }

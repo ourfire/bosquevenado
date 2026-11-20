@@ -208,7 +208,7 @@ ES = dict(
     pr_th1="Plazo", pr_th2="Mensualidad", pr_th3="Total", pr_th4="Descuento",
     pr_letra="Enganche de $10,000 por lote en todos los plazos. Si liquidas antes, pagas el precio del plazo en que terminas. El precio de preventa sube 5% cada vez que se venden 10 lotes. La cuota de mantenimiento es anual, de " + CUOTA + " por lote; se cobra desde la entrega del lote, cuando ya tiene vialidad, y se ajusta según lo que necesite la comunidad. Precios en pesos mexicanos, sin intereses. La venta la atiende <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     part_h="Qué te da tu participación, y qué no.",
-    part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora</a>, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
+    part_lede="Tu participación son acciones de una serie de la SAPI de C.V. de La Tokenizadora, representadas por un token. Con ellas recibes el uso vitalicio de uno o varios lotes de 200 m² y voz en cómo se cuida la tierra.",
     si_h="Incluye",
     si_items=li([
         ("Uso vitalicio de tus lotes", "Desde un lote de 200 m², o un cluster de 2, 4 u 8, en la etapa 3"),
@@ -421,7 +421,7 @@ EN = dict(
     pr_th1="Term", pr_th2="Monthly", pr_th3="Total", pr_th4="Discount",
     pr_letra="MXN $10,000 down payment per lot on every term. If you pay off early, you pay the price of the term in which you finish. The pre-sale price goes up 5% every time 10 lots are sold. The maintenance fee is annual, MXN " + CUOTA + " per lot; it is charged from when the lot is handed over with road access, and adjusted to what the community needs. Prices in Mexican pesos, interest-free. Sales are handled by <a href=\"https://sibarita.casa\" target=\"_blank\" rel=\"noopener\">Casa Sibarita</a>.",
     part_h="What your stake gives you, and what it doesn't.",
-    part_lede="Your stake is a set of shares in a series of <a href=\"https://tokenizadora.com\" target=\"_blank\" rel=\"noopener\">La Tokenizadora's</a> SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
+    part_lede="Your stake is a set of shares in a series of La Tokenizadora's SAPI de C.V., represented by a token. It gives you lifetime use of one or more 200 m² lots and a say in how the land is cared for.",
     si_h="Included",
     si_items=li([
         ("Lifetime use of your lots", "From a single 200 m² lot, or a cluster of 2, 4 or 8, in phase 3"),
